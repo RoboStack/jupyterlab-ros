@@ -1,0 +1,22 @@
+.main {
+  display: flex;
+  flex-direction: row;
+}
+
+.ok {
+  width: 15px;
+  height: 15px;
+  margin: 5px;
+  background: green;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.ko {
+  width: 15px;
+  height: 15px;
+  margin: 5px;
+  background: red;
+  border-radius: 50%;
+  display: inline-block;
+}

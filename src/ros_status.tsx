@@ -1,31 +1,34 @@
-import { VDomModel, VDomRenderer } from '@jupyterlab/apputils';
-
 import { JupyterFrontEnd, JupyterFrontEndPlugin } from '@jupyterlab/application';
+import { VDomModel, VDomRenderer } from '@jupyterlab/apputils';
+import { IStatusBar, TextItem } from '@jupyterlab/statusbar';
 
-import * as React from 'react';
-
-import { IStatusBar } from '@jupyterlab/statusbar';
-
-import { TextItem } from '@jupyterlab/statusbar';
+import React, { Component } from 'react';
 
 export class ROSStatus extends VDomRenderer {
-  /**
-   * Construct a new ROSStatus status item.
-   */
+  private status: boolean;
 
-  // constructor() {
-  //   super(new CommandEditStatus.Model());
-  // }
+  constructor() {
+    super();
+    this.status = false;
+  }
+  
+  toggle = () => {
+    console.log("Hi!!, ", this.status);
+    this.status = !this.status;
+    this.r
+  }
 
-  /**
-   * Render the ROSStatus status item.
-   */
   render() {
-    // if (!this.model) {
-    //   return null;
-    // }
-    this.node.title = `Notebook is in NO mode`;
-    return <TextItem source={`Status: online?`} />;
+    console.log("render:", this.status)
+    this.node.title = "Ros bridge status";
+
+    return (
+      <div className="main" onClick={this.toggle}>
+        <TextItem source={"ROS: "} />
+        { this.status && <div className="ok" /> }
+        { this.status == false && <div className="ko" /> }
+      </div>
+    );
   }
 }
 
@@ -37,29 +40,16 @@ export const rosStatusItem: JupyterFrontEndPlugin<void> = {
   autoStart: true,
   requires: [IStatusBar],
   optional: [],
-  activate: (
-    app: JupyterFrontEnd,
-    statusBar: IStatusBar
-  ) => {
-    if (!statusBar)
-    {
-      console.log("ERROR NO STATUS BAR?!");
-    }
-
+  activate: (app: JupyterFrontEnd, statusBar: IStatusBar) => {
     const { shell } = app;
-    const item = new ROSStatus();
-    if (!statusBar) {
-      // Automatically disable if statusbar missing
-      console.log("No status bar.");
-      return;
-    }
-
-    statusBar.registerStatusItem('@jupyterlab/notebook-extension:mode-status', {
-      item,
-      align: 'right',
+    
+    if (!statusBar) { console.log("No status bar!"); return; }
+    
+    statusBar.registerStatusItem('@jupyterlab/ros:status', {
+      item: new ROSStatus(),
+      align: 'left',
       rank: 4,
-      isActive: () =>
-        true
+      isActive: () => true
     });
   }
 };

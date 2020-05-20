@@ -4,31 +4,38 @@ import { IStatusBar, TextItem } from '@jupyterlab/statusbar';
 
 import React, { Component } from 'react';
 
-export class ROSStatus extends VDomRenderer {
-  private status: boolean;
-
+export class ROSStatus extends VDomRenderer<ROSStatus.Model> {
+  
   constructor() {
-    super();
-    this.status = false;
+    super(new ROSStatus.Model());
   }
   
   toggle = () => {
-    console.log("Hi!!, ", this.status);
-    this.status = !this.status;
-    this.r
+    console.log("Hi!!, ", this.model.status);
+    this.model.status = !this.model.status;
+    //this.render()
   }
 
   render() {
-    console.log("render:", this.status)
+    console.log("render:", this.model.status)
     this.node.title = "Ros bridge status";
 
     return (
       <div className="main" onClick={this.toggle}>
         <TextItem source={"ROS: "} />
-        { this.status && <div className="ok" /> }
-        { this.status == false && <div className="ko" /> }
+        { this.model.status && <div className="ok" /> }
+        { this.model.status == false && <div className="ko" /> }
       </div>
     );
+  }
+}
+
+export namespace ROSStatus {
+  export class Model extends VDomModel {
+    private _status: boolean = false;
+  
+    get status() { return this._status; }
+    set status(status: boolean) { this._status = status; }
   }
 }
 

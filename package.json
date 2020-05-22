@@ -35,8 +35,10 @@
   "dependencies": {
     "@jupyterlab/application": "^2.1.0",
     "@jupyterlab/apputils": "^2.1.1",
+    "@jupyterlab/mainmenu": "^2.1.1",
     "@jupyterlab/notebook": "^2.1.2",
-    "@jupyterlab/statusbar": "^2.1.1"
+    "@jupyterlab/statusbar": "^2.1.1",
+    "@lumino/widgets": "^1.12.2"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^2.25.0",

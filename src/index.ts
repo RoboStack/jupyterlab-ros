@@ -1,8 +1,11 @@
-import {
-  JupyterFrontEnd,
-  JupyterFrontEndPlugin
-} from '@jupyterlab/application';
+import { JupyterFrontEndPlugin } from '@jupyterlab/application';
 
-import { rosStatusItem } from "./ros_status"
+import { rosStatus } from "./status/index";
+import { rosMenu } from "./menu/index";
 
-export default rosStatusItem;
+const ros: JupyterFrontEndPlugin<any>[] = [
+  rosStatus,
+  rosMenu,
+];
+
+export default ros;

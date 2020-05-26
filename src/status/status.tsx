@@ -1,15 +1,13 @@
-import { JupyterFrontEnd } from '@jupyterlab/application';
-import { VDomModel, VDomRenderer } from '@jupyterlab/apputils';
+import { VDomModel, VDomRenderer, Dialog, ReactWidget } from '@jupyterlab/apputils';
 import { TextItem } from '@jupyterlab/statusbar';
+
 import ROSLIB from 'roslib';
-
 import React from 'react';
-
 
 export class ROSStatusBridge extends VDomRenderer<Model> {
   
-  constructor(app: JupyterFrontEnd) {
-    super(new Model(app));
+  constructor() {
+    super(new Model());
   }
 
   onAfterAttach = () => {
@@ -40,28 +38,16 @@ export class ROSStatusBridge extends VDomRenderer<Model> {
     console.log("Disconnected from rosbridges.");
   }
 
-  roscoreConsole = () => {
-    console.log("name: ", this.model.app.name);
-
-    this.model.app.serviceManager.terminals.startNew()
-      .then(terminal => {
-        
-        console.log("Terminal: ", terminal);
-
-        const res = terminal.send({type: 'stdin', content: ["conda activate ros && roscore\n"]});
-        console.log("Send: ", res);
-
-        console.log("Hi!!, ", this.model.status);
-        this.model.status = !this.model.status;
-        
-      }).catch(err => console.error(err));
+  onClick = () => {
+    this.model.status = !this.model.status;
+    console.log("Status changed.");
   }
   
   render() {
     this.node.title = "Ros bridge status";
 
     return (
-      <div className="main">
+      <div className="main" onClick={this.onClick}>
         <TextItem source={"ROS: "} />
         { this.model.status && <div className="ok" /> }
         { this.model.status == false && <div className="ko" /> }
@@ -72,11 +58,9 @@ export class ROSStatusBridge extends VDomRenderer<Model> {
 
 class Model extends VDomModel {
   private _status: boolean = false;
-  private _app: JupyterFrontEnd = null;
 
-  constructor(app: JupyterFrontEnd) {
+  constructor() {
     super();
-    this._app = app;
   }
 
   get status() { return this._status; }
@@ -84,10 +68,11 @@ class Model extends VDomModel {
     this._status = status;
     this.stateChanged.emit(void 0)
   }
+}
 
-  get app() { return this._app; }
-  set app(app: JupyterFrontEnd) {
-    this._app = app;
-    this.stateChanged.emit(void 0)
+class MyDialog extends Dialog<ReactWidget> {
+  
+  show() {
+
   }
 }

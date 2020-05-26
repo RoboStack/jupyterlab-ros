@@ -13,7 +13,7 @@ export const rosStatus: JupyterFrontEndPlugin<void> = {
     if (!statusBar) { console.log("No status bar!"); return; }
     
     statusBar.registerStatusItem('jupyterlab-ros/status:web-bridge', {
-      item: new ROSStatusBridge(app),
+      item: new ROSStatusBridge(),
       align: 'left',
       rank: 4,
       isActive: () => true

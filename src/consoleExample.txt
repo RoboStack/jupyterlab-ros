@@ -1,0 +1,16 @@
+roscoreConsole = () => {
+    console.log("name: ", this.model.app.name);
+
+    this.app.serviceManager.terminals.startNew()
+      .then(terminal => {
+        
+        console.log("Terminal: ", terminal);
+
+        const res = terminal.send({type: 'stdin', content: ["conda activate ros && roscore\n"]});
+        console.log("Send: ", res);
+
+        console.log("Hi!!, ", this.status);
+        this.status = !this.status;
+        
+      }).catch(err => console.error(err));
+  }

@@ -4,7 +4,7 @@ import { IStatusBar } from '@jupyterlab/statusbar';
 import { ROSStatusBridge } from './status';
 
 export const rosStatus: JupyterFrontEndPlugin<void> = {
-  id: 'jlab-ros:status',
+  id: 'jupyterlab-ros/status',
   autoStart: true,
   requires: [IStatusBar],
   optional: [],
@@ -12,7 +12,7 @@ export const rosStatus: JupyterFrontEndPlugin<void> = {
     
     if (!statusBar) { console.log("No status bar!"); return; }
     
-    statusBar.registerStatusItem('jlab-ros:status-bridge', {
+    statusBar.registerStatusItem('jupyterlab-ros/status:web-bridge', {
       item: new ROSStatusBridge(app),
       align: 'left',
       rank: 4,

@@ -1,6 +1,7 @@
 import { JupyterFrontEnd } from '@jupyterlab/application';
 import { VDomModel, VDomRenderer } from '@jupyterlab/apputils';
 import { TextItem } from '@jupyterlab/statusbar';
+import ROSLIB from 'roslib';
 
 import React from 'react';
 
@@ -10,8 +11,36 @@ export class ROSStatusBridge extends VDomRenderer<Model> {
   constructor(app: JupyterFrontEnd) {
     super(new Model(app));
   }
+
+  onAfterAttach = () => {
+    const ros = new ROSLIB.Ros({});
+    console.log("entra");
+
+    ros.on('connection', this.onConnect);
+    ros.on('error', this.onError);
+    ros.on('close', this.onDisconect);
+    console.log("entra 2");
+
+    ros.connect('ws://localhost:9090');
+    console.log("entra end");
+  }
   
-  toggle = () => {
+  onConnect = () => {
+    this.model.status = true;
+    console.log("Connected to rosbridge");
+  }
+
+  onError = () => {
+    this.model.status = false;
+    console.log("No va.");
+  }
+
+  onDisconect = () => {
+    this.model.status = false;
+    console.log("Disconnected from rosbridges.");
+  }
+
+  roscoreConsole = () => {
     console.log("name: ", this.model.app.name);
 
     this.model.app.serviceManager.terminals.startNew()
@@ -27,24 +56,12 @@ export class ROSStatusBridge extends VDomRenderer<Model> {
         
       }).catch(err => console.error(err));
   }
-
-  session = () => {
-    try {
-      async () => {
-        const terminal = await this.model.app.serviceManager.terminals.startNew();
-        const aux = await terminal.send({type: 'stdin', content: ["conda activate ros && which roscore"]});
-        console.log(aux);
-      }
-    } catch (e) { console.error(e); }
-  }
-
   
-
   render() {
     this.node.title = "Ros bridge status";
 
     return (
-      <div className="main" onClick={this.toggle}>
+      <div className="main">
         <TextItem source={"ROS: "} />
         { this.model.status && <div className="ok" /> }
         { this.model.status == false && <div className="ko" /> }

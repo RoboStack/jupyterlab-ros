@@ -1,16 +1,18 @@
 import { JupyterFrontEnd, JupyterFrontEndPlugin } from '@jupyterlab/application';
-import { ICommandPalette } from '@jupyterlab/apputils';
+import { SettingEditor, ISettingEditorTracker } from '@jupyterlab/settingeditor';
+import { ISettingRegistry } from '@jupyterlab/settingregistry';
+import { ICommandPalette, MainAreaWidget, WidgetTracker } from '@jupyterlab/apputils';
 import { IMainMenu } from '@jupyterlab/mainmenu';
 import { Menu } from '@lumino/widgets';
 
 export const rosMenu: JupyterFrontEndPlugin<void> = {
-  id: 'jlab-ros:menu',
+  id: 'jupyterlab-ros/menu',
   autoStart: true,
-  requires: [ICommandPalette, IMainMenu],
+  requires: [ICommandPalette, IMainMenu, ISettingEditorTracker, ISettingRegistry],
   optional: [],
-  activate: (app: JupyterFrontEnd, palette: ICommandPalette, mainMenu: IMainMenu) => {
+  activate: (app: JupyterFrontEnd, palette: ICommandPalette, mainMenu: IMainMenu, settings: ISettingEditorTracker, registry: ISettingRegistry) => {
     
-    const { commands } = app;
+    const { commands, shell } = app;
 
     // Create a new menu
     const menu: Menu = new Menu({ commands });
@@ -22,7 +24,7 @@ export const rosMenu: JupyterFrontEndPlugin<void> = {
      ************************************************************************/
     // CREATE ENV
     // Create and add a new command
-    let command = 'jlab-ros:menu-newEnv';
+    let command = 'jupyterlab-ros/menu:new-env';
     commands.addCommand(command, {
       label: 'New env',
       caption: 'Create a new conda env with all ROS packages.',
@@ -40,9 +42,8 @@ export const rosMenu: JupyterFrontEndPlugin<void> = {
 
     // Add the command to the menu
     menu.addItem({ command, args: { arg: 'example' } });
-
     // DELETE ENV
-    command = 'jlab-ros:menu-delEnv';
+    command = 'jupyterlab-ros/menu:del-env';
     commands.addCommand(command, {
       label: 'Delete env',
       caption: 'Delete an existing conda env with ros packages.',
@@ -60,7 +61,7 @@ export const rosMenu: JupyterFrontEndPlugin<void> = {
     menu.addItem({ type: "separator" })
 
     // START/STOP WEB BRIDGE SERVER
-    command = 'jlab-ros:menu-bridgeServer';
+    command = 'jupyterlab-ros/menu:bridge-server';
     commands.addCommand(command, {
       label: 'Bridge server',
       caption: 'Start/Stop the web bridge server.',
@@ -74,17 +75,21 @@ export const rosMenu: JupyterFrontEndPlugin<void> = {
       category: "ROS",
       args: { status: 'stoped' }
     });
-    
+
     menu.addItem({ command, args: { status: 'running' } });
     menu.addItem({ type: "separator" })
 
     // DELETE ENV
-    command = 'jlab-ros:menu-settings';
+    command = 'jupyterlab-ros/menu:settings';
     commands.addCommand(command, {
       label: 'Settings',
       caption: 'Configurate your JupyterLab-ROS env.',
       execute: (args: any) => {
-        window.alert("Settings file launched.");
+        //const edit = settings.currentWidget.content.settings. ;
+        //console.log(edit);
+        // app.activatePlugin('jupyterlab-ros:settings-ros')
+        // shell.activateById('jupyterlab-ros:settings-ros')
+        commands.execute('settingeditor:open');
       }
     });
 

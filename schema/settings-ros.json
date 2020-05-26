@@ -1,0 +1,19 @@
+{
+    "title": "ROS",
+    "description": "Settings for ROS environment.",
+    "type": "object",
+    "properties": {
+      "environment": {
+        "type": "string",
+        "title": "Environment path",
+        "description": "Path of your ROS environment, this is necessary for ROS extension.",
+        "default": "/opt/melodic/"
+      },
+      "bridge": {
+        "type": "string",
+        "title": "Web bridge server path",
+        "description": "I don't know what is this because I'm not sure where is bridge launch file.",
+        "default": "/opt/melodic/bin/"
+      }
+    }
+  }

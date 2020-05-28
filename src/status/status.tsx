@@ -1,78 +1,103 @@
-import { VDomModel, VDomRenderer, Dialog, ReactWidget } from '@jupyterlab/apputils';
-import { TextItem } from '@jupyterlab/statusbar';
+import { ReactWidget, showDialog, Dialog } from '@jupyterlab/apputils';
+import { ServerConnection } from '@jupyterlab/services';
+import { URLExt } from '@jupyterlab/coreutils';
 
 import ROSLIB from 'roslib';
 import React from 'react';
 
-export class ROSStatusBridge extends VDomRenderer<Model> {
-  
+export class ROSStatusBridge extends ReactWidget {
   constructor() {
-    super(new Model());
-  }
-
-  onAfterAttach = () => {
-    const ros = new ROSLIB.Ros({});
-    console.log("entra");
-
-    ros.on('connection', this.onConnect);
-    ros.on('error', this.onError);
-    ros.on('close', this.onDisconect);
-    console.log("entra 2");
-
-    ros.connect('ws://localhost:9090');
-    console.log("entra end");
+    super();
+    this.addClass('jp-ReactWidget');
   }
   
-  onConnect = () => {
-    this.model.status = true;
-    console.log("Connected to rosbridge");
+  render(): JSX.Element {
+    this.node.title = "Ros bridge status";
+    return <Status/>;
+  }
+}
+
+
+type Props = {}
+type State = {
+  status: boolean;
+}
+
+class Status extends React.Component<Props, State> {
+  readonly state: State = {
+    status: false,
+  };
+
+  constructor(props: Props) {
+    super(props);
   }
 
-  onError = () => {
-    this.model.status = false;
-    console.log("No va.");
+  componentDidMount = () => this.checkStatus();
+
+  checkStatus = () => {
+    const settings = ServerConnection.makeSettings();
+    const requestUrl = URLExt.join(
+      settings.baseUrl,
+      'jupyterlab-ros',
+      'config'
+    );
+
+    ServerConnection.makeRequest(requestUrl, {}, settings)
+      .then( async (res) => {
+        const data = await res.json();
+        this.setState({ status: data.status });
+        if (data.status) setTimeout(this.checkStatus, 5000);
+      
+      }).catch( err => console.log(err) );
   }
 
-  onDisconect = () => {
-    this.model.status = false;
-    console.log("Disconnected from rosbridges.");
-  }
+  toggle = () => {
+    let label = this.state.status ? "Are you sure you want to stop bridge server?" : "Are you sure you want to launch bridge server?";
 
-  onClick = () => {
-    this.model.status = !this.model.status;
-    console.log("Status changed.");
+    showDialog({
+      title: "Web bridge server",
+      body: <span className="jp-About-body">{label}</span>,
+      buttons: [
+        Dialog.okButton(),
+        Dialog.cancelButton()
+      ]
+    }).then(res => {
+      let cmd = "";
+      if (res.button.label != "OK") return;
+      else if (res.button.label == "OK" && this.state.status) cmd = "stop";
+      else cmd = "start";
+
+      const settings = ServerConnection.makeSettings();
+      const requestUrl = URLExt.join(
+        settings.baseUrl,
+        'jupyterlab-ros',
+        'config'
+      );
+      const req = {
+        body: JSON.stringify({ cmd }),
+        method: 'POST'
+      }
+
+      ServerConnection.makeRequest(requestUrl, req, settings)
+        .then( async (res) => {
+          if (!res.ok) { this.setState({ status: false }); return; }
+          
+          const data = await res.json();
+          this.setState({ status: data.status });
+          if (data.status) this.checkStatus();
+
+        }).catch( err => console.log(err) );
+
+    }).catch( e => console.log(e) );
   }
   
   render() {
-    this.node.title = "Ros bridge status";
-
     return (
-      <div className="main" onClick={this.onClick}>
-        <TextItem source={"ROS: "} />
-        { this.model.status && <div className="ok" /> }
-        { this.model.status == false && <div className="ko" /> }
+      <div className="main" onClick={this.toggle}>
+        <span style={{ marginTop: '3px' }}>{"ROS: "}</span>
+        { this.state.status && <div className="ok" /> }
+        { this.state.status == false && <div className="ko" /> }
       </div>
     );
-  }
-}
-
-class Model extends VDomModel {
-  private _status: boolean = false;
-
-  constructor() {
-    super();
-  }
-
-  get status() { return this._status; }
-  set status(status: boolean) {
-    this._status = status;
-    this.stateChanged.emit(void 0)
-  }
-}
-
-class MyDialog extends Dialog<ReactWidget> {
-  
-  show() {
-
   }
 }

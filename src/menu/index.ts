@@ -1,18 +1,18 @@
 import { JupyterFrontEnd, JupyterFrontEndPlugin } from '@jupyterlab/application';
-import { SettingEditor, ISettingEditorTracker } from '@jupyterlab/settingeditor';
 import { ISettingRegistry } from '@jupyterlab/settingregistry';
-import { ICommandPalette, MainAreaWidget, WidgetTracker } from '@jupyterlab/apputils';
+import { ICommandPalette, MainAreaWidget } from '@jupyterlab/apputils';
 import { IMainMenu } from '@jupyterlab/mainmenu';
 import { Menu } from '@lumino/widgets';
+import { SettingsWidget } from './settings';
 
 export const rosMenu: JupyterFrontEndPlugin<void> = {
   id: 'jupyterlab-ros/menu',
   autoStart: true,
-  requires: [ICommandPalette, IMainMenu, ISettingEditorTracker, ISettingRegistry],
+  requires: [ICommandPalette, IMainMenu, ISettingRegistry],
   optional: [],
-  activate: (app: JupyterFrontEnd, palette: ICommandPalette, mainMenu: IMainMenu, settings: ISettingEditorTracker, registry: ISettingRegistry) => {
+  activate: (app: JupyterFrontEnd, palette: ICommandPalette, mainMenu: IMainMenu, settings: ISettingRegistry) => {
     
-    const { commands, shell } = app;
+    const { commands } = app;
 
     // Create a new menu
     const menu: Menu = new Menu({ commands });
@@ -85,11 +85,10 @@ export const rosMenu: JupyterFrontEndPlugin<void> = {
       label: 'Settings',
       caption: 'Configurate your JupyterLab-ROS env.',
       execute: (args: any) => {
-        //const edit = settings.currentWidget.content.settings. ;
-        //console.log(edit);
-        // app.activatePlugin('jupyterlab-ros:settings-ros')
-        // shell.activateById('jupyterlab-ros:settings-ros')
-        commands.execute('settingeditor:open');
+        const content = new SettingsWidget(settings, "jupyterlab-ros:settings-ros");
+        const widget = new MainAreaWidget<SettingsWidget>({ content });
+        widget.title.label = 'ROS Settings';
+        app.shell.add(widget, 'main');
       }
     });
 

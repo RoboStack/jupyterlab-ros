@@ -1,6 +1,15 @@
 *.bundle.*
+
+# Build
 lib/
+*.tsbuildinfo
+jupyterlab_ros_server.egg-info/
+
+# Libraries
 node_modules/
+
+# Others
+yarn.lock
 *.egg-info/
 .ipynb_checkpoints
-*.tsbuildinfo
+jupyterlab_ros_server/**/__pycache__

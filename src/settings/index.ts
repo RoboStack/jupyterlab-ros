@@ -22,10 +22,10 @@ export const rosSettings: JupyterFrontEndPlugin<void> = {
 
     // Wait for the application to be restored and
     // for the settings for this plugin to be loaded
-    Promise.all([app.restored, settings.load("jupyterlab-ros/settings")])
+    Promise.all([app.restored, settings.load("jupyterlab-ros:settings-ros")])
       .then(([, setting]) => {
         // Read the settings
-        loadSetting(setting);
+        // loadSetting(setting);
 
         // Listen for your plugin setting changes using Signal
         setting.changed.connect(loadSetting);

@@ -1,15 +1,15 @@
 {
   "name": "jupyterlab-ros",
   "version": "0.1.0",
-  "description": "A JupyterLab extension.",
+  "description": "A JupyterLab extension for ROS.",
   "keywords": [
     "jupyter",
     "jupyterlab",
     "jupyterlab-extension"
   ],
-  "homepage": "https://github.com/my_name/myextension",
+  "homepage": "https://github.com/RoboStack/jupyterlab-ros",
   "bugs": {
-    "url": "https://github.com/my_name/myextension/issues"
+    "url": "https://github.com/RoboStack/jupyterlab-ros/issues"
   },
   "license": "BSD-3-Clause",
   "author": "QuantStack",
@@ -23,7 +23,7 @@
   "style": "style/index.css",
   "repository": {
     "type": "git",
-    "url": "https://github.com/my_name/myextension.git"
+    "url": "https://github.com/RoboStack/jupyterlab-ros.git"
   },
   "scripts": {
     "build": "tsc",
@@ -42,8 +42,6 @@
     "@jupyterlab/settingregistry": "^2.1.0",
     "@jupyterlab/statusbar": "^2.1.1",
     "@lumino/widgets": "^1.12.2",
-    "bootstrap": "^4.5.0",
-    "react-bootstrap": "^1.0.1",
     "roslib": "github:RoboStack/roslibjs#remove_ws"
   },
   "devDependencies": {

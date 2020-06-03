@@ -3,7 +3,11 @@ import { ISettingRegistry } from '@jupyterlab/settingregistry';
 import { ICommandPalette, MainAreaWidget } from '@jupyterlab/apputils';
 import { IMainMenu } from '@jupyterlab/mainmenu';
 import { Menu } from '@lumino/widgets';
+import { ServerConnection } from '@jupyterlab/services';
+import { URLExt } from '@jupyterlab/coreutils';
+
 import { SettingsWidget } from './settings';
+import ROSLIB from 'roslib';
 
 export const rosMenu: JupyterFrontEndPlugin<void> = {
   id: 'jupyterlab-ros/menu',
@@ -66,7 +70,53 @@ export const rosMenu: JupyterFrontEndPlugin<void> = {
       label: 'Bridge server',
       caption: 'Start/Stop the web bridge server.',
       execute: (args: any) => {
-        window.alert(`Server ${args['status']}.`);
+
+        const settings = ServerConnection.makeSettings();
+
+        const url = URLExt.join(
+          settings.wsUrl,
+          'jupyterlab-ros',
+          'bridge'
+        );
+
+        console.log(url);
+
+        const ros = new ROSLIB.Ros({});
+        ros.connect(url);
+
+        ros.on('connection', function() {
+          console.log('Connected to websocket server.');
+          var cmdVel = new ROSLIB.Topic({
+            ros : ros,
+            name : '/cmd_vel',
+            messageType : 'geometry_msgs/Twist'
+          });
+          
+          var twist = new ROSLIB.Message({
+            linear : {
+              x : 0.1,
+              y : 0.2,
+              z : 0.3
+            },
+            angular : {
+              x : -0.1,
+              y : -0.2,
+              z : -0.3
+            }
+          });
+          
+          console.log("Publishing cmd_vel");
+          cmdVel.publish(twist);
+          // ros.close();
+        });
+        
+        ros.on('error', function(error) {
+          console.log('Error connecting to websocket server: ', error);
+        });
+        
+        ros.on('close', function() {
+          console.log('Connection to websocket server closed.');
+        });
       }
     });
 
@@ -76,7 +126,7 @@ export const rosMenu: JupyterFrontEndPlugin<void> = {
       args: { status: 'stoped' }
     });
 
-    menu.addItem({ command, args: { status: 'running' } });
+    menu.addItem({ command });
     menu.addItem({ type: "separator" })
 
     // DELETE ENV

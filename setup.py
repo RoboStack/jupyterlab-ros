@@ -12,7 +12,7 @@ setup_args = {
     'packages': find_packages(),
     'data_files': [
         (
-            '/home/carlos/miniconda3/envs/jupyterlab/etc/jupyter/jupyter_notebook_config.d/',
+            '/home/carlos/miniconda3/envs/jupyterlab-ros/etc/jupyter/jupyter_notebook_config.d/',
             ['jupyterlab_ros_server/jupyterlab_ros_server.json']
         )
     ],

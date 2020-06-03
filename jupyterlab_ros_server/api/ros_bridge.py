@@ -1,18 +1,28 @@
-import json
+import rospy
+import bson
+from tornado.websocket import WebSocketHandler
+from tornado.escape import json_decode
 
-from notebook.base.handlers import APIHandler
-from notebook.utils import url_path_join
+class RosBridge(WebSocketHandler):
+    cont = 0
 
-import tornado
-from tornado.web import StaticFileHandler
+    def __new__(cls):
+        rospy.init_node("rosbridge")
 
-class ROSBridge(APIHandler):
-    
-    @tornado.web.authenticated
-    def get(self):
-        self.finish(json.dumps({ 'data': "works" }))
+    def open(self):
+        print("FE: Connection opened {}".format(self.cont))
+        self.cont += 1
 
-    @tornado.web.authenticated
-    def post(self):
-        # req = self.get_json_body()
-        self.finish(json.dumps({ 'data': "works" }))
+    def on_message(self, message):
+        print("FE: New message.")
+        msg = json_decode(message)
+        print(msg)
+        
+        #if (msg.get('op', None) == "advertise") :
+        #    self.pub = rospy.Publisher(msg.get('topic', None), msg.get('type', None), msg.get('queue_size', None))
+        #
+        #elif (msg.get('op', None) == "publish") :
+        #    self.pub.publish(msg.get('msg', None))
+
+    def on_close(self):
+        print("FE: Connection close.")

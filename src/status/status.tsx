@@ -2,7 +2,6 @@ import { ReactWidget, showDialog, Dialog } from '@jupyterlab/apputils';
 import { ServerConnection } from '@jupyterlab/services';
 import { URLExt } from '@jupyterlab/coreutils';
 
-import ROSLIB from 'roslib';
 import React from 'react';
 
 export class ROSStatusBridge extends ReactWidget {

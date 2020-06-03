@@ -44,8 +44,10 @@
     "@lumino/widgets": "^1.12.2",
     "roslib": "github:RoboStack/roslibjs#remove_ws"
   },
+  "resolutions": {
+    "roslib": "git+https://github.com/RoboStack/roslibjs#remove_ws"
+  },
   "devDependencies": {
-    "@types/roslib": "^1.0.1",
     "@typescript-eslint/eslint-plugin": "^2.25.0",
     "@typescript-eslint/parser": "^2.25.0",
     "eslint": "^6.8.0",

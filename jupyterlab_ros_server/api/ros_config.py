@@ -4,7 +4,6 @@ from notebook.base.handlers import APIHandler
 from notebook.utils import url_path_join
 
 import tornado
-from tornado.web import StaticFileHandler
 
 status = False
 

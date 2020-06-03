@@ -14,6 +14,5 @@ def load_jupyter_server_extension(lab_app):
         JupyterLab application instance
     """
     url_path = "jupyterlab-ros"
-    lab_app.web_app.settings['autoreload'] = True
     setup_handlers(lab_app.web_app, url_path)
     lab_app.log.info("Registered jupyterlab_ros_server extension at URL path /{}".format(url_path))

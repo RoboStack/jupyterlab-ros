@@ -80,34 +80,19 @@ export const rosMenu: JupyterFrontEndPlugin<void> = {
         );
 
         console.log(url);
+        /*const ws = new WebSocket(url);
+        ws.onopen = (event) => {
+          ws.send("Hi!!");
+        }
 
-        const ros = new ROSLIB.Ros({});
-        ros.connect(url);
+        ws.onerror = (event) => console.log('Error connecting to websocket server: ', event);
+        ws.onclose = (event) => console.log('Connection to websocket server closed.');
+        */
+        
+        const ros = new ROSLIB.Ros({url});
 
         ros.on('connection', function() {
           console.log('Connected to websocket server.');
-          var cmdVel = new ROSLIB.Topic({
-            ros : ros,
-            name : '/cmd_vel',
-            messageType : 'geometry_msgs/Twist'
-          });
-          
-          var twist = new ROSLIB.Message({
-            linear : {
-              x : 0.1,
-              y : 0.2,
-              z : 0.3
-            },
-            angular : {
-              x : -0.1,
-              y : -0.2,
-              z : -0.3
-            }
-          });
-          
-          console.log("Publishing cmd_vel");
-          cmdVel.publish(twist);
-          // ros.close();
         });
         
         ros.on('error', function(error) {
@@ -117,6 +102,45 @@ export const rosMenu: JupyterFrontEndPlugin<void> = {
         ros.on('close', function() {
           console.log('Connection to websocket server closed.');
         });
+
+        console.log("Connecting to server");
+        ros.connect();
+
+        var cmdVel = new ROSLIB.Topic({
+          ros : ros,
+          name : '/cmd_vel',
+          messageType : 'geometry_msgs/Twist'
+        });
+        
+        var twist = new ROSLIB.Message({
+          linear : {
+            x : 0.1,
+            y : 0.2,
+            z : 0.3
+          },
+          angular : {
+            x : -0.1,
+            y : -0.2,
+            z : -0.3
+          }
+        });
+        
+        
+        console.log("Publishing cmd_vel");
+        cmdVel.publish(twist);
+
+        var listener = new ROSLIB.Topic({
+          ros : ros,
+          name : '/listener',
+          messageType : 'std_msgs/String'
+        });
+      
+        listener.subscribe(function(message) {
+          console.log('Received message on ' + listener.name + ': ' + message.data);
+          // listener.unsubscribe();
+        });
+
+        // ros.close();
       }
     });
 

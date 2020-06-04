@@ -5,7 +5,8 @@ from .ros_config import ROSConfig
 
 import rospy
 
-from rosbridge_server.websocket_handler import RosbridgeWebSocket
+#from rosbridge_server.websocket_handler import RosbridgeWebSocket
+from .websocket_handler import LabRosbridgeWebSocket
 
 from rosbridge_server import ClientManager
 
@@ -35,54 +36,19 @@ def setup_handlers(web_app, url_path):
 def init_rosbridge():
     # Prep RosBrige Handler
     rospy.init_node("rosbridge_websocket", disable_signals=True)
-    
-    ##################################################
-    # Parameter handling                             #
-    ##################################################
 
-    # get RosbridgeProtocol parameters
-    RosbridgeWebSocket.fragment_timeout = rospy.get_param('~fragment_timeout', RosbridgeWebSocket.fragment_timeout)
-    RosbridgeWebSocket.delay_between_messages = rospy.get_param('~delay_between_messages', RosbridgeWebSocket.delay_between_messages)
-    RosbridgeWebSocket.max_message_size = rospy.get_param('~max_message_size', RosbridgeWebSocket.max_message_size)
-    RosbridgeWebSocket.unregister_timeout = rospy.get_param('~unregister_timeout', RosbridgeWebSocket.unregister_timeout)
-
-    if RosbridgeWebSocket.max_message_size == "None":
-        RosbridgeWebSocket.max_message_size = None
-    
-    RosbridgeWebSocket.max_message_size = int(100)
-
-    # if authentication should be used
-    RosbridgeWebSocket.authenticate = rospy.get_param('~authenticate', False)
-
-    RosbridgeWebSocket.client_manager = ClientManager()
+    LabRosbridgeWebSocket.client_manager = ClientManager()
 
     # Get the glob strings and parse them as arrays.
-    RosbridgeWebSocket.topics_glob = [
-        element.strip().strip("'")
-        for element in rospy.get_param('~topics_glob', '')[1:-1].split(',')
-        if len(element.strip().strip("'")) > 0]
-    RosbridgeWebSocket.services_glob = [
-        element.strip().strip("'")
-        for element in rospy.get_param('~services_glob', '')[1:-1].split(',')
-        if len(element.strip().strip("'")) > 0]
-    RosbridgeWebSocket.params_glob = [
-        element.strip().strip("'")
-        for element in rospy.get_param('~params_glob', '')[1:-1].split(',')
-        if len(element.strip().strip("'")) > 0]
+    LabRosbridgeWebSocket.topics_glob = []
+    LabRosbridgeWebSocket.services_glob = ["/rosapi/*"]
+    LabRosbridgeWebSocket.params_glob = []
 
-    # To be able to access the list of topics and services, you must be able to access the rosapi services.
-    if RosbridgeWebSocket.services_glob:
-        RosbridgeWebSocket.services_glob.append("/rosapi/*")
-
-    Subscribe.topics_glob = RosbridgeWebSocket.topics_glob
-    Advertise.topics_glob = RosbridgeWebSocket.topics_glob
-    Publish.topics_glob = RosbridgeWebSocket.topics_glob
-    AdvertiseService.services_glob = RosbridgeWebSocket.services_glob
-    UnadvertiseService.services_glob = RosbridgeWebSocket.services_glob
-    CallService.services_glob = RosbridgeWebSocket.services_glob
-
-    ##################################################
-    # Done with parameter handling                   #
-    ##################################################
+    Subscribe.topics_glob = LabRosbridgeWebSocket.topics_glob
+    Advertise.topics_glob = LabRosbridgeWebSocket.topics_glob
+    Publish.topics_glob = LabRosbridgeWebSocket.topics_glob
+    AdvertiseService.services_glob = LabRosbridgeWebSocket.services_glob
+    UnadvertiseService.services_glob = LabRosbridgeWebSocket.services_glob
+    CallService.services_glob = LabRosbridgeWebSocket.services_glob
     
-    return RosbridgeWebSocket
+    return LabRosbridgeWebSocket

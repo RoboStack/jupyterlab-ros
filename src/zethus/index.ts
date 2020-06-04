@@ -13,7 +13,7 @@ export const rosZethus: JupyterFrontEndPlugin<void> = {
 
     let command = 'jupyterlab-ros/zethus:open';
     commands.addCommand(command, {
-      label: 'Zethus',
+      label: 'Open Zethus',
       caption: 'Open a new Zethus view.',
       execute: (args: any) => {
         const widget = new MainAreaWidget<ZethusWidget>({ content: new ZethusWidget() });

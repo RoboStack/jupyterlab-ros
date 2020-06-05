@@ -42,9 +42,30 @@
     "@jupyterlab/settingregistry": "^2.1.0",
     "@jupyterlab/statusbar": "^2.1.1",
     "@lumino/widgets": "^1.12.2",
-    "amphion": "^0.1.23",
     "roslib": "github:RoboStack/roslibjs#remove_ws",
-    "zethus": "^0.1.19"
+
+    "amphion": "^0.1.20",
+    "brace": "^0.11.1",
+    "classnames": "^2.2.6",
+    "d3": "^5.15.0",
+    "dagre-d3": "^0.6.3",
+    "is-valid-http-url": "^1.0.3",
+    "jsoneditor-react": "^2.0.0",
+    "lodash": "^4.17.13",
+    "mousetrap": "^1.6.3",
+    "prop-types": "^15.7.2",
+    "react-graceful-unmount": "^1.0.7",
+    "react-markdown": "^4.0.6",
+    "react-rnd": "^10.0.0",
+    "react-router-dom": "^5.0.1",
+    "react-select": "^3.0.4",
+    "react-tagsinput": "^3.19.0",
+    "react-virtualized": "^9.21.2",
+    "shortid": "^2.2.14",
+    "stats-js": "^1.0.0",
+    "store": "^2.0.12",
+    "styled-components": "^4.3.2",
+    "three": "^0.109.0"
   },
   "resolutions": {
     "roslib": "git+https://github.com/RoboStack/roslibjs#remove_ws"
@@ -57,7 +78,7 @@
     "eslint-plugin-prettier": "^3.1.2",
     "prettier": "1.16.4",
     "rimraf": "^2.6.1",
-    "typescript": "~3.7.0"
+    "typescript": "^3.7.0"
   },
   "sideEffects": [
     "style/*.css"

@@ -13,3 +13,4 @@ yarn.lock
 *.egg-info/
 .ipynb_checkpoints
 jupyterlab_ros_server/**/__pycache__
+build-lib/

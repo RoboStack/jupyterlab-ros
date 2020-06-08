@@ -1,7 +1,10 @@
 import { ReactWidget } from '@jupyterlab/apputils';
 import React from 'react';
 
-import Zethus from './zethus/zethus';
+// @ts-ignore
+import Zethus from '../../thirdparty/zethus/build-lib/zethus.umd.js';
+// @ts-ignore
+import Panels from '../../thirdparty/zethus/build-lib/panels.umd.js';
 
 /**
  * A SettingsWidget Lumino Widget that wraps a SettingsComponent.

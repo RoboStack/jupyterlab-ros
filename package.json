@@ -42,9 +42,7 @@
     "@jupyterlab/settingregistry": "^2.1.0",
     "@jupyterlab/statusbar": "^2.1.1",
     "@lumino/widgets": "^1.12.2",
-    "roslib": "github:RoboStack/roslibjs#remove_ws",
-
-    "amphion": "^0.1.20",
+    "amphion": "^0.1.23",
     "brace": "^0.11.1",
     "classnames": "^2.2.6",
     "d3": "^5.15.0",
@@ -61,18 +59,21 @@
     "react-select": "^3.0.4",
     "react-tagsinput": "^3.19.0",
     "react-virtualized": "^9.21.2",
+    "roslib": "github:RoboStack/roslibjs#remove_ws",
     "shortid": "^2.2.14",
     "stats-js": "^1.0.0",
     "store": "^2.0.12",
     "styled-components": "^4.3.2",
-    "three": "^0.109.0"
+    "three": "^0.117.0"
   },
   "resolutions": {
-    "roslib": "git+https://github.com/RoboStack/roslibjs#remove_ws"
+    "roslib": "github:RoboStack/roslibjs#remove_ws",
+    "three": "^0.117.0"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^2.25.0",
     "@typescript-eslint/parser": "^2.25.0",
+    "@types/ws": "^6.0.1",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.10.1",
     "eslint-plugin-prettier": "^3.1.2",

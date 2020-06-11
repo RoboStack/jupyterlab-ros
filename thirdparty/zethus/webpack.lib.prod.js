@@ -87,6 +87,7 @@ module.exports = {
     filename: '[name].umd.js',
     libraryTarget: 'umd',
     path: path.resolve(__dirname, 'build-lib'),
+    publicPath: '/jupyterlab-ros/zethus'
   },
   externals: {
     roslib: 'roslib',

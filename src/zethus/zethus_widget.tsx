@@ -1,26 +1,14 @@
-import { ReactWidget } from '@jupyterlab/apputils';
-import React from 'react';
+import { IFrame } from '@jupyterlab/apputils';
+import { PageConfig } from '@jupyterlab/coreutils';
 
-// @ts-ignore
-import Zethus from '../../thirdparty/zethus/build-lib/zethus.umd.js';
-// @ts-ignore
-import Panels from '../../thirdparty/zethus/build-lib/panels.umd.js';
-
-/**
- * A SettingsWidget Lumino Widget that wraps a SettingsComponent.
- */
-export class ZethusWidget extends ReactWidget {
-  /**
-   * Constructs a new Settings.
-   */
+export class ZethusWidget extends IFrame {
   constructor() {
     super();
-    this.addClass('jp-ReactWidget');
-  }
-
-  render(): JSX.Element {
-    return (
-      <Zethus/>
-    );
+    const baseUrl = PageConfig.getBaseUrl();
+    this.url = baseUrl + 'jupyterlab-ros/zethus/index.html';
+    this.id = 'Zethus';
+    this.title.label = 'Zethus';
+    this.title.closable = true;
+    this.node.style.overflowY = 'auto';
   }
 }

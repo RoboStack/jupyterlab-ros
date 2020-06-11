@@ -16,8 +16,7 @@ export const rosZethus: JupyterFrontEndPlugin<void> = {
       label: 'Open Zethus',
       caption: 'Open a new Zethus view.',
       execute: (args: any) => {
-        const widget = new MainAreaWidget<ZethusWidget>({ content: new ZethusWidget() });
-        widget.title.label = 'Zethus';
+        const widget =  new ZethusWidget();
         app.shell.add(widget, 'main');
       }
     });

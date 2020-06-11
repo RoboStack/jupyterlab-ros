@@ -31,6 +31,7 @@
 # POSSIBILITY OF SUCH DAMAGE.
 
 import rospy
+import rosnode
 import uuid
 
 from rosauth.srv import Authentication
@@ -48,6 +49,7 @@ from tornado.gen import coroutine, BadYieldError
 
 from rosbridge_library.rosbridge_protocol import RosbridgeProtocol
 from rosbridge_library.util import json, bson
+from rosbridge_server import ClientManager
 
 
 def _log_exception():
@@ -106,10 +108,13 @@ class LabRosbridgeWebSocket(WebSocketHandler):
             cls.clients_connected += 1
             self.client_id = uuid.uuid4()
             self.io_loop = IOLoop.current()
+
             if cls.client_manager:
                 cls.client_manager.add_client(self.client_id, self.request.remote_ip)
+
         except Exception as exc:
             rospy.logerr("Unable to accept incoming connection.  Reason: %s", str(exc))
+        
         rospy.loginfo("Client connected.  %d clients total.", cls.clients_connected)
         if cls.authenticate:
             rospy.loginfo("Awaiting proper authentication...")
@@ -148,12 +153,22 @@ class LabRosbridgeWebSocket(WebSocketHandler):
 
     @log_exceptions
     def on_close(self):
-        cls = self.__class__
-        cls.clients_connected -= 1
-        self.protocol.finish()
-        if cls.client_manager:
-            cls.client_manager.remove_client(self.client_id, self.request.remote_ip)
-        rospy.loginfo("Client disconnected. %d clients total.", cls.clients_connected)
+        try:
+            cls = self.__class__
+            cls.clients_connected -= 1
+            self.protocol.finish()
+
+            if cls.client_manager:
+                cls.client_manager.remove_client(self.client_id, self.request.remote_ip)
+            
+            rospy.loginfo("Client disconnected. %d clients total.", cls.clients_connected)
+        except:
+            rospy.logerr("Master disconnected")
+            if cls.client_manager:
+                rospy.logerr("client manager")
+                cls.client_manager.remove_client(self.client_id, self.request.remote_ip)
+            
+            rospy.logerr("Client disconnected. %d clients total.", cls.clients_connected)
 
     @log_exceptions
     def send_message(self, message):
@@ -200,7 +215,21 @@ class LabRosbridgeWebSocket(WebSocketHandler):
 
     @log_exceptions
     def check_origin(self, origin):
-        return True
+        try:
+            rospy.get_master().getPid()
+            
+            if not '/rosbridge_websocket' in rosnode.get_node_names() :
+                rospy.loginfo("[INFO]: Starting rosbridge")
+                rospy.init_node("rosbridge_websocket", disable_signals=True)
+                self.__class__.client_manager = ClientManager()
+                return True
+            
+            else :
+                return True
+
+        except:
+            rospy.logerr("Master not running check origin")
+            return False
 
     @log_exceptions
     def get_compression_options(self):

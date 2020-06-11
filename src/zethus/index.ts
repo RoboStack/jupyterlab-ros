@@ -22,6 +22,6 @@ export const rosZethus: JupyterFrontEndPlugin<void> = {
       }
     });
 
-    palette.addItem({ command, category: "ROS" });
+    palette.addItem({ command, category: 'ROS' });
   }
 };

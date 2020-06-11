@@ -38,7 +38,7 @@ class Status extends React.Component<Props, State> {
     const requestUrl = URLExt.join(
       settings.baseUrl,
       'jupyterlab-ros',
-      'config'
+      'master'
     );
 
     ServerConnection.makeRequest(requestUrl, {}, settings)
@@ -70,7 +70,7 @@ class Status extends React.Component<Props, State> {
       const requestUrl = URLExt.join(
         settings.baseUrl,
         'jupyterlab-ros',
-        'config'
+        'master'
       );
       const req = {
         body: JSON.stringify({ cmd }),

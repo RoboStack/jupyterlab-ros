@@ -27,6 +27,9 @@ class Zethus extends React.Component {
     this.toggleVisibility = this.toggleVisibility.bind(this);
     this.updateConfiguration = this.updateConfiguration.bind(this);
     this.resetReload = this.resetReload.bind(this);
+
+    //console.log(props.match.path)
+    //console.log(props.match.url)
   }
 
   updateConfiguration(configuration, replaceOnExisting) {

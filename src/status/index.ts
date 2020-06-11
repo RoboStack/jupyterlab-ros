@@ -19,4 +19,4 @@ export const rosStatus: JupyterFrontEndPlugin<void> = {
       isActive: () => true
     });
   }
-  };
+};

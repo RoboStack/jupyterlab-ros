@@ -1,6 +1,6 @@
 import os
 from notebook.utils import url_path_join
-from tornado.web import StaticFileHandler
+#from tornado.web import StaticFileHandler
 
 from .ros_master import ROSMaster
 from .websocket_handler import LabRosbridgeWebSocket

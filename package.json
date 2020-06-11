@@ -18,8 +18,8 @@
     "style/**/*.{css,eot,gif,html,jpg,json,png,svg,woff2,ttf}",
     "schema/**/*.json"
   ],
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
+  "main": "lib/src/index.js",
+  "types": "lib/src/index.d.ts",
   "style": "style/index.css",
   "repository": {
     "type": "git",
@@ -42,33 +42,10 @@
     "@jupyterlab/settingregistry": "^2.1.0",
     "@jupyterlab/statusbar": "^2.1.1",
     "@lumino/widgets": "^1.12.2",
-    "amphion": "^0.1.23",
-    "brace": "^0.11.1",
-    "classnames": "^2.2.6",
-    "d3": "^5.15.0",
-    "dagre-d3": "^0.6.3",
-    "is-valid-http-url": "^1.0.3",
-    "jsoneditor-react": "^2.0.0",
-    "lodash": "^4.17.13",
-    "mousetrap": "^1.6.3",
-    "prop-types": "^15.7.2",
-    "react-graceful-unmount": "^1.0.7",
-    "react-markdown": "^4.0.6",
-    "react-rnd": "^10.0.0",
-    "react-router-dom": "^5.0.1",
-    "react-select": "^3.0.4",
-    "react-tagsinput": "^3.19.0",
-    "react-virtualized": "^9.21.2",
-    "roslib": "github:RoboStack/roslibjs#remove_ws",
-    "shortid": "^2.2.14",
-    "stats-js": "^1.0.0",
-    "store": "^2.0.12",
-    "styled-components": "^4.3.2",
-    "three": "^0.117.0"
+    "roslib": "github:RoboStack/roslibjs#remove_ws"
   },
   "resolutions": {
-    "roslib": "github:RoboStack/roslibjs#remove_ws",
-    "three": "^0.117.0"
+    "roslib": "github:RoboStack/roslibjs#remove_ws"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^2.25.0",

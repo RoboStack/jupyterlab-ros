@@ -4,7 +4,7 @@ import { ICommandPalette, MainAreaWidget } from '@jupyterlab/apputils';
 import { ZethusWidget } from './zethus_widget';
 
 export const rosZethus: JupyterFrontEndPlugin<void> = {
-  id: "jupyterlab-ros/settings",
+  id: "jupyterlab-ros/zethus",
   autoStart: true,
   requires: [ICommandPalette],
   activate: (app: JupyterFrontEnd, palette: ICommandPalette) => {
@@ -22,6 +22,6 @@ export const rosZethus: JupyterFrontEndPlugin<void> = {
       }
     });
 
-    palette.addItem({ command, category: "ROS" });
+    palette.addItem({ command, category: 'ROS' });
   }
 };

@@ -20,6 +20,10 @@ export const rosMenu: JupyterFrontEndPlugin<void> = {
     menu.addItem({ command: 'jupyterlab-ros/zethus:open' });
     menu.addItem({ type: 'separator' });
 
+    // Open Logger
+    menu.addItem({ command: 'jupyterlab-ros/logConsole:open' });
+    menu.addItem({ type: 'separator' });
+
     // Open Settings
     menu.addItem({ command: 'jupyterlab-ros/settings:open' });
   }

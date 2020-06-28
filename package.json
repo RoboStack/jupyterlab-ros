@@ -18,7 +18,7 @@
     "style/**/*.{css,eot,gif,html,jpg,json,png,svg,woff2,ttf}",
     "schema/**/*.json"
   ],
-  "main": "lib/src/index.js",
+  "main": "lib/index.js",
   "types": "lib/src/index.d.ts",
   "style": "style/index.css",
   "repository": {
@@ -36,21 +36,19 @@
   "dependencies": {
     "@jupyterlab/application": "^2.1.0",
     "@jupyterlab/apputils": "^2.1.1",
+    "@jupyterlab/logconsole": "^2.1.1",
     "@jupyterlab/mainmenu": "^2.1.1",
     "@jupyterlab/notebook": "^2.1.2",
     "@jupyterlab/settingeditor": "^2.1.1",
     "@jupyterlab/settingregistry": "^2.1.0",
     "@jupyterlab/statusbar": "^2.1.1",
     "@lumino/widgets": "^1.12.2",
-    "roslib": "github:RoboStack/roslibjs#remove_ws"
-  },
-  "resolutions": {
-    "roslib": "github:RoboStack/roslibjs#remove_ws"
+    "roslib": "npm:@robostack/roslib@^1.1.0"
   },
   "devDependencies": {
+    "@types/ws": "^6.0.1",
     "@typescript-eslint/eslint-plugin": "^2.25.0",
     "@typescript-eslint/parser": "^2.25.0",
-    "@types/ws": "^6.0.1",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.10.1",
     "eslint-plugin-prettier": "^3.1.2",

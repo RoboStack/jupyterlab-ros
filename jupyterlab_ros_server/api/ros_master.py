@@ -1,4 +1,5 @@
 import json
+
 from tornado.web import authenticated
 from notebook.base.handlers import APIHandler
 
@@ -24,6 +25,7 @@ class ROSMaster(APIHandler):
             command = ['/home/carlos/miniconda3/envs/lab/bin/roslaunch', 'jupyterlab_ros_server/roslab.launch']
             cls.cmd = Command(command)
             print("initialized")
+            
             cls.cmd.start()
             cls.status = True
 

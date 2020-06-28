@@ -1,7 +1,7 @@
 import { JupyterFrontEnd, JupyterFrontEndPlugin } from '@jupyterlab/application';
 import { ICommandPalette } from '@jupyterlab/apputils';
 
-//import { ZethusWidget } from './zethus_widget';
+import { ZethusWidget } from './zethus_widget';
 
 export const rosZethus: JupyterFrontEndPlugin<void> = {
   id: "jupyterlab-ros/zethus",
@@ -16,8 +16,8 @@ export const rosZethus: JupyterFrontEndPlugin<void> = {
       label: 'Open Zethus',
       caption: 'Open a new Zethus view.',
       execute: (args: any) => {
-        //const widget = new ZethusWidget();
-        //app.shell.add(widget, 'main');
+        const widget = new ZethusWidget();
+        app.shell.add(widget, 'main');
       }
     });
 

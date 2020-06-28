@@ -4,6 +4,7 @@
 lib/
 *.tsbuildinfo
 jupyterlab_ros_server.egg-info/
+jupyterlab_ros_server/api/zethus/*
 
 # Libraries
 node_modules/
@@ -11,7 +12,6 @@ node_modules/
 # Others
 .github/
 .vscode/
-yarn.lock
 *.egg-info/
 .ipynb_checkpoints
 jupyterlab_ros_server/**/__pycache__

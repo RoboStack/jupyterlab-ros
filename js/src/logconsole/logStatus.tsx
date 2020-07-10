@@ -5,28 +5,28 @@ import ROSLIB from 'roslib';
 
 export class LogStatus extends ReactWidget {
 
-  private _connected: boolean = false;
-  private _ros: ROSLIB.Ros = null;
+  private connected: boolean = false;
+  private ros: ROSLIB.Ros = null;
   
   constructor(ros: ROSLIB.Ros) {
     super();
     this.addClass('jp-LogConsole-toolbarLogLevel');
-    this._ros = ros;
+    this.ros = ros;
   }
 
-  private connect = (): void => this._ros?.connect("ws://"+window.location.host+"/jupyterlab-ros/bridge");
-  private disconnect = (): void => this._ros?.close();
+  private connect = (): void => this.ros?.connect("ws://"+window.location.host+"/jupyterlab-ros/bridge");
+  private disconnect = (): void => this.ros?.close();
 
   public setConnected = (connected: boolean) => {
-    this._connected = connected;
+    this.connected = connected;
     this.update();
   }
 
   render(): JSX.Element {
     return (
-      <a href="#" style={{ width: "20px", height: "24px" }}>
+      <a href="#" className="main">
         {
-          this._connected ?
+          this.connected ?
           <div onClick={this.disconnect} className="ok"/> :
           <div onClick={this.connect} className="ko"/>
         }

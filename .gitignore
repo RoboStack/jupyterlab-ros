@@ -1,10 +1,10 @@
 *.bundle.*
 
 # Build
-lib/
+build
 *.tsbuildinfo
 jupyterlab_ros_server.egg-info/
-jupyterlab_ros_server/api/zethus/*
+jupyterlab_ros_server/public/*
 
 # Libraries
 node_modules/
@@ -12,6 +12,7 @@ node_modules/
 # Others
 .github/
 .vscode/
+.DS_Store
 *.egg-info/
 .ipynb_checkpoints
 jupyterlab_ros_server/**/__pycache__

@@ -14,7 +14,7 @@
     "noUnusedLocals": false,
     "preserveWatchOutput": true,
     "resolveJsonModule": true,
-    "outDir": "lib",
+    "outDir": "build",
     "rootDir": "src",
     "strict": true,
     "strictNullChecks": false,

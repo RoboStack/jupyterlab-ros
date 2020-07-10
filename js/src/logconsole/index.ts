@@ -4,7 +4,7 @@ import { addIcon, clearIcon } from '@jupyterlab/ui-components';
 
 import { LogConsoleWidget } from './logConsoleWidget';
 
-export const rosLogConsole: JupyterFrontEndPlugin<void> = {
+export const logConsole: JupyterFrontEndPlugin<void> = {
   id: 'jupyterlab-ros/logConsole',
   autoStart: true,
   requires: [ICommandPalette, ILayoutRestorer],

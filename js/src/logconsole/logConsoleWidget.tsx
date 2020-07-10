@@ -1,7 +1,6 @@
 import { JupyterFrontEnd } from '@jupyterlab/application';
 import { MainAreaWidget, CommandToolbarButton, showDialog, Dialog } from '@jupyterlab/apputils';
 import { listIcon, } from '@jupyterlab/ui-components';
-import React from 'react';
 
 import ROSLIB from 'roslib';
 
@@ -15,6 +14,7 @@ export class LogConsoleWidget extends MainAreaWidget<LogConsolePanel> {
   
   private logs: RosLog[];
   private ros: ROSLIB.Ros;
+  private listener: ROSLIB.Topic;
 
   private status: LogStatus;
   private levelSwitcher: LogLevelSwitcher;
@@ -32,6 +32,13 @@ export class LogConsoleWidget extends MainAreaWidget<LogConsolePanel> {
     this.ros.on('connection', this.onConection);
     this.ros.on('error', this.onError);
     this.ros.on('close', this.onClose);
+    this.listener = new ROSLIB.Topic({
+      ros: this.ros,
+      name: '/rosout',
+      messageType: 'rosgraph_msgs/Log'
+    });
+    
+    this.listener.subscribe(this.onMessage);
 
     this.status = new LogStatus(this.ros);
     this.levelSwitcher = new LogLevelSwitcher(this.content);
@@ -51,41 +58,37 @@ export class LogConsoleWidget extends MainAreaWidget<LogConsolePanel> {
   }
 
   dispose(): void {
-    console.log("disposed");
+    this.listener?.unsubscribe();
+    this.listener = null;
+    this.ros?.close();
     this.ros = null;
     super.dispose();
   }
 
   private onConection = (): void => {
-    console.log('Connected to websocket server.');
     this.status.setConnected(true);
 
     this.ros.getNodes((nodes) =>{
       this.nodeSwicher.refreshNodes(nodes);
-      
-      const listener = new ROSLIB.Topic({
-        ros: this.ros,
-        name: '/rosout',
-        messageType: 'rosgraph_msgs/Log'
-      });
-  
-      listener.subscribe(this.onMessage);
     });
   }
 
   private onError = (error): void => {
     this.status.setConnected(false);
 
-    showDialog({
-      title: "Warning",
-      body: <span className="jp-About-body">Web bridge server is not running!</span>,
+    /*showDialog({
+      title: "Log Console: WARNING",
+      body: <span className="jp-About-body">Master not running</span>,
       buttons: [Dialog.okButton()]
-    }).catch( e => console.log(e) );
+    }).catch( e => console.log(e) );*/
   }
 
   private onClose = (): void => {
-    console.log('Connection close with websocket server.');
     this.status.setConnected(false);
+    
+    setTimeout(() => {
+      this.ros?.connect("ws://"+window.location.host+"/jupyterlab-ros/bridge");
+    }, 5000);
   }
 
   private onMessage = (msg): void => {

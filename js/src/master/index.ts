@@ -1,10 +1,10 @@
 import { JupyterFrontEnd, JupyterFrontEndPlugin } from '@jupyterlab/application';
 import { IStatusBar } from '@jupyterlab/statusbar';
 
-import { ROSStatusBridge } from './status';
+import StatusMaster from './status';
 
-export const rosStatus: JupyterFrontEndPlugin<void> = {
-  id: 'jupyterlab-ros/status',
+export const master: JupyterFrontEndPlugin<void> = {
+  id: 'jupyterlab-ros/master',
   autoStart: true,
   requires: [IStatusBar],
   optional: [],
@@ -12,8 +12,8 @@ export const rosStatus: JupyterFrontEndPlugin<void> = {
     
     if (!statusBar) { console.log("No status bar!"); return; }
     
-    statusBar.registerStatusItem('jupyterlab-ros/status:web-bridge', {
-      item: new ROSStatusBridge(),
+    statusBar.registerStatusItem('jupyterlab-ros/master:status', {
+      item: new StatusMaster(),
       align: 'left',
       rank: 4,
       isActive: () => true

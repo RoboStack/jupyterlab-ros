@@ -16,7 +16,7 @@ const DEFAULT_SANDBOX: TSandboxOptions = {
   'allow-scripts': true,
 };
 
-export class ZethusWidget extends IFrame {
+export default class ZethusWidget extends IFrame {
   constructor() {
     super();
     const baseUrl = PageConfig.getBaseUrl();
@@ -27,5 +27,9 @@ export class ZethusWidget extends IFrame {
     this.node.style.overflowY = 'auto';
 
     this.sandbox = ["allow-forms", "allow-modals", "allow-orientation-lock", "allow-pointer-lock", "allow-popups", "allow-presentation", "allow-same-origin", "allow-scripts", "allow-top-navigation", "allow-top-navigation-by-user-activation"];
+  }
+
+  onCloseRequest = () => {
+    this.dispose();
   }
 }

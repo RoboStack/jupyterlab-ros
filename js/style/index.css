@@ -1,0 +1,32 @@
+.main {
+  display: flex;
+  flex-direction: row;
+}
+
+.ok {
+  width: 14px;
+  height: 14px;
+  margin: 5px;
+  background: green;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.ko {
+  width: 14px;
+  height: 14px;
+  margin: 5px;
+  background: red;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.ros-logo {
+  width: 54px;
+  height: 14px;
+  margin: 5px;
+  margin-right: 0px;
+  background: url(img/ros.png) no-repeat center;
+  background-size: 94%;
+  display: inline-block;
+}

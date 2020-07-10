@@ -2,9 +2,9 @@ import { JupyterFrontEnd, JupyterFrontEndPlugin } from '@jupyterlab/application'
 import { ISettingRegistry } from '@jupyterlab/settingregistry';
 import { ICommandPalette, MainAreaWidget } from '@jupyterlab/apputils';
 
-import { SettingsWidget } from './settings';
+import SettingsWidget from './settings';
 
-export const rosSettings: JupyterFrontEndPlugin<void> = {
+export const settings: JupyterFrontEndPlugin<void> = {
   id: 'jupyterlab-ros/settings',
   autoStart: true,
   requires: [ICommandPalette, ISettingRegistry],

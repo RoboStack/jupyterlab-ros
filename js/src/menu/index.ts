@@ -2,7 +2,7 @@ import { JupyterFrontEnd, JupyterFrontEndPlugin } from '@jupyterlab/application'
 import { IMainMenu } from '@jupyterlab/mainmenu';
 import { Menu } from '@lumino/widgets';
 
-export const rosMenu: JupyterFrontEndPlugin<void> = {
+export const menu: JupyterFrontEndPlugin<void> = {
   id: 'jupyterlab-ros/menu',
   autoStart: true,
   requires: [IMainMenu],

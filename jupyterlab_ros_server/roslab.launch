@@ -1,7 +1,0 @@
-<launch>
-  <!-- Output: screen, log -->
-  <arg name="output" default="screen" />
-
-  <node name="rosapi" pkg="rosapi" type="rosapi_node" output="$(arg output)">
-  </node>
-</launch>

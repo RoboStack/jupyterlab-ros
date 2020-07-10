@@ -156,7 +156,7 @@ const SettingsComponent: React.FC<Props> = props => {
 /**
  * A SettingsWidget Lumino Widget that wraps a SettingsComponent.
  */
-export class SettingsWidget extends ReactWidget {
+export default class SettingsWidget extends ReactWidget {
   private settings: ISettingRegistry;
   private idSettings: string;
   /**

@@ -1,3 +1,5 @@
+import { defaultSanitizer } from '@jupyterlab/apputils';
+import { renderText } from '@jupyterlab/rendermime';
 import React, { useState } from 'react';
 
 export type RosLog = {
@@ -47,6 +49,8 @@ export const Log: React.FC<Props> = (props): JSX.Element => {
   }
 
   const title = log.date.toLocaleDateString()+" "+log.date.toLocaleTimeString()+"; "+level+" level";
+  const msg = document.createElement('div');
+  renderText({host: msg, sanitizer: defaultSanitizer, source: log.msg });
 
   return (
     <a href="#" onClick={open} className="lm-Widget p-Widget lm-Panel p-Panel jp-OutputArea-child">
@@ -67,7 +71,7 @@ export const Log: React.FC<Props> = (props): JSX.Element => {
           </pre>
           <pre>
             { log.msg.length < 50 ?
-              <span>{log.msg}</span>
+              <div dangerouslySetInnerHTML={{ __html: msg.innerHTML }}></div>
               :
               <span>{log.msg.substr(0, 50)}...</span>
             }
@@ -95,7 +99,7 @@ export const Log: React.FC<Props> = (props): JSX.Element => {
               </tr>
               <tr>
                 <th>Message:</th>
-                <td><pre>{log.msg}</pre></td>
+                <td><div dangerouslySetInnerHTML={{ __html: msg.innerHTML }}></div></td>
               </tr>
             </tbody>
           </table>

@@ -8,7 +8,7 @@ from tornado.ioloop import IOLoop
 from tornado.gen import coroutine
 from tornado.websocket import WebSocketHandler
 
-from ..lib.constants import ROOT
+from ..lib import ROOT
 
 class Master(WebSocketHandler):
     status = False

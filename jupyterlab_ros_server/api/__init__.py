@@ -9,7 +9,7 @@ from rosbridge_library.capabilities.advertise_service import AdvertiseService
 from rosbridge_library.capabilities.unadvertise_service import UnadvertiseService
 from rosbridge_library.capabilities.call_service import CallService
 
-from ..lib.constants import PUBLIC
+from ..lib import PUBLIC
 from .bridge import Bridge
 from .launch import Launch
 from .master import Master

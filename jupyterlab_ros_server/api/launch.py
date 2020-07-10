@@ -4,7 +4,7 @@ import json
 from tornado.ioloop import IOLoop
 from tornado.websocket import WebSocketHandler
 
-from ..lib.process import Process
+from ..lib import Process
 
 class Launch(WebSocketHandler):
     master = False

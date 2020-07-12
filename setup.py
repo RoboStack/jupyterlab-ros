@@ -8,32 +8,6 @@ import os
 
 from jupyterlab_ros_server._version import __version__
 ROOT_PATH = os.path.dirname(os.path.abspath(__file__))
-DEVELOP = False
-
-print("Version: ", __version__)
-print("DEVELOP: ", DEVELOP)
-print("Path: ", ROOT_PATH)
-
-def data_files():
-    if not DEVELOP :
-        return [
-            (
-                'etc/jupyter/jupyter_notebook_config.d',
-                ['jupyterlab_ros_server/jupyterlab_ros_server.json']
-            ),
-            (
-                'share/jupyter/lab/extensions',
-                ['js/jupyterlab-ros-0.1.0.tgz']
-            )
-        ]
-    
-    else :
-        return [
-            (
-                'etc/jupyter/jupyter_notebook_config.d',
-                ['jupyterlab_ros_server/jupyterlab_ros_server.json']
-            )
-        ]
 
 class Develop(develop):
     def run(self):
@@ -175,7 +149,16 @@ setup_args = {
     'url': "https://github.com/RoboStack/jupyterlab-ros",
     'include_package_data': True,
     'packages': find_packages(),
-    'data_files': data_files(),
+    'data_files': [
+        (
+            'etc/jupyter/jupyter_notebook_config.d',
+            ['jupyterlab_ros_server/jupyterlab_ros_server.json']
+        ),
+        (
+            'share/jupyter/lab/extensions',
+            ['js/jupyterlab-ros-0.1.0.tgz']
+        )
+    ],
     'cmdclass': {
         'develop': Develop,
         'install': Install,

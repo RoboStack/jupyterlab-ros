@@ -1,11 +1,12 @@
 # jupyterlab-ros
 
-A JupyterLab extension.
-
+A JupyterLab extension for ROS.
 
 ## Requirements
 
+* python >= 3.6
 * JupyterLab >= 2.0
+* npm
 * ROS
     * ros-melodic-ros-core
     * ros-melodic-rospy
@@ -16,12 +17,9 @@ A JupyterLab extension.
 ## Install
 
 ```bash
-conda config --add channels conda-forge
-conda create -n lab -c conda-forge python=3.6 nodejs=12 jupyterlab
-conda activate lab
-conda install -c robostack ros-melodic-ros-core ros-melodic-rospy ros-melodic-rosbridge-suite ros-melodic-rosbag ros-melodic-rosauth
+conda create -n test -c conda-forge -c robostack python=3.6 nodejs=12 jupyterlab ros-melodic-ros-core ros-melodic-rospy ros-melodic-rosbridge-suite ros-melodic-rosbag ros-melodic-rosauth
 
-pip install -e .
+pip install .
 ```
 
 ## Contributing
@@ -37,7 +35,7 @@ The `jlpm` command is JupyterLab's pinned version of
 # Move to jupyterlab-ros directory
 
 # Install server extension in editable mode
-JUPYTERLAB-ROS-DEV=1 pip install -e .
+pip install -e .
 # Register server extension
 jupyter-serverextension enable --py jupyterlab_ros_server
 # or if using conda env
@@ -57,15 +55,14 @@ You can watch the source directory and run JupyterLab in watch mode to watch for
 # Watch the source directory in another terminal tab
 jlpm watch
 # Run jupyterlab in watch mode in one terminal tab
-jupyter-lab --watch
-jupyter-lab --allow-root  --no-browser --ip=0.0.0.0 --port=8888 --watch
+jupyter-lab --no-browser --ip=192.168.64.5 --watch
 ```
 
 ### Uninstall
 
 ```bash
 # Uninstalling the frontend extension
-jupyter-labextension uninstall jupyterlab-ros
+jupyter-labextension unlink jupyterlab-ros
 
 # Uninstalling the server extension
 jupyter-serverextension disable jupyterlab_ros_server
@@ -74,8 +71,4 @@ pip uninstall jupyterlab_ros_server
 # Cleaning jupyterlab
 jupyter lab clean
 jupyter lab build
-
-# If you only have jupyterlab_ros_server extension then remove the following file
-rm /home/carlos/miniconda3/envs/jupyterlab-ros/etc/jupyter/jupyter_notebook_config.json
-rm /home/carlos/miniconda3/envs/jupyterlab-ros/share/jupyter/lab/staging/
 ```

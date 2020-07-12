@@ -31,7 +31,7 @@
 # POSSIBILITY OF SUCH DAMAGE.
 
 import rospy
-import rosnode
+import rosgraph
 import uuid
 import time
 
@@ -93,6 +93,7 @@ class Bridge(WebSocketHandler):
 
     @log_exceptions
     def open(self):
+        print("[BRIDGE]: open")
         rospy.logwarn_once('The Tornado Rosbridge WebSocket implementation is deprecated.'
                            ' See rosbridge_server.autobahn_websocket'
                            ' and rosbridge_websocket.py')
@@ -128,6 +129,7 @@ class Bridge(WebSocketHandler):
 
     @log_exceptions
     def on_message(self, message):
+        print("[BRIDGE]: message, ", message)
         cls = self.__class__
         # check if we need to authenticate
         if cls.authenticate and not self.authenticated:
@@ -160,6 +162,7 @@ class Bridge(WebSocketHandler):
 
     @log_exceptions
     def on_close(self):
+        print("[BRIDGE]: close")
         try:
             cls = self.__class__
             cls.clients.pop(self.client_id)
@@ -222,6 +225,7 @@ class Bridge(WebSocketHandler):
 
     @log_exceptions
     def check_origin(self, origin):
+        print("[BRIDGE]: check origin")
         cls = self.__class__
         return cls.master
 
@@ -238,13 +242,22 @@ class Bridge(WebSocketHandler):
 
     @classmethod
     def start(cls):
-        rospy.loginfo("[INFO]: Starting rosbridge")
-        time.sleep(5)
+        print("[BRIDGE]: starting")
 
         if cls.first :
-            rospy.init_node("rosbridge_websocket", disable_signals=True)
-            cls.client_manager = ClientManager()
-            cls.first = False
+            cont = 0
+            while cont < 30 and (not rosgraph.is_master_online()) :
+                time.sleep(0.1)
+                cont += 0.1
+            
+            if rosgraph.is_master_online() :
+                rospy.init_node("rosbridge_websocket", disable_signals=True)
+                cls.client_manager = ClientManager()
+                cls.first = False
+                print("[BRIDGE]: running")
+            
+            else :
+                print("[BRIDGE]: master not running")
         
         cls.master = True
 
@@ -252,7 +265,7 @@ class Bridge(WebSocketHandler):
     def stop(cls):
         cls.master = False
         cls.client_id_seed = 0
-        rospy.loginfo("[INFO]: Stoping rosbridge")
+        print("[BRIDGE]: stopping")
 
         for loop, close in cls.clients.values() :
             loop.add_callback(close)

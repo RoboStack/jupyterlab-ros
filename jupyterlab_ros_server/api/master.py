@@ -20,6 +20,7 @@ class Master(WebSocketHandler):
     launch_master_changes = None
 
     def open(self):
+        print("[MASTER]: open")
         cls = self.__class__
         self.id = str(uuid.uuid4())
         cls.clients[self.id] = (IOLoop.current(), self.write_message)
@@ -27,24 +28,29 @@ class Master(WebSocketHandler):
         self.write_message( json.dumps({ 'status': cls.status }) )
 
     def on_message(self, message):
+        print("[MASTER]: message, ", message)
         cls = self.__class__
         msg = json.loads(message)
 
         if msg['cmd'] == "start" and cls.proc == None :
-            cls.thread = Thread(target=cls.run, args=(['roslaunch', ROOT+'/lib/roslab.launch'],))
+            print("[MASTER]: starting")
+            cls.thread = Thread(target=cls.run, args=(['roslaunch', ROOT+'/static/roslab.launch'],))
             cls.thread.daemon = True
             cls.thread.start()
             
         elif msg['cmd'] == "stop" and cls.proc != None:
+            print("[MASTER]: stopping")
             if cls.proc.poll() == None :
                 cls.proc.terminate()
             
 
     def on_close(self):
+        print("[MASTER]: close")
         cls = self.__class__
         cls.clients.pop(self.id)
     
     def check_origin(self, origin):
+        print("[MASTER]: check origin")
         return True
     
     @classmethod
@@ -59,8 +65,12 @@ class Master(WebSocketHandler):
         cls.bridge_master_changes(cls.status)
         cls.launch_master_changes(cls.status)
 
+        print("[MASTER]: running")
+
         out, err = cls.proc.communicate()
         cls.proc = None
+
+        print("[MASTER]: stopped")
 
         cls.status = False
         if err :

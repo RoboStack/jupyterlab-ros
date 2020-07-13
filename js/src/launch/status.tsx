@@ -25,19 +25,18 @@ export default class StatusLaunch extends ReactWidget {
   onOpen = (event) => { } // console.log(event); }
   onError = (event) => { console.error(event); }
   onClose = (event) => { } // console.log(event); }
-  onMessage = async (message) => {
+  onMessage = (message) => {
     const msg = JSON.parse(message.data);
-    let body: HTMLDivElement = null;
+    const body = document.createElement('div');
     
     switch (msg.code) {
       case 0: this.paths = msg.paths; break;
       case 1: this.paths.push(msg.path); break;
       case 2:
-        body = document.createElement('div');
-        await renderText({host: body, sanitizer: defaultSanitizer, source: msg.msg });
+        renderText({host: body, sanitizer: defaultSanitizer, source: msg.msg });
         showDialog({
           title: "WARNING: " + msg.path,
-          body: <div className="jp-About-body" dangerouslySetInnerHTML={{ __html: body.innerHTML }}></div>,
+          body: <div className=".jp-RenderedText" dangerouslySetInnerHTML={{ __html: body.innerHTML }}></div>,
           buttons: [ Dialog.okButton() ]
         });
         break;
@@ -46,12 +45,10 @@ export default class StatusLaunch extends ReactWidget {
         var index = this.paths.indexOf(msg.path);
         if (index !== -1) this.paths.splice(index, 1);
 
-        body = document.createElement('div');
-        await renderText({host: body, sanitizer: defaultSanitizer, source: msg.msg });
-
+        renderText({host: body, sanitizer: defaultSanitizer, source: msg.msg });
         showDialog({
           title: (msg.code == 3 ? "FINISHED: " : "ERROR: " ) + msg.path,
-          body: <div className="jp-About-body" dangerouslySetInnerHTML={{ __html: body.innerHTML }}></div>,
+          body: <div className=".jp-RenderedText" dangerouslySetInnerHTML={{ __html: body.innerHTML }}></div>,
           buttons: [ Dialog.okButton() ]
         });
         break;
@@ -69,7 +66,7 @@ export default class StatusLaunch extends ReactWidget {
   toggle = (path) => {
     showDialog({
       title: path,
-      body: <pre className="jp-About-body">This execution will be stoped. Are you sure?</pre>,
+      body: <pre className=".jp-RenderedText">This execution will be stoped. Are you sure?</pre>,
       buttons: [ Dialog.okButton(), Dialog.cancelButton() ]
     }).then(res => {
       if (res.button.label != "OK") return;

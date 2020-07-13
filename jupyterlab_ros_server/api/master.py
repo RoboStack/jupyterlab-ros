@@ -1,3 +1,4 @@
+import re
 import uuid
 import json
 import asyncio
@@ -28,7 +29,7 @@ class Master(WebSocketHandler):
         self.write_message( json.dumps({ 'status': cls.status }) )
 
     def on_message(self, message):
-        print("[MASTER]: message, ", message)
+        #print("[MASTER]: message, ", message)
         cls = self.__class__
         msg = json.loads(message)
 
@@ -56,7 +57,7 @@ class Master(WebSocketHandler):
     @classmethod
     def run(cls, command):
         asyncio.set_event_loop(asyncio.new_event_loop())
-        cls.proc = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True)
+        cls.proc = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE,  universal_newlines=True)
         cls.status = True
 
         for loop, write in cls.clients.values() :
@@ -71,17 +72,18 @@ class Master(WebSocketHandler):
         cls.proc = None
 
         print("[MASTER]: stopped")
+        msg = ''.join( re.split(r'\x1b]2;.*?\x07', (err if err else out))  )
 
         cls.status = False
         if err :
             for loop, write in cls.clients.values() :
-                loop.add_callback(write, json.dumps({ 'status': cls.status, 'error': err }) )
+                loop.add_callback(write, json.dumps({ 'status': cls.status, 'error': msg }) )
                 cls.bridge_master_changes(cls.status)
                 cls.launch_master_changes(cls.status)
             
         else :
             for loop, write in cls.clients.values() :
-                loop.add_callback(write, json.dumps({ 'status': cls.status, 'output': out }) )
+                loop.add_callback(write, json.dumps({ 'status': cls.status, 'output': msg }) )
                 cls.bridge_master_changes(cls.status)
                 cls.launch_master_changes(cls.status)
         

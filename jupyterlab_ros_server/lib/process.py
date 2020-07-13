@@ -1,3 +1,4 @@
+import re
 import json
 import asyncio
 import subprocess
@@ -25,7 +26,7 @@ class Process(Thread):
         out, err = self.proc.communicate()
         self.proc = None
         
-        msg = err if err else out
+        msg = ''.join( re.split(r'\x1b]2;.*?\x07', (err if err else out))  )
         code = 4 if err else 3
         message = json.dumps({ "code": code, "path": self.cmd[1], "msg": msg }) 
         self.finished(self.cmd[1], message)

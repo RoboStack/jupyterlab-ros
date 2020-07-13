@@ -20,7 +20,7 @@ class Launch(WebSocketHandler):
         self.write_message( json.dumps({ 'code': 0, 'paths': list(cls.processes.keys()) }) )
     
     def on_message(self, message):
-        print("[LAUNCH]: message, ", message)
+        #print("[LAUNCH]: message, ", message)
         cls = self.__class__
         msg = json.loads(message)
 

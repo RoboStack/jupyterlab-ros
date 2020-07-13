@@ -24,13 +24,13 @@ export class LogStatus extends ReactWidget {
 
   render(): JSX.Element {
     return (
-      <a href="#" className="main">
+      <div className="main">
         {
           this.connected ?
           <div onClick={this.disconnect} className="ok"/> :
           <div onClick={this.connect} className="ko"/>
         }
-      </a>
+      </div>
     );
   }
 }

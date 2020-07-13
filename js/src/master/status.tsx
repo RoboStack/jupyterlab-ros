@@ -39,7 +39,7 @@ export default class StatusMaster extends ReactWidget {
 
       showDialog({
         title: "Master: WARNING",
-        body: <div className="jp-About-body" dangerouslySetInnerHTML={{ __html: body.innerHTML }} />,
+        body: <div className=".jp-RenderedText" dangerouslySetInnerHTML={{ __html: body.innerHTML }} />,
         buttons: [ Dialog.okButton() ]
       });
 
@@ -49,7 +49,7 @@ export default class StatusMaster extends ReactWidget {
 
       showDialog({
         title: "Master FINNISHED",
-        body: <div className="jp-About-body" dangerouslySetInnerHTML={{ __html: body.innerHTML }} />,
+        body: <div className=".jp-RenderedText" dangerouslySetInnerHTML={{ __html: body.innerHTML }} />,
         buttons: [ Dialog.okButton() ]
       });
     }
@@ -61,7 +61,7 @@ export default class StatusMaster extends ReactWidget {
   start = () => {
     showDialog({
       title: "Master",
-      body: <pre className="jp-About-body">Do you want to START ROS Master?</pre>,
+      body: <pre className=".jp-RenderedText">Do you want to START ROS Master?</pre>,
       buttons: [ Dialog.okButton(), Dialog.cancelButton() ]
     }).then(res => {
       if (res.button.label != "OK") return;
@@ -72,7 +72,7 @@ export default class StatusMaster extends ReactWidget {
   stop = () => {
     showDialog({
       title: "Master",
-      body: <pre className="jp-About-body">Do you want to STOP ROS Master?</pre>,
+      body: <pre className=".jp-RenderedText">Do you want to STOP ROS Master?</pre>,
       buttons: [ Dialog.okButton(), Dialog.cancelButton() ]
     }).then(res => {
       if (res.button.label != "OK") return;

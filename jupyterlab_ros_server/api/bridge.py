@@ -129,7 +129,7 @@ class Bridge(WebSocketHandler):
 
     @log_exceptions
     def on_message(self, message):
-        print("[BRIDGE]: message, ", message)
+        #print("[BRIDGE]: message, ", message)
         cls = self.__class__
         # check if we need to authenticate
         if cls.authenticate and not self.authenticated:
@@ -244,22 +244,25 @@ class Bridge(WebSocketHandler):
     def start(cls):
         print("[BRIDGE]: starting")
 
-        if cls.first :
-            cont = 0
-            while cont < 30 and (not rosgraph.is_master_online()) :
-                time.sleep(0.1)
-                cont += 0.1
-            
-            if rosgraph.is_master_online() :
+        cont = 0
+        while cont < 10 and (not rosgraph.is_master_online()) :
+            time.sleep(1)
+            cont += 1
+        
+        print("[BRIDGE]: cont", cont)
+
+        if rosgraph.is_master_online() :
+            if cls.first :
                 rospy.init_node("rosbridge_websocket", disable_signals=True)
                 cls.client_manager = ClientManager()
                 cls.first = False
-                print("[BRIDGE]: running")
+
+            print("[BRIDGE]: running")
+            cls.master = True
             
-            else :
-                print("[BRIDGE]: master not running")
-        
-        cls.master = True
+        else :
+            print("[BRIDGE]: master not running")
+            cls.master = False
 
     @classmethod
     def stop(cls):

@@ -1,144 +1,148 @@
-from setuptools import setup, find_packages
-from setuptools.command.develop import develop
+from setuptools import setup, find_packages, Command
+from setuptools.command.sdist import sdist
+from setuptools.command.build_py import build_py
 from setuptools.command.install import install
-from subprocess import check_call
+from setuptools.command.develop import develop
+from setuptools.command.egg_info import egg_info
+from setuptools.command.bdist_egg import bdist_egg
+
+from subprocess import check_call, PIPE
 from distutils import log
+import json
 import sys
 import os
 
+log.set_verbosity(log.INFO)
+
+def js_package_name():
+    with open(os.path.join(ROOT_JS, 'package.json')) as f:
+        package_json = json.load(f)
+    
+    return '%s-%s.tgz' % (package_json['name'], package_json['version'])
+
 from jupyterlab_ros_server._version import __version__
 ROOT_PATH = os.path.dirname(os.path.abspath(__file__))
+ROOT_JS = os.path.join(ROOT_PATH, 'js')
+PUBLIC = os.path.join(ROOT_PATH, 'jupyterlab_ros_server', 'public')
+ZETHUS = os.path.join(ROOT_JS, 'node_modules', 'zethus', 'build', '*')
+JS_PACK = os.path.join(ROOT_JS, js_package_name())
+
+def check_js():
+    return os.path.exists(JS_PACK)
+
+def register_server_extension():
+    try:
+        check_call(['jupyter-serverextension', 'enable', '--py', '--sys-prefix', 'jupyterlab_ros_server'], stdout=sys.stdout, stderr=sys.stderr)
+        return True
+    except Exception:
+        log.error("Error installing the server extension.")
+        log.info("\tTry manualy with:")
+        log.info("\tjupyter-serverextension enable --py jupyterlab_ros_server")
+        log.info("\tor in conda environments:")
+        log.info("\tjupyter-serverextension enable --py --sys-prefix jupyterlab_ros_server")
+        return False
+
+def build_jupyterlab():
+    try:
+        check_call(['jupyter-lab', 'build'], stdout=sys.stdout, stderr=sys.stderr)
+        return True
+    except Exception:
+        log.error("Error building JupyterLab.")
+        log.info("\tTry manualy with:")
+        log.info("\tjupyter-lab build")
+        return False
+
+class BuildPy(build_py):
+    def run(self):
+        if not check_js() :
+            self.distribution.run_command('jsdeps')
+
+        log.info("\nBuilding python...")
+        build_py.run(self)
+
+class EggInfo(egg_info):
+    def run(self):
+        if not check_js() :
+            self.distribution.run_command('jsdeps')
+
+        log.info("\nEggInfo...")
+        egg_info.run(self)
+
+class SDist(sdist):
+    def run(self):
+        if not check_js() :
+            self.distribution.run_command('jsdeps')
+
+        log.info("\nSDist...")
+        sdist.run(self)
 
 class Develop(develop):
     def run(self):
+        if not check_js() :
+            self.distribution.run_command('jsdeps')
+
+        log.info("\nBuilding for develop...")
         develop.run(self)
 
-class Install(install):
+class BdistEggDisabled(bdist_egg):
+    """
+    Disabled version of bdist_egg
+    Prevents setup.py install performing setuptools' default easy_install,
+    which it should never ever do.
+    """
+    def run(self):
+        sys.exit("Aborting implicit building of eggs. Use `pip install .` to install from source.")
+
+class NPM(Command):
+
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
 
     def check_npm(self):
-            try:
-                check_call(['npm', '--version'])
-                return True
-            except Exception:
-                return False
-
-    def check_lab(self):
         try:
-            check_call(['jupyter-lab', '--version'])
-            return True
+            check_call(['npm', '--version'], stdout=sys.stdout, stderr=sys.stderr)
+            log.info("\t+ nodejs installed")
         except Exception:
-            return False
-
-    def check_rosmaster(self):
-        try:
-            check_call(['rosstack', 'find', 'rosmaster'])
-            return True
-        except Exception:
-            return False
-
-    def check_rosbridge(self):
-        try:
-            check_call(['rosstack', 'find', 'rosbridge_suite'])
-            return True
-        except Exception:
-            return False
-
-    def check_rospy(self):
-        try:
-            check_call(['rosstack', 'find', 'rospy'])
-            return True
-        except Exception:
-            return False
-
-    def check_rosauth(self):
-        try:
-            check_call(['rosstack', 'find', 'rosauth'])
-            return True
-        except Exception:
-            return False
-
-    def register_server_extension(self):
-        try:
-            check_call(['jupyter-serverextension', 'enable', '--py', '--sys-prefix', 'jupyterlab_ros_server'])
-            return True
-        except Exception:
-            return False
-
-    def build_jupyterlab(self):
-        try:
-            check_call(['jupyter-lab', 'build'])
-            return True
-        except Exception:
-            return False
-    
-    def run(self):
-        print("------------------------------------------------------")
-        print("INSTALLING JUPYTERLAB-ROS")
-        print("\nChecking dependencies...")
-
-        if not self.check_npm() :
             log.error("nodejs is not installed.")
             log.info("\ttry: conda install -c conda-forge nodejs=12")
-            exit(1)
+            return False
+    
+    def build_js(self):
+        try:
+            check_call(['npm', 'install'], cwd=ROOT_JS, stdout=sys.stdout, stderr=sys.stderr)
+            log.info("\t+ Js dependencies installed.")
+        except Exception:
+            log.error("Js dependencies not installed.")
+            log.info("\tIn js directory try:")
+            log.info("\tnpm install")
+            return False
+        
+        try:
+            check_call(['npm', 'pack'], cwd=ROOT_JS, stdout=sys.stdout, stderr=sys.stderr)
+            log.info("\t+ Js extension packaged.")
+        except Exception:
+            log.error("Js extension not packaged.")
+            log.info("\tIn js directory try:")
+            log.info("\tnpm pack")
+            return False
+        
+        try:
+            check_call(['cp -r '+ZETHUS+' '+PUBLIC], shell=True, stdout=sys.stdout, stderr=sys.stderr)
+            log.info("\t+ Zethus installed.")
+        except Exception:
+            log.error("Zethus not installed.")
+            log.info("\tTry to move Zethus from js/node_modules/zethus/build to jupyterlab_ros_server/public")
+            return False
 
-        print("\t+ nodejs installed")
-
-        if not self.check_lab() :
-            log.error("JupyterLab is not installed.")
-            log.info("\ttry: conda install -c conda-forge jupyterlab")
+        return True
+    
+    def run(self):
+        log.info("\nBuilding js extension...")
+        if not self.build_js() :
             exit(1)
-        
-        print("\t+ JupyterLab installed")
-        
-        if not self.check_rosmaster() :
-            log.error("rosmaster is not installed.")
-            log.info("\ttry: conda install -c conda-forge robostack ros-melodic-ros-core")
-            exit(1)
-        
-        print("\t+ rosmaster installed")
-        
-        if not self.check_rosbridge() :
-            log.error("rosbridge_suite is not installed.")
-            log.info("\ttry: conda install -c conda-forge robostack ros-melodic-rosbridge-suite'")
-            exit(1)
-        
-        print("\t+ rosbridge_suite installed")
-
-        if not self.check_rospy() :
-            log.error("rospy is not installed.")
-            log.info("\ttry: conda install -c conda-forge robostack ros-melodic-rospy")
-            exit(1)
-        
-        print("\t+ rospy installed")
-
-        if not self.check_rosauth() :
-            log.error("rosauth is not installed.")
-            log.info("\ttry: conda install -c conda-forge robostack ros-melodic-rosauth")
-            exit(1)
-
-        print("\t+ rosauth installed")
-        
-        print("\nInstalling the extension...")
-        install.run(self)
-
-        print("\nInstalling server extension...")
-        if not self.register_server_extension() :
-            log.error("Error installing the server extension.")
-            log.info("\tTry manualy with:")
-            log.info("\tjupyter-serverextension enable --py jupyterlab_ros_server")
-            log.info("\tor in conda environments:")
-            log.info("\tjupyter-serverextension enable --py --sys-prefix jupyterlab_ros_server")
-            exit(1)
-
-        print("\nBuilding JupyterLab...")
-        if not self.build_jupyterlab() :
-            log.error("Error building JupyterLab.")
-            log.info("\tTry manualy with:")
-            log.info("\tjupyter-lab build")
-            exit(1)
-        
-        print("Installed succesfuly")
-        print("------------------------------------------------------")
 
 setup_args = {
     'name': "jupyterlab_ros_server",
@@ -149,20 +153,36 @@ setup_args = {
     'url': "https://github.com/RoboStack/jupyterlab-ros",
     'include_package_data': True,
     'packages': find_packages(),
+    'package_data': {
+        'jupyterlab_ros_server': [
+            'static/*',
+            'public/*'
+        ]
+    },
     'data_files': [
         (
             'etc/jupyter/jupyter_notebook_config.d',
             ['jupyterlab_ros_server/jupyterlab_ros_server.json']
         ),
-        (
-            'share/jupyter/lab/extensions',
-            ['js/jupyterlab-ros-0.1.0.tgz']
-        )
+        ('share/jupyter/lab/extensions', ['js/' + js_package_name()])
     ],
     'cmdclass': {
-        'develop': Develop,
-        'install': Install,
+        'jsdeps': NPM,
+        'build_py': BuildPy,
+        'egg_info': EggInfo,
+        'sdist': SDist,
+        'develop': develop,
+        'bdist_egg': bdist_egg if 'bdist_egg' in sys.argv else BdistEggDisabled
     },
+    'install_requires': [
+        'rosbridge-library',
+        'rosbridge-server',
+        'rosmaster',
+        'roslaunch',
+        'rosgraph',
+        'rosapi',
+        'rospy'
+    ],
     'keywords': [
         'jupyter',
         'jupyterlab',
@@ -179,12 +199,10 @@ setup_args = {
 }
 
 if __name__ == '__main__' :
-
-    print("args: ", sys.argv)
-
-    if '-e' in sys.argv :
-        DEVELOP = True
-        print("develop: ", DEVELOP)
-        exit(0)
-
+    log.info("------------------------------------------------------")
+    log.info("INSTALLING JUPYTERLAB-ROS")
+    
     setup(**setup_args)
+
+    log.info("Installed succesfuly")
+    log.info("------------------------------------------------------")

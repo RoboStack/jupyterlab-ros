@@ -246,7 +246,7 @@ class Bridge(WebSocketHandler):
 
         if cls.first :
             cont = 0
-            while cont < 30 and (not rosgraph.is_master_online()) :
+            while cont < 5 and (not rosgraph.is_master_online()) :
                 time.sleep(0.1)
                 cont += 0.1
             

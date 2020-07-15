@@ -13,6 +13,7 @@ from ..lib import PUBLIC
 from .bridge import Bridge
 from .launch import Launch
 from .master import Master
+from .setting import Setting
 
 def setup_handlers(web_app, url_path):
     host_pattern = ".*$"
@@ -22,6 +23,7 @@ def setup_handlers(web_app, url_path):
     route_bridge = url_path_join(base_url, url_path, "bridge")
     route_launch = url_path_join(base_url, url_path, "launch")
     route_master = url_path_join(base_url, url_path, "master")
+    route_setting = url_path_join(base_url, url_path, "setting")
     route_zethus = url_path_join(base_url, url_path, "zethus")
 
     Master.bridge_master_changes = Bridge.on_master_changes
@@ -31,6 +33,7 @@ def setup_handlers(web_app, url_path):
         (route_bridge, init_bridge()),
         (route_launch, Launch),
         (route_master, Master),
+        (route_setting, Setting),
         ("{}/(.*)".format(route_zethus), StaticFileHandler, {"path": PUBLIC})
     ]
     

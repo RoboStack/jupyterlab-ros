@@ -138,12 +138,16 @@ const SettingsComponent: React.FC<Props> = props => {
     <form className="jp-Launcher-content" onSubmit={submit}>
       {
         properties.map( prop => (
-          <div className="jp-Launcher-section">
+          <div key={prop.key} className="jp-Launcher-section">
             <div className="jp-Launcher-sectionHeader">
               <span className="jp-Launcher-sectionTitle">{prop.title}</span>
             </div>
+            <pre className="jp-About-body" >{prop.description}</pre>
             <div className="jp-Launcher-cardContainer">
-              { typeInput(prop) }
+              <div className="bp3-input-group jp-extensionmanager-search-wrapper jp-InputGroup"
+                  style={{ width: "100%" }}>
+                { typeInput(prop) }
+              </div>
             </div>
           </div>
         ))

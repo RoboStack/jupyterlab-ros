@@ -6,7 +6,7 @@ A JupyterLab extension for ROS.
 
 * python >= 3.6
 * JupyterLab >= 2.0
-* npm
+* npm >= 6.13.4
 * ROS
     * ros-melodic-ros-core
     * ros-melodic-rospy
@@ -17,8 +17,9 @@ A JupyterLab extension for ROS.
 ## Install
 
 ```bash
-conda create -n test -c conda-forge -c robostack python=3.6 nodejs=12 jupyterlab ros-melodic-ros-core ros-melodic-rospy ros-melodic-rosbridge-suite ros-melodic-rosbag ros-melodic-rosauth
-
+conda create -n test -c conda-forge -c robostack nodejs=12 jupyterlab ros-melodic-ros-core ros-melodic-rosauth ros-melodic-rospy ros-melodic-rosbridge-suite
+conda activate test
+conda install -c conda-forge -c robostack ros-melodic-rosbag
 pip install .
 ```
 

@@ -1,10 +1,11 @@
 import uuid
 import json
+from os import path
 
 from tornado.ioloop import IOLoop
 from tornado.websocket import WebSocketHandler
 
-from ..lib import Process
+from ..lib import Process, getEnv
 
 class Launch(WebSocketHandler):
     master = False
@@ -27,7 +28,7 @@ class Launch(WebSocketHandler):
         if msg['cmd'] == "start" :
             if ( cls.processes.get(msg['path'], None) == None ) and cls.master :
                 print("[LAUNCH]: starting")
-                cmd = ['roslaunch', msg['path']]
+                cmd = [path.join(getEnv(), 'roslaunch'), msg['path']]
                 cls.processes[msg['path']] = Process(cmd, cls.on_process_finished)
                 cls.processes[msg['path']].start()
 

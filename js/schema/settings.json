@@ -1,0 +1,19 @@
+{
+  "title": "ROS",
+  "description": "Settings for ROS environment.",
+  "type": "object",
+  "properties": {
+    "env": {
+      "type": "string",
+      "title": "Environment path",
+      "description": "Absolute path of your ROS binaries.\nKeep it empty to use the default one.",
+      "default": ""
+    },
+    "master": {
+      "type": "string",
+      "title": "Master launch file",
+      "description": "Absolute path of your launch file to initialize ROS master.\nKeep it empty to use the default one.",
+      "default": ""
+    }
+  }
+}

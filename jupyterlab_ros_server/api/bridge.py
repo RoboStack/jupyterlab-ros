@@ -244,6 +244,7 @@ class Bridge(WebSocketHandler):
     def start(cls):
         print("[BRIDGE]: starting")
 
+<<<<<<< HEAD
         cont = 0
         while cont < 10 and (not rosgraph.is_master_online()) :
             time.sleep(1)
@@ -253,6 +254,15 @@ class Bridge(WebSocketHandler):
 
         if rosgraph.is_master_online() :
             if cls.first :
+=======
+        if cls.first :
+            cont = 0
+            while cont < 5 and (not rosgraph.is_master_online()) :
+                time.sleep(0.1)
+                cont += 0.1
+            
+            if rosgraph.is_master_online() :
+>>>>>>> setup
                 rospy.init_node("rosbridge_websocket", disable_signals=True)
                 cls.client_manager = ClientManager()
                 cls.first = False

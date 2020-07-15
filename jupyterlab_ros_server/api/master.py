@@ -1,6 +1,8 @@
 import re
 import uuid
 import json
+from os import path
+
 import asyncio
 import subprocess
 from threading import Thread
@@ -9,7 +11,7 @@ from tornado.ioloop import IOLoop
 from tornado.gen import coroutine
 from tornado.websocket import WebSocketHandler
 
-from ..lib import ROOT
+from ..lib import getEnv, getMaster
 
 class Master(WebSocketHandler):
     status = False
@@ -35,7 +37,9 @@ class Master(WebSocketHandler):
 
         if msg['cmd'] == "start" and cls.proc == None :
             print("[MASTER]: starting")
-            cls.thread = Thread(target=cls.run, args=(['roslaunch', ROOT+'/static/roslab.launch'],))
+            print(path.join(getEnv(), 'roslaunch'))
+            print(getMaster())
+            cls.thread = Thread(target=cls.run, args=([path.join(getEnv(), 'roslaunch'), getMaster()],))
             cls.thread.daemon = True
             cls.thread.start()
             

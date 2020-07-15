@@ -37,8 +37,6 @@ class Master(WebSocketHandler):
 
         if msg['cmd'] == "start" and cls.proc == None :
             print("[MASTER]: starting")
-            print(path.join(getEnv(), 'roslaunch'))
-            print(getMaster())
             cls.thread = Thread(target=cls.run, args=([path.join(getEnv(), 'roslaunch'), getMaster()],))
             cls.thread.daemon = True
             cls.thread.start()

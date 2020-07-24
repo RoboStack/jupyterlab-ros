@@ -2,8 +2,6 @@ import { ReactWidget } from '@jupyterlab/apputils';
 import { HTMLSelect } from '@jupyterlab/ui-components';
 import * as React from 'react';
 
-import ROSLIB from 'roslib';
-
 import { LogConsolePanel } from './logConsolePanel';
 
 export class LogNodeSwitcher extends ReactWidget {

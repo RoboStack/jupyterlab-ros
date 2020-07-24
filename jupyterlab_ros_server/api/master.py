@@ -19,6 +19,7 @@ class Master(WebSocketHandler):
     proc = None
     clients = {}
 
+    bagplay_master_changes = None
     bridge_master_changes = None
     launch_master_changes = None
 
@@ -65,6 +66,7 @@ class Master(WebSocketHandler):
         for loop, write in cls.clients.values() :
             loop.add_callback(write, json.dumps({ 'status': cls.status }) )
         
+        cls.bagplay_master_changes(cls.status)
         cls.bridge_master_changes(cls.status)
         cls.launch_master_changes(cls.status)
 
@@ -80,12 +82,14 @@ class Master(WebSocketHandler):
         if err :
             for loop, write in cls.clients.values() :
                 loop.add_callback(write, json.dumps({ 'status': cls.status, 'error': msg }) )
+                cls.bagplay_master_changes(cls.status)
                 cls.bridge_master_changes(cls.status)
                 cls.launch_master_changes(cls.status)
             
         else :
             for loop, write in cls.clients.values() :
                 loop.add_callback(write, json.dumps({ 'status': cls.status, 'output': msg }) )
+                cls.bagplay_master_changes(cls.status)
                 cls.bridge_master_changes(cls.status)
                 cls.launch_master_changes(cls.status)
         

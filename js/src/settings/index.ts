@@ -15,7 +15,6 @@ export const settings: JupyterFrontEndPlugin<void> = {
     const { commands } = app;
     const server = ServerConnection.makeSettings();
     const url = URLExt.join(server.baseUrl, 'jupyterlab-ros/setting');
-    console.log(url);
 
     let content: SettingsWidget = null;
     let widget: MainAreaWidget<SettingsWidget> = null;
@@ -67,11 +66,10 @@ export const settings: JupyterFrontEndPlugin<void> = {
       const master = setting.get('master').composite as string;
 
       if ( env != "" || master != "" ) {
-        console.log(url);
         const msg = { method: 'PUT', body: JSON.stringify({ env, master }) };
   
         ServerConnection.makeRequest(url, msg, server)
-        .then( resp => console.log(resp) )
+        .then( resp => {})//console.log(resp) )
         .catch( err => console.log(err) );
       }
     }

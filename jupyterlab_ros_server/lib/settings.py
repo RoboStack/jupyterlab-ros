@@ -7,7 +7,6 @@ SETTINGS = path.join(ROOT, 'static/settings.json')
 MASTER = path.join(ROOT, 'static/roslab.launch')
 
 def getEnv():
-    print("getEnv: ")
     try:
         with open(SETTINGS) as settings:
             data = json.load(settings)
@@ -18,7 +17,6 @@ def getEnv():
     return data['env']
 
 def getMaster():
-    print("getMaster: ")
     try:
         with open(SETTINGS) as settings:
             data = json.load(settings)
@@ -41,3 +39,5 @@ def save(env, master):
 
     with open(SETTINGS, 'w+') as settings:
         json.dump(data, settings)
+
+save("", "")

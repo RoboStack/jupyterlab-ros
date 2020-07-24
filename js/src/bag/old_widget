@@ -1,0 +1,174 @@
+import { MainAreaWidget, ToolbarButton, defaultSanitizer, showDialog, Dialog } from '@jupyterlab/apputils';
+import { DocumentRegistry, DocumentWidget } from '@jupyterlab/docregistry';
+import { renderText } from '@jupyterlab/rendermime';
+import { runIcon, stopIcon } from '@jupyterlab/ui-components';
+
+import React from 'react';
+
+import { BagPanel, Bag, Type, Topic } from "./bagPanel";
+
+class BagViewFactory extends ABCWidgetFactory<BagViewWidget> {
+  /**
+   * Create a new widget given a context.
+   */
+  protected createNewWidget(
+    context: DocumentRegistry.IContext<DocumentRegistry.IModel>
+  ): BagWidget {
+    return new BagWidget(new BagPanel(), context);
+  }
+}
+
+export default class BagDocument extends DocumentWidget<BagViewer, BagModel> {
+  private path: string = null;
+  private ws: WebSocket = null;
+
+  constructor(bagPanel: BagPanel, context: DocumentRegistry.IContext<DocumentRegistry.IModel>) {
+    super({ content: bagPanel, context });
+    this.id = 'jupyterlab-ros/bag:widget';
+    this.title.label = context.localPath;
+    this.title.closable = true;
+
+    this.path = context.path;
+
+    this.toolbar.addItem('play', new Play(this.onPlay));
+    this.toolbar.addItem('stop', new Stop(this.onStop));
+
+    this.ws = new WebSocket("ws://"+window.location.host+"/jupyterlab-ros/bagplay");
+    this.ws.onopen = this.onOpen;
+    this.ws.onmessage = this.onMessage;
+    this.ws.onerror = this.onError;
+    this.ws.onclose = this.onclose;
+  }
+
+  dispose(): void {
+    this.ws?.close();
+    this.ws = null;
+    super.dispose();
+  }
+
+  onOpen = (message) => {
+    console.log(message);
+    // INFO: { 'code': 0, 'path': this.path }
+    this.ws.send( JSON.stringify({ code: 0, path: this.path }) );
+  }
+  onError = (message) => {console.log(message)}
+  onclose = (message) => {console.log(message)}
+  onMessage = (message) => {
+    const msg = JSON.parse(message.data);
+
+    switch(msg['code']) {
+      case 0: // INFO: { 'code': BAG_INFO, 'info': info }
+        this.info(msg['info']);
+        break;
+      case 1: // PLAY: 
+        break;
+      case 2: // STOP: { 'code': BAG_STOP, 'status': status, 'msg': message }
+        if (msg['status'] == -1) this.error(msg['msg']);
+        break;
+      case -1: // ERROR: { 'code': BAG_ERROR, 'msg': message }
+        this.error(msg['msg']);
+        break;
+      default:
+        break;
+    }
+  }
+
+  private info(msg: any): void {
+    console.log(msg);
+    const types: Type[] = [];
+    for (let key in msg['types']) {
+      types.push({ type: key, hash: msg['types'][key] });
+    }
+
+    const topics: Topic[] = [];
+    for (let key in msg['topics']) {
+      topics.push({
+        topic: key,
+        type: msg['topics'][key][0],
+        number: msg['topics'][key][1],
+        connections: msg['topics'][key][2],
+        frequency: msg['topics'][key][3]
+      });
+    }
+
+    const bag: Bag =  {
+      path: msg['path'],
+      version: msg['version'],
+      start: msg['start'],
+      end: msg['end'],
+      duration: msg['duration'],
+      size: msg['size'],
+      messages: msg['messages'],
+      compression: msg['compression'],
+      types,
+      topics
+    };
+
+    this.content.setBag(bag);
+  }
+
+  private error(msg: string): void {
+    const body = document.createElement('div');
+    renderText({host: body, sanitizer: defaultSanitizer, source: msg });
+
+    showDialog({
+      title: "ERROR Bag: " + this.path,
+      body: <div className=".jp-RenderedText" dangerouslySetInnerHTML={{ __html: body.innerHTML }} />,
+      buttons: [ Dialog.okButton() ]
+    });
+  }
+
+  public getPath(): string { return this.path; }
+
+  onPlay = (event) => {
+    // PLAY: { 'code': 1, 'path': this.path, 'options': "" }
+    this.ws.send( JSON.stringify({ code: 1, path: this.path, options: "" }) );
+  }
+
+  onStop = (event) => {
+    // STOP: { 'code': 2, 'path': this.path, 'options': "" }
+    this.ws.send( JSON.stringify({ code: 2, path: this.path }) );
+  }
+}
+
+class Play extends ToolbarButton {
+  private onClick: any = null;
+
+  constructor(onClick: any) {
+    super();
+    this.id = 'jupyterlab-ros/bag:play';
+    this.title.label = "Play";
+    this.title.icon = runIcon;
+
+    this.onClick = onClick;
+  }
+
+  render(): JSX.Element {
+    return (
+      <a href="#" onClick={this.onClick}>
+        <runIcon.react tag="span" right="7px" top="5px" />
+      </a>
+    );
+  }
+}
+
+class Stop extends ToolbarButton {
+  private onClick: any = null;
+
+  constructor(onClick: any) {
+    super();
+    this.id = 'jupyterlab-ros/bag:stop';
+    this.title.label = "Stop";
+    this.title.icon = stopIcon;
+
+    this.onClick = onClick;
+  }
+
+  render(): JSX.Element {
+    return (
+      <a href="#" onClick={this.onClick}>
+        <stopIcon.react tag="span" right="7px" top="5px" />
+      </a>
+    );
+  }
+}

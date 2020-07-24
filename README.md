@@ -56,7 +56,7 @@ You can watch the source directory and run JupyterLab in watch mode to watch for
 # Watch the source directory in another terminal tab
 jlpm watch
 # Run jupyterlab in watch mode in one terminal tab
-jupyter-lab --no-browser --ip=192.168.64.5 --watch
+jupyter-lab --no-browser --ip=192.168.64.6 --watch
 ```
 
 ### Uninstall

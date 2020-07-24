@@ -41,6 +41,7 @@
     "@jupyterlab/notebook": "^2.1.2",
     "@jupyterlab/settingeditor": "^2.1.1",
     "@jupyterlab/settingregistry": "^2.1.0",
+    "@jupyterlab/statedb": "^2.2.0",
     "@jupyterlab/statusbar": "^2.1.1",
     "@lumino/widgets": "^1.12.2",
     "roslib": "npm:@robostack/roslib@^1.1.0"

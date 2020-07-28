@@ -1,6 +1,5 @@
 import { JupyterFrontEndPlugin } from '@jupyterlab/application';
 
-import { bag } from "./bag";
 import { launch } from "./launch";
 import { logConsole } from "./logconsole";
 import { master } from "./master";
@@ -9,7 +8,6 @@ import { settings } from "./settings";
 import { zethus } from "./zethus";
 
 const ros: JupyterFrontEndPlugin<any>[] = [
-  bag,
   launch,
   logConsole,
   master,

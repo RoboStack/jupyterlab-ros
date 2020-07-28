@@ -1,18 +1,18 @@
-import { DocumentRegistry, DocumentWidget } from '@jupyterlab/docregistry';
 import { runIcon, stopIcon } from '@jupyterlab/ui-components';
-import { ToolbarButton,  } from '@jupyterlab/apputils';
+import { MainAreaWidget, ToolbarButton } from '@jupyterlab/apputils';
 
 import React from 'react';
 
-import BagModel from './bagModel';
 import BagPanel from './bagPanel';
 
-export default class BagDocument extends DocumentWidget<BagPanel, BagModel> {
+export default class BagWidget extends MainAreaWidget<BagPanel> {
 
-  constructor(content: BagPanel, context: DocumentRegistry.IContext<BagModel>) {
-    super({ content, context });
+  constructor(content: BagPanel) {
+    super({ content });
+    console.log("Document");
+
     this.id = 'jupyterlab-ros/bag:widget';
-    this.title.label = context.localPath;
+    this.title.label = this.content.model.session.name;
     this.title.closable = true;
 
     this.toolbar.addItem('play', new Play(this.onPlay));

@@ -1,6 +1,5 @@
-import { Kernel, KernelMessage } from '@jupyterlab/services';
-import { DocumentModel } from '@jupyterlab/docregistry';
-import { ISessionContext } from '@jupyterlab/apputils';
+import { Kernel, KernelMessage, Session } from '@jupyterlab/services';
+
 import { IOutput } from '@jupyterlab/nbformat';
 
 type Type = {
@@ -16,42 +15,41 @@ type Topic = {
   frequency: number
 }
 
-export default class BagModel extends DocumentModel {
-  private session: ISessionContext = null;
+type Bag = {
+  path: string,
+  version: string,
+  start: string,
+  end: string,
+  duration: string,
+  size: string,
+  messages: number,
+  compression: string,
+  types: Type[],
+  topics: Topic[]
+}
 
+export default class BagModel {
+  private _session: Session.ISessionConnection = null;
   private _error: string = null;
+  private _bag: Bag = null;
 
-  private _path: string = null;
-  private _version: string = null;
-  private _start: string = null;
-  private _end: string = null;
-  private _duration: string = null;
-  private _size: string = null;
-  private _messages: number = 0;
-  private _compression: string = null;
-  private _types: Type[] = [];
-  private _topics: Topic[] = [];
-  
-  constructor() {
-    super();
-    console.log("entra init");
+  constructor(session: Session.ISessionConnection) {
+    console.log("Model");
+    console.log(session);
+    this._session = session;
+    this._session.statusChanged.connect(this.status);
   }
 
-  dispose(): void {
-    this.session.shutdown();
-    this.session.dispose();
+  get session(): Session.ISessionConnection { return this._session; }
+  get error(): string { return this._error; }
+  get bag(): Bag { return this._bag; }
+
+  private status(connection: Session.ISessionConnection, status: Kernel.Status) {
+    console.log(status);
   }
 
-  public setSession(session: ISessionContext): void {
-    this.session = session;
-    this.session.ready.then( () => {
-      console.log("ready");
-      this.getInfo(this.session.path);
-    }).catch( err => console.log(err) );
-  }
-
-  private info(message: KernelMessage.IIOPubMessage): void {
-    console.log("Info");
+  private onIOPub(message: KernelMessage.IIOPubMessage): void {
+    console.log("onIOPub");
     console.log(message);
 
     let msg = null;
@@ -66,33 +64,6 @@ export default class BagModel extends DocumentModel {
       default:
         break;
     }
-
-    this._path = msg['path'];
-    this._version = msg['version'];
-    this._start = msg['start'];
-    this._end = msg['end'];
-    this._duration = msg['duration'];
-    this._size = msg['size'];
-    this._messages = msg['messages'];
-    this._compression = msg['compression'];
-    this._types = [];
-    this._topics = [];
-
-    for (let key in msg['types']) {
-      this.types.push({ type: key, hash: msg['types'][key] });
-    }
-
-    for (let key in msg['topics']) {
-      this.topics.push({
-        topic: key,
-        type: msg['topics'][key][0],
-        number: msg['topics'][key][1],
-        connections: msg['topics'][key][2],
-        frequency: msg['topics'][key][3]
-      });
-    }
-
-    this.triggerContentChange();
   }
 
   private onReply(msg: KernelMessage.IExecuteReplyMsg): void {
@@ -103,34 +74,48 @@ export default class BagModel extends DocumentModel {
     console.log("onStdin", msg);
   }
 
-  get error(): string { return this._error; }
+  private infoReply(msg: any): void {
+    this._bag.path = msg['path'];
+    this._bag.version = msg['version'];
+    this._bag.start = msg['start'];
+    this._bag.end = msg['end'];
+    this._bag.duration = msg['duration'];
+    this._bag.size = msg['size'];
+    this._bag.messages = msg['messages'];
+    this._bag.compression = msg['compression'];
+    this._bag.types = [];
+    this._bag.topics = [];
 
-  get path(): string { return this._path; }
-  get version(): string { return this._version; }
-  get start(): string { return this._start; }
-  get end(): string { return this._end; }
-  get duration(): string { return this._duration; }
-  get size(): string { return this._size; }
-  get messages(): number { return this._messages; }
-  get compression(): string { return this._compression; }
-  get types(): Type[] { return this._types; }
-  get topics(): Topic[] { return this._topics; }
+    for (let key in msg['types']) {
+      this._bag.types.push({ type: key, hash: msg['types'][key] });
+    }
 
-  getInfo(path: string): void {
+    for (let key in msg['topics']) {
+      this._bag.topics.push({
+        topic: key,
+        type: msg['topics'][key][0],
+        number: msg['topics'][key][1],
+        connections: msg['topics'][key][2],
+        frequency: msg['topics'][key][3]
+      });
+    }
+  }
+
+  info() {
     console.log("get info");
-    if (!this.session || !this.session.session?.kernel) return;
-    console.log("path: ", path);
+    if (!this._session || !this._session?.kernel) return;
+    console.log("path: ", this._session.path);
 
     const code = 
 `
 from datetime import datetime
 import rosbag
-bag = rosbag.Bag("${path}", mode='r', allow_unindexed=True)
+bag = rosbag.Bag("${this._session.path}", mode='r', allow_unindexed=True)
 start = datetime.utcfromtimestamp( bag.get_start_time() )
 end = datetime.utcfromtimestamp( bag.get_end_time() )
 types, topics = bag.get_type_and_topic_info()
 
-return {
+res = {
     'path': bag.filename,
     'version': float(bag.version) / 100,
     'start': str(start),
@@ -144,9 +129,19 @@ return {
 }
 `;
 
-    const future = this.session.session?.kernel?.requestExecute({ code });
-    future.onIOPub = this.info;
+    const future = this._session?.kernel?.requestExecute({ code: somecode });
+    future.onIOPub = this.onIOPub;
     future.onReply = this.onReply;
     future.onStdin = this.onStdin;
   }
 }
+
+const somecode = `
+from ipylab import JupyterFrontEnd, Panel, SplitPanel
+from ipywidgets import IntSlider, Layout
+app = JupyterFrontEnd()
+panel = Panel()
+slider = IntSlider()
+panel.children = [slider]
+app.shell.add(panel, 'main', { 'mode': 'split-right' })
+`;

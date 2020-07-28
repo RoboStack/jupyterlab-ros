@@ -6,24 +6,30 @@ import React from 'react';
 import BagModel from './bagModel';
 
 export default class BagPanel extends ReactWidget {
-  private path: string = null;
-  private model: BagModel = null;
+  private _model: BagModel = null;
   
-  constructor(path: string, model: BagModel){
+  constructor(model: BagModel){
     super();
-    this.path = path;
-    this.model = model;
-    this.model.contentChanged.connect(this.update, this);
-    console.log("panel");
+    console.log("Panel");
+    this._model = model;
+
+    this._model.info();
   }
 
+  dispose() {
+    this._model.session?.shutdown();
+    super.dispose();
+  }
+
+  get model(): BagModel { return this._model; }
+
   render(): JSX.Element {
-    if (this.model.error) {
+    if (this._model?.error) {
       const body = document.createElement('div');
-      renderText({host: body, sanitizer: defaultSanitizer, source: this.model.error });
+      renderText({host: body, sanitizer: defaultSanitizer, source: this._model?.error });
 
       showDialog({
-        title: "ERROR Bag: " + this.path,
+        title: "ERROR Bag: " + this._model.session.name,
         body: <div className=".jp-RenderedText" dangerouslySetInnerHTML={{ __html: body.innerHTML }} />,
         buttons: [ Dialog.okButton() ]
       });
@@ -31,18 +37,18 @@ export default class BagPanel extends ReactWidget {
 
     return (
       <div>
-        <div>Path: {this.model.path}</div>
-        <div>Version: {this.model.version}</div>
-        <div>Duration: {this.model.duration}</div>
-        <div>Start: {this.model.start}</div>
-        <div>End: {this.model.end}</div>
-        <div>Size: {this.model.size}</div>
-        <div>Messages: {this.model.messages}</div>
-        <div>Compresion: {this.model.compression}</div>
+        <div>Path: {this._model.bag?.path}</div>
+        <div>Version: {this._model.bag?.version}</div>
+        <div>Duration: {this._model.bag?.duration}</div>
+        <div>Start: {this._model.bag?.start}</div>
+        <div>End: {this._model.bag?.end}</div>
+        <div>Size: {this._model.bag?.size}</div>
+        <div>Messages: {this._model.bag?.messages}</div>
+        <div>Compresion: {this._model.bag?.compression}</div>
         <div>Types:</div>
           <table>
             <tbody>
-              {this.model.types.map( type => {
+              {this._model.bag?.types.map( type => {
                 <tr>
                   <td>{type.type}</td>
                   <td>{type.hash}</td>
@@ -55,7 +61,7 @@ export default class BagPanel extends ReactWidget {
         <table>
           <tbody>
             <tr><th>Topic</th><th>Message type</th><th>Message count</th><th>Connections</th><th>Frequency</th></tr>
-            {this.model.topics.map( topic => {
+            {this._model.bag?.topics.map( topic => {
               <tr><td>{topic.topic}</td><td>{topic.type}</td><td>{topic.number}</td><td>{topic.connections}</td><td>{topic.frequency}</td></tr>
             })}
           </tbody>

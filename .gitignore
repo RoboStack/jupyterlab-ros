@@ -2,6 +2,7 @@
 
 # Build
 build
+js/jupyterlab-ros-*.tgz
 *.tsbuildinfo
 jupyterlab_ros_server.egg-info/
 jupyterlab_ros_server/public/*
@@ -13,7 +14,5 @@ node_modules/
 .github/
 .vscode/
 .DS_Store
-*.egg-info/
 .ipynb_checkpoints
 jupyterlab_ros_server/**/__pycache__
-build-lib/

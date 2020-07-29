@@ -31,6 +31,8 @@
     "eslint": "eslint . --ext .ts,.tsx --fix",
     "eslint:check": "eslint . --ext .ts,.tsx",
     "prepare": "jlpm run clean && jlpm run build",
+    "zethus": "cp -r node_modules/zethus/build/* ../jupyterlab_ros_server/public/",
+    "del": "rm -r node_modules build tsconfig.tsbuildinfo package-lock.json",
     "watch": "tsc -w"
   },
   "dependencies": {
@@ -44,7 +46,8 @@
     "@jupyterlab/statedb": "^2.2.0",
     "@jupyterlab/statusbar": "^2.1.1",
     "@lumino/widgets": "^1.12.2",
-    "roslib": "npm:@robostack/roslib@^1.1.0"
+    "roslib": "npm:@robostack/roslib@^1.1.0",
+    "zethus": "npm:@robostack/zethus@^0.1.22"
   },
   "devDependencies": {
     "@types/ws": "^6.0.1",

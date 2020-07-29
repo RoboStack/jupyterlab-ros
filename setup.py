@@ -24,6 +24,7 @@ from jupyterlab_ros_server._version import __version__
 ROOT_PATH = os.path.dirname(os.path.abspath(__file__))
 ROOT_JS = os.path.join(ROOT_PATH, 'js')
 PUBLIC = os.path.join(ROOT_PATH, 'jupyterlab_ros_server', 'public')
+DEL_PUBLIC = os.path.join(ROOT_PATH, 'jupyterlab_ros_server', 'public', '*')
 ZETHUS = os.path.join(ROOT_JS, 'node_modules', 'zethus', 'build', '*')
 JS_PACK = os.path.join(ROOT_JS, js_package_name())
 
@@ -129,6 +130,14 @@ class NPM(Command):
             log.info("\tnpm pack")
             return False
         
+        try:
+            check_call(['rm -rf '+DEL_PUBLIC], shell=True, stdout=sys.stdout, stderr=sys.stderr)
+            log.info("\t+ Public folder cleaned.")
+        except Exception:
+            log.error("Public folder not cleaned.")
+            log.info("\tTry to remove everything inside of jupyterlab_ros_server/public")
+            return False
+
         try:
             check_call(['cp -r '+ZETHUS+' '+PUBLIC], shell=True, stdout=sys.stdout, stderr=sys.stderr)
             log.info("\t+ Zethus installed.")

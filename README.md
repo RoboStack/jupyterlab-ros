@@ -19,7 +19,7 @@ A JupyterLab extension for ROS.
 ## Install
 
 ```bash
-conda create -n test -c conda-forge -c robostack nodejs=12 jupyterlab ros-melodic-ros-core ros-melodic-rosauth ros-melodic-rospy ros-melodic-rosbridge-suite
+mamba create -n test -c conda-forge -c robostack nodejs=12 jupyterlab ros-melodic-ros-core ros-melodic-rosauth ros-melodic-rospy ros-melodic-rosbridge-suite
 conda activate test
 conda install -c conda-forge -c robostack ros-melodic-rosbag
 pip install .

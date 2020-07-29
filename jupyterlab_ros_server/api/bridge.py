@@ -169,6 +169,7 @@ class Bridge(WebSocketHandler):
 
             cls.clients_connected -= 1
             self.protocol.finish()
+            print("[BRIDGE]: protocol finished")
 
             if cls.client_manager:
                 cls.client_manager.remove_client(self.client_id, self.request.remote_ip)
@@ -207,10 +208,10 @@ class Bridge(WebSocketHandler):
             yield future
         except WebSocketClosedError:
             rospy.logwarn_throttle(1, 'WebSocketClosedError: Tried to write to a closed websocket')
-            raise
+            #raise
         except StreamClosedError:
             rospy.logwarn_throttle(1, 'StreamClosedError: Tried to write to a closed stream')
-            raise
+            #raise
         except BadYieldError:
             # Tornado <4.5.0 doesn't like its own yield and raises BadYieldError.
             # This does not affect functionality, so pass silently only in this case.
@@ -218,10 +219,10 @@ class Bridge(WebSocketHandler):
                 pass
             else:
                 _log_exception()
-                raise
+                #raise
         except:
             _log_exception()
-            raise
+            #raise
 
     @log_exceptions
     def check_origin(self, origin):
@@ -245,17 +246,19 @@ class Bridge(WebSocketHandler):
         print("[BRIDGE]: starting")
 
         cont = 0
+
         while cont < 10 and (not rosgraph.is_master_online()) :
             time.sleep(1)
             cont += 1
         
-        print("[BRIDGE]: cont", cont)
-
         if rosgraph.is_master_online() :
-            if cls.first :
-                rospy.init_node("rosbridge_websocket", disable_signals=True)
-                cls.client_manager = ClientManager()
-                cls.first = False
+            rospy.init_node("rosbridge_websocket", disable_signals=True)
+            cls.client_manager = ClientManager()
+
+            #if cls.first :
+            #    rospy.init_node("rosbridge_websocket", disable_signals=True)
+            #    cls.client_manager = ClientManager()
+            #    cls.first = False
 
             print("[BRIDGE]: running")
             cls.master = True

@@ -17,7 +17,6 @@ log.set_verbosity(log.INFO)
 def js_package_name():
     with open(os.path.join(ROOT_JS, 'package.json')) as f:
         package_json = json.load(f)
-    
     return '%s-%s.tgz' % (package_json['name'], package_json['version'])
 
 from jupyterlab_ros_server._version import __version__
@@ -110,7 +109,7 @@ class NPM(Command):
             log.error("nodejs is not installed.")
             log.info("\ttry: conda install -c conda-forge nodejs=12")
             return False
-    
+
     def build_js(self):
         try:
             check_call(['npm', 'install'], cwd=ROOT_JS, stdout=sys.stdout, stderr=sys.stderr)
@@ -120,7 +119,7 @@ class NPM(Command):
             log.info("\tIn js directory try:")
             log.info("\tnpm install")
             return False
-        
+
         try:
             check_call(['npm', 'pack'], cwd=ROOT_JS, stdout=sys.stdout, stderr=sys.stderr)
             log.info("\t+ Js extension packaged.")
@@ -129,7 +128,7 @@ class NPM(Command):
             log.info("\tIn js directory try:")
             log.info("\tnpm pack")
             return False
-        
+
         try:
             check_call(['rm -rf '+DEL_PUBLIC], shell=True, stdout=sys.stdout, stderr=sys.stderr)
             log.info("\t+ Public folder cleaned.")
@@ -139,7 +138,8 @@ class NPM(Command):
             return False
 
         try:
-            check_call(['cp -r '+ZETHUS+' '+PUBLIC], shell=True, stdout=sys.stdout, stderr=sys.stderr)
+            check_call(['mkdir -p ' + PUBLIC], shell=True, stdout=sys.stdout, stderr=sys.stderr)
+            check_call(['cp -r '+ ZETHUS + ' ' + PUBLIC], shell=True, stdout=sys.stdout, stderr=sys.stderr)
             log.info("\t+ Zethus installed.")
         except Exception:
             log.error("Zethus not installed.")
@@ -147,7 +147,7 @@ class NPM(Command):
             return False
 
         return True
-    
+
     def run(self):
         log.info("\nBuilding js extension...")
         if not self.build_js() :
@@ -210,7 +210,7 @@ setup_args = {
 if __name__ == '__main__' :
     log.info("------------------------------------------------------")
     log.info("INSTALLING JUPYTERLAB-ROS")
-    
+
     setup(**setup_args)
 
     log.info("Installed succesfuly")

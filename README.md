@@ -15,13 +15,14 @@ A JupyterLab extension for ROS.
     * ros-melodic-rosbridge-suite
     * ros-melodic-rosbag
     * ros-melodic-rosauth
+    * ros-melodic-tf2_web_republisher
+    * ros-melodic-franka-ros
 
 ## Install
 
 ```bash
-mamba create -n test -c conda-forge -c robostack nodejs=12 jupyterlab ros-melodic-ros-core ros-melodic-rosauth ros-melodic-rospy ros-melodic-rosbridge-suite
+mamba create -n test -c conda-forge -c robostack nodejs=12 jupyterlab ros-melodic-ros-core ros-melodic-rosauth ros-melodic-rospy ros-melodic-rosbridge-suite ros-melodic-rosbag ros-melodic-franka-ros
 conda activate test
-conda install -c conda-forge -c robostack ros-melodic-rosbag
 pip install .
 ```
 
@@ -38,18 +39,34 @@ The `jlpm` command is JupyterLab's pinned version of
 # Move to jupyterlab-ros directory
 
 # Install server extension in editable mode
+pip install .
+# Register server extension
+jupyter-serverextension enable --py --sys-prefix jupyterlab_ros_server
+# Link your development version of the extension with JupyterLab
+jupyter-labextension link .
+```
+
+### Development
+
+```bash
+# Clone the repo to your local environment
+# Move to jupyterlab-ros directory
+
+# Install server extension in editable mode
 pip install -e .
 # Register server extension
-jupyter-serverextension enable --py jupyterlab_ros_server
-# or if using conda env
 jupyter-serverextension enable --py --sys-prefix jupyterlab_ros_server
 
+# Move to js folder
+cd js/
 # Install frontend extension dependencies
 jlpm
 # Build Typescript frontend source
 jlpm build
 # Link your development version of the extension with JupyterLab
 jupyter-labextension link .
+# Copy Zethus to jupyterlab_ros_server/public
+cp -r node_modules/zethus/build/* ../jupyterlab_ros_server/public/
 ```
 
 You can watch the source directory and run JupyterLab in watch mode to watch for changes in the extension's source and automatically rebuild the extension and application.

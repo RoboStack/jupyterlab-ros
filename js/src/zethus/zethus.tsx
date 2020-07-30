@@ -29,7 +29,6 @@ export default class ZethusWidget extends IFrame {
     this.sandbox = ["allow-forms", "allow-modals", "allow-orientation-lock", "allow-pointer-lock", "allow-popups", "allow-presentation", "allow-same-origin", "allow-scripts", "allow-top-navigation", "allow-top-navigation-by-user-activation"];
   }
 
-  onCloseRequest = () => {
-    this.dispose();
-  }
+  dispose(): void { super.dispose(); }
+  onCloseRequest(): void { this.dispose() }
 }

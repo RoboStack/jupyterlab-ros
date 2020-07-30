@@ -23,7 +23,6 @@ from jupyterlab_ros_server._version import __version__
 ROOT_PATH = os.path.dirname(os.path.abspath(__file__))
 ROOT_JS = os.path.join(ROOT_PATH, 'js')
 PUBLIC = os.path.join(ROOT_PATH, 'jupyterlab_ros_server', 'public')
-DEL_PUBLIC = os.path.join(ROOT_PATH, 'jupyterlab_ros_server', 'public', '*')
 ZETHUS = os.path.join(ROOT_JS, 'node_modules', 'zethus', 'build', '*')
 JS_PACK = os.path.join(ROOT_JS, js_package_name())
 
@@ -78,9 +77,6 @@ class SDist(sdist):
 
 class Develop(develop):
     def run(self):
-        if not check_js() :
-            self.distribution.run_command('jsdeps')
-
         log.info("\nBuilding for develop...")
         develop.run(self)
 
@@ -130,7 +126,8 @@ class NPM(Command):
             return False
 
         try:
-            check_call(['rm -rf '+DEL_PUBLIC], shell=True, stdout=sys.stdout, stderr=sys.stderr)
+            check_call(['rm -rf ' + PUBLIC], shell=True, stdout=sys.stdout, stderr=sys.stderr)
+            check_call(['mkdir -p ' + PUBLIC], shell=True, stdout=sys.stdout, stderr=sys.stderr)
             log.info("\t+ Public folder cleaned.")
         except Exception:
             log.error("Public folder not cleaned.")
@@ -138,8 +135,7 @@ class NPM(Command):
             return False
 
         try:
-            check_call(['mkdir -p ' + PUBLIC], shell=True, stdout=sys.stdout, stderr=sys.stderr)
-            check_call(['cp -r '+ ZETHUS + ' ' + PUBLIC], shell=True, stdout=sys.stdout, stderr=sys.stderr)
+            check_call(['cp -r ' + ZETHUS + ' ' + PUBLIC], shell=True, stdout=sys.stdout, stderr=sys.stderr)
             log.info("\t+ Zethus installed.")
         except Exception:
             log.error("Zethus not installed.")

@@ -16,14 +16,13 @@ class Rospkgs(IPythonHandler):
     @tornado.web.authenticated
     def get(self, *args, **kwargs):
         cls = self.__class__
-        print("[ROSPKGS] get")
-
-        print("[ROSPKGS] ROS path: ", cls.rospack.get_ros_paths())
 
         if not args:
             self.write("Error - no argument supplied")
             self.finish()
             return
+        
+        print("[ROSPKGS] get:", args[0])
         
         argslist = args[0].split('/')
         
@@ -33,7 +32,6 @@ class Rospkgs(IPythonHandler):
 
         try :
             path = cls.rospack.get_path(package)
-            print("[ROSPKGS] ROS file: ", path)
 
         except rospkg.ResourceNotFound :
             self.write("Package %s not found" % package)

@@ -36,7 +36,6 @@ export const zethus: JupyterFrontEndPlugin<void> = {
           widget.disposed.connect(() => {
             widget = null;
             commands.notifyCommandChanged();
-            console.log("Disposed!!");
           });
 
           app.shell.add(widget, 'main');

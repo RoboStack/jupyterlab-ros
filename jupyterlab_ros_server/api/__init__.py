@@ -10,11 +10,10 @@ from rosbridge_library.capabilities.unadvertise_service import UnadvertiseServic
 from rosbridge_library.capabilities.call_service import CallService
 
 from ..lib import PUBLIC
-from .bag_play import BagPlay
 from .bridge import Bridge
 from .launch import Launch
 from .master import Master
-from .models import Models
+from .rospkgs import Rospkgs
 from .setting import Setting
 
 def setup_handlers(web_app, url_path):
@@ -22,27 +21,21 @@ def setup_handlers(web_app, url_path):
     base_url = web_app.settings["base_url"]
 
     # Prepend the base_url so that it works in a jupyterhub setting
-    route_bagplay = url_path_join(base_url, url_path, "bagplay")
     route_bridge = url_path_join(base_url, url_path, "bridge")
     route_launch = url_path_join(base_url, url_path, "launch")
     route_master = url_path_join(base_url, url_path, "master")
-    route_models = url_path_join(base_url, url_path, "models")
+    route_rospkgs = url_path_join(base_url, url_path, "rospkgs/(.*)")
     route_setting = url_path_join(base_url, url_path, "setting")
     route_zethus = url_path_join(base_url, url_path, "zethus")
 
-    Master.bagplay_master_changes = BagPlay.on_master_changes
     Master.bridge_master_changes = Bridge.on_master_changes
     Master.launch_master_changes = Launch.on_master_changes
 
-    Models.web_app = web_app
-    Models.base_url = url_path_join(base_url, url_path)
-
     handlers = [
-        (route_bagplay, BagPlay),
         (route_bridge, init_bridge()),
         (route_launch, Launch),
         (route_master, Master),
-        (route_models, Models),
+        (route_rospkgs, Rospkgs),
         (route_setting, Setting),
         ("{}/(.*)".format(route_zethus), StaticFileHandler, {"path": PUBLIC})
     ]

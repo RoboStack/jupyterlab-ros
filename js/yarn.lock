@@ -3795,10 +3795,10 @@ yeast@0.1.2:
   resolved "https://registry.yarnpkg.com/yeast/-/yeast-0.1.2.tgz#008e06d8094320c372dbc2f8ed76a0ca6c8ac419"
   integrity sha1-AI4G2AlDIMNy28L47XagymyKxBk=
 
-"zethus@npm:@robostack/zethus@^0.1.23":
-  version "0.1.23"
-  resolved "https://registry.yarnpkg.com/@robostack/zethus/-/zethus-0.1.23.tgz#6d278d1576e8994e3a1d41a2e9550f9705a77d4e"
-  integrity sha512-bI5Gt4IWx6I7Z/7KZ7/JfOwUXtQxLc4YS9dQMl9V1rgSG+10iJoWHiBNwmgsqxeMj6C9aIZ8aSDmMDqLscQ+MA==
+"zethus@npm:@robostack/zethus@^0.1.24":
+  version "0.1.24"
+  resolved "https://registry.yarnpkg.com/@robostack/zethus/-/zethus-0.1.24.tgz#2f171c2e94c464d76b77acbae6d8adf9fd7171a9"
+  integrity sha512-yZHaVWdiEQTUNVEbZZhQOyoXvqfz5zcMADPn78UstiEfc4ZbYZq6VWZrZaH504XY6SriCtpeFj5TxwAWhvBmNQ==
   dependencies:
     amphion "npm:@robostack/amphion@^0.1.24"
     brace "^0.11.1"

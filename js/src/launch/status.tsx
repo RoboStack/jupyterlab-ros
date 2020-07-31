@@ -1,6 +1,8 @@
 import { ReactWidget, showDialog, Dialog } from '@jupyterlab/apputils';
 import { renderText } from '@jupyterlab/rendermime';
 import { defaultSanitizer } from '@jupyterlab/apputils';
+import { ServerConnection } from '@jupyterlab/services';
+import { URLExt } from '@jupyterlab/coreutils';
 
 import React from 'react';
 
@@ -14,7 +16,8 @@ export default class StatusLaunch extends ReactWidget {
     this.addClass('jp-ReactWidget');
 
     this.paths = [];
-    const url = `${location.protocol === 'https:' ? "wss" : "ws"}://${location.host}/jupyterlab-ros/launch`;
+    const server = ServerConnection.makeSettings();
+    const url = URLExt.join(server.wsUrl, 'jupyterlab-ros/launch');
     this.ws = new WebSocket(url);
     this.ws.onopen = this.onOpen;
     this.ws.onmessage = this.onMessage;

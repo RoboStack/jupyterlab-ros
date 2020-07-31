@@ -1,6 +1,8 @@
 import { ReactWidget, showDialog, Dialog } from '@jupyterlab/apputils';
 import { defaultSanitizer } from '@jupyterlab/apputils';
 import { renderText } from '@jupyterlab/rendermime';
+import { ServerConnection } from '@jupyterlab/services';
+import { URLExt } from '@jupyterlab/coreutils';
 
 import React from 'react';
 
@@ -13,7 +15,8 @@ export default class StatusMaster extends ReactWidget {
     this.node.title = "ROS Master";
     this.addClass('jp-ReactWidget');
     
-    const url = `${location.protocol === 'https:' ? "wss" : "ws"}://${location.host}/jupyterlab-ros/master`;
+    const server = ServerConnection.makeSettings();
+    const url = URLExt.join(server.wsUrl, 'jupyterlab-ros/master');
     this.ws = new WebSocket(url);
     this.ws.onopen = this.onOpen;
     this.ws.onmessage = this.onMessage;

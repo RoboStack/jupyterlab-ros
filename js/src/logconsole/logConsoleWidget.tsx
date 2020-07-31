@@ -1,6 +1,8 @@
 import { JupyterFrontEnd } from '@jupyterlab/application';
-import { MainAreaWidget, CommandToolbarButton, showDialog, Dialog } from '@jupyterlab/apputils';
+import { MainAreaWidget, CommandToolbarButton } from '@jupyterlab/apputils';
 import { listIcon, } from '@jupyterlab/ui-components';
+import { ServerConnection } from '@jupyterlab/services';
+import { URLExt } from '@jupyterlab/coreutils';
 
 import ROSLIB from 'roslib';
 
@@ -28,7 +30,8 @@ export class LogConsoleWidget extends MainAreaWidget<LogConsolePanel> {
     this.title.label = 'ROS Log console';
     this.title.icon = listIcon;
 
-    const url = `${location.protocol === 'https:' ? "wss" : "ws"}://${location.host}/jupyterlab-ros/bridge`;
+    const server = ServerConnection.makeSettings();
+    const url = URLExt.join(server.wsUrl, 'jupyterlab-ros/bridge');
     this.ros = new ROSLIB.Ros({ url });
     this.ros.on('connection', this.onConection);
     this.ros.on('error', this.onError);

@@ -47,7 +47,7 @@
     "@jupyterlab/statusbar": "^2.1.1",
     "@lumino/widgets": "^1.12.2",
     "roslib": "npm:@robostack/roslib@^1.1.0",
-    "zethus": "npm:@robostack/zethus@^0.1.24"
+    "zethus": "npm:@robostack/zethus@^0.1.25"
   },
   "devDependencies": {
     "@types/ws": "^6.0.1",

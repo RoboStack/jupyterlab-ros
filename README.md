@@ -21,7 +21,7 @@ A JupyterLab extension for ROS.
 ## Install
 
 ```bash
-mamba create -n test -c conda-forge -c robostack nodejs=12 jupyterlab ros-melodic-ros-core ros-melodic-rosauth ros-melodic-rospy ros-melodic-rosbridge-suite ros-melodic-rosbag ros-melodic-franka-ros
+mamba create -n test -c conda-forge -c robostack python=3.6 nodejs=12 jupyterlab ros-melodic-ros-core ros-melodic-rosauth ros-melodic-rospy ros-melodic-rosbridge-suite ros-melodic-rosbag ros-melodic-franka-ros
 conda activate test
 pip install .
 ```
@@ -40,10 +40,6 @@ The `jlpm` command is JupyterLab's pinned version of
 
 # Install server extension in editable mode
 pip install .
-# Register server extension
-jupyter-serverextension enable --py --sys-prefix jupyterlab_ros_server
-# Link your development version of the extension with JupyterLab
-jupyter-labextension link .
 ```
 
 ### Development

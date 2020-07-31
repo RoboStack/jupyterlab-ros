@@ -28,7 +28,8 @@ export class LogConsoleWidget extends MainAreaWidget<LogConsolePanel> {
     this.title.label = 'ROS Log console';
     this.title.icon = listIcon;
 
-    this.ros = new ROSLIB.Ros({url:"ws://" + window.location.host + "/jupyterlab-ros/bridge"});
+    const url = `${location.protocol === 'https:' ? "wss" : "ws"}://${location.host}/jupyterlab-ros/bridge`;
+    this.ros = new ROSLIB.Ros({ url });
     this.ros.on('connection', this.onConection);
     this.ros.on('error', this.onError);
     this.ros.on('close', this.onClose);

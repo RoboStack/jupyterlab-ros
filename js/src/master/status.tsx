@@ -13,7 +13,8 @@ export default class StatusMaster extends ReactWidget {
     this.node.title = "ROS Master";
     this.addClass('jp-ReactWidget');
     
-    this.ws = new WebSocket("ws://"+window.location.host+"/jupyterlab-ros/master");
+    const url = `${location.protocol === 'https:' ? "wss" : "ws"}://${location.host}/jupyterlab-ros/master`;
+    this.ws = new WebSocket(url);
     this.ws.onopen = this.onOpen;
     this.ws.onmessage = this.onMessage;
     this.ws.onerror = this.onError;

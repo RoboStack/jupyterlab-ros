@@ -14,8 +14,8 @@ export default class StatusLaunch extends ReactWidget {
     this.addClass('jp-ReactWidget');
 
     this.paths = [];
-
-    this.ws = new WebSocket("ws://"+window.location.host+"/jupyterlab-ros/launch");
+    const url = `${location.protocol === 'https:' ? "wss" : "ws"}://${location.host}/jupyterlab-ros/launch`;
+    this.ws = new WebSocket(url);
     this.ws.onopen = this.onOpen;
     this.ws.onmessage = this.onMessage;
     this.ws.onerror = this.onError;

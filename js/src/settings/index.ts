@@ -69,7 +69,7 @@ export const settings: JupyterFrontEndPlugin<void> = {
         const msg = { method: 'PUT', body: JSON.stringify({ env, master }) };
   
         ServerConnection.makeRequest(url, msg, server)
-        .then( resp => {})//console.log(resp) )
+        .then( resp => {})
         .catch( err => console.log(err) );
       }
     }

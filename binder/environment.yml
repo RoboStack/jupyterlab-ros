@@ -3,10 +3,13 @@ channels:
 - conda-forge
 - robostack
 dependencies:
-- nodejs=10
+- python=3.6
+- nodejs=12
 - jupyterlab
 - ros-melodic-ros-core
 - ros-melodic-rospy
 - ros-melodic-rosbridge-suite
 - ros-melodic-rosbag
 - ros-melodic-rosauth
+- ros-melodic-tf2-web-republisher
+- ros-melodic-franka-ros

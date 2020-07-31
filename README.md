@@ -15,14 +15,21 @@ A JupyterLab extension for ROS.
     * ros-melodic-rosbridge-suite
     * ros-melodic-rosbag
     * ros-melodic-rosauth
-    * ros-melodic-tf2_web_republisher
-    * ros-melodic-franka-ros
+    * ros-melodic-tf2-web-republisher
 
 ## Install
 
 ```bash
-mamba create -n test -c conda-forge -c robostack python=3.6 nodejs=12 jupyterlab ros-melodic-ros-core ros-melodic-rosauth ros-melodic-rospy ros-melodic-rosbridge-suite ros-melodic-rosbag ros-melodic-franka-ros
+# Create a new environment with the dependencies
+mamba create -n test -c conda-forge -c robostack python=3.6 nodejs=12 jupyterlab ros-melodic-ros-core ros-melodic-rosauth ros-melodic-rospy ros-melodic-rosbridge-suite ros-melodic-rosbag ros-melodic-tf2-web-republisher ros-melodic-franka-ros
+
 conda activate test
+
+# Clone the repo to your local environment
+git clone https://github.com/RoboStack/jupyterlab-ros.git
+# Move to jupyterlab-ros directory
+cd jupyterlab-ros
+# Install the extension
 pip install .
 ```
 
@@ -36,17 +43,9 @@ The `jlpm` command is JupyterLab's pinned version of
 
 ```bash
 # Clone the repo to your local environment
+git clone https://github.com/RoboStack/jupyterlab-ros.git
 # Move to jupyterlab-ros directory
-
-# Install server extension in editable mode
-pip install .
-```
-
-### Development
-
-```bash
-# Clone the repo to your local environment
-# Move to jupyterlab-ros directory
+cd jupyterlab-ros
 
 # Install server extension in editable mode
 pip install -e .

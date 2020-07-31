@@ -185,6 +185,7 @@ setup_args = {
         'rosmaster',
         'roslaunch',
         'rosgraph',
+        'rosbag',
         'rosapi',
         'rospy'
     ],

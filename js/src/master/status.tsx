@@ -27,7 +27,7 @@ export default class StatusMaster extends ReactWidget {
     this.ws = null;
   }
 
-  onOpen = (msg) => {}
+  onOpen = (msg) => { this.ws.send(JSON.stringify({ cmd: "start" })); }
   onError = (msg) => console.error(msg);
   onClose = (msg) => {}
   onMessage = (message) => {
@@ -65,7 +65,7 @@ export default class StatusMaster extends ReactWidget {
       buttons: [ Dialog.okButton(), Dialog.cancelButton() ]
     }).then(res => {
       if (res.button.label != "OK") return;
-      this.ws.send(JSON.stringify({ cmd: "start" }))
+      this.ws.send(JSON.stringify({ cmd: "start" }));
     }).catch( e => console.log(e) );
   }
 

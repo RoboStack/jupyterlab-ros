@@ -15,4 +15,4 @@ dependencies:
 - ros-melodic-franka-ros
 - ros-melodic-interactive-marker-tutorials
 - ros-melodic-teb-local-planner
-- jupyterlab_conda
+- jupyter_conda

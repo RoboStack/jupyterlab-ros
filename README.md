@@ -2,9 +2,7 @@
 
 A JupyterLab extension for ROS.
 
-> To access JupyterLab in Binder, once is started change the url from "https://<span></span>hub.gke.mybinder.org<span></span>/user/whatever/tree" to "https://<span></span>hub.gke.mybinder.org<span></span>/user/whatever/lab"
-
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/RoboStack/jupyterlab-ros/master)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/RoboStack/jupyterlab-ros/master?urlpath=lab/tree/examples)
 
 ## Requirements
 

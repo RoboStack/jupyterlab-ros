@@ -1,2 +1,4 @@
 pip install .
+conda install -c conda-forge jupyterlab jupyter_conda
+jupyter labextension install jupyterlab_conda
 jupyter-lab build --dev-build=False

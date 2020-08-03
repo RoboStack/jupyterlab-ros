@@ -13,3 +13,6 @@ dependencies:
 - ros-melodic-rosauth
 - ros-melodic-tf2-web-republisher
 - ros-melodic-franka-ros
+- ros-melodic-interactive-marker-tutorials
+- ros-melodic-teb-local-planner
+- jupyterlab_conda

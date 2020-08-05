@@ -9,6 +9,8 @@ jupyter labextension install jupyter-vuetify
 git clone https://github.com/hbcarlos/jupyter-ros.git
 cd jupyter-ros
 pip install .
+jupyter nbextension enable --py --sys-prefix jupyros
+jupyter labextension install jupyter-ros
 
 jupyter-lab build --dev-build=False
 

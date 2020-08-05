@@ -1,0 +1,4 @@
+<launch>
+	<rosparam param="/test_optim_node/enable_homotopy_class_planning">true</rosparam>
+	<include file="$(find teb_local_planner)/launch/test_optim_node.launch" />
+</launch>

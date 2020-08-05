@@ -6,6 +6,9 @@ dependencies:
 - python=3.6
 - nodejs=12
 - jupyterlab
+- ipympl
+- bqplot
+- ipywidgets
 - ros-melodic-ros-core
 - ros-melodic-rospy
 - ros-melodic-rosbridge-suite
@@ -15,4 +18,6 @@ dependencies:
 - ros-melodic-franka-ros
 - ros-melodic-interactive-marker-tutorials
 - ros-melodic-teb-local-planner
+- ros-melodic-turtlebot3
+- ros-melodic-turtlebot3-fake
 - jupyter_conda

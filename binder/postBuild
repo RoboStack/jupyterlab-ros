@@ -1,3 +1,13 @@
 pip install .
+
+pip install ipyvuetify
+jupyter labextension install bqplot
+jupyter labextension install @jupyter-widgets/jupyterlab-manager
+jupyter labextension install jupyter-vuetify
 jupyter labextension install jupyterlab_conda
+
+pip install jupyros
+
 jupyter-lab build --dev-build=False
+
+2to3 -w "$CONDA_PREFIX/lib/turtlebot3_teleop/turtlebot3_teleop_key"

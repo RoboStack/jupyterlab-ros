@@ -20,4 +20,3 @@ dependencies:
 - ros-melodic-teb-local-planner
 - ros-melodic-turtlebot3
 - ros-melodic-turtlebot3-fake
-- jupyter_conda

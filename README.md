@@ -54,14 +54,8 @@ jupyter-serverextension enable --py --sys-prefix jupyterlab_ros_server
 
 # Move to js folder
 cd js/
-# Install frontend extension dependencies
-jlpm
-# Build Typescript frontend source
-jlpm build
 # Link your development version of the extension with JupyterLab
 jupyter-labextension link .
-# Copy Zethus to jupyterlab_ros_server/public
-cp -r node_modules/zethus/build/* ../jupyterlab_ros_server/public/
 ```
 
 You can watch the source directory and run JupyterLab in watch mode to watch for changes in the extension's source and automatically rebuild the extension and application.

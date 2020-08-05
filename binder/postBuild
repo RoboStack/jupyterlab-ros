@@ -6,6 +6,10 @@ jupyter labextension install @jupyter-widgets/jupyterlab-manager
 pip install ipyvuetify
 jupyter labextension install jupyter-vuetify
 
+git clone https://github.com/hbcarlos/jupyter-ros.git
+cd jupyter-ros
+pip install .
+
 jupyter-lab build --dev-build=False
 
 2to3 -w /srv/conda/envs/notebook/lib/turtlebot3_teleop/turtlebot3_teleop_key

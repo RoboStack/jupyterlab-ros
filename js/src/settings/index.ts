@@ -39,7 +39,7 @@ export const settings: JupyterFrontEndPlugin<void> = {
         if (widget) {
           widget.dispose();
         } else {
-          content = new SettingsWidget(settings, 'jupyterlab-ros:settings');
+          content = new SettingsWidget(settings, '@robostack/jupyterlab-ros:settings');
           widget = new MainAreaWidget<SettingsWidget>({ content });
           widget.title.label = 'ROS Settings';
 
@@ -74,7 +74,7 @@ export const settings: JupyterFrontEndPlugin<void> = {
       }
     }
 
-    settings.load('jupyterlab-ros:settings')
+    settings.load('@robostack/jupyterlab-ros:settings')
       .then(rosSetting => {
         rosSetting.changed.connect(loadSetting);
         loadSetting(rosSetting);

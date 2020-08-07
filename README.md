@@ -67,12 +67,12 @@ jupyter-lab --no-browser --ip=192.168.64.6 --watch
 
 ```bash
 # Uninstalling the frontend extension
-jupyter-labextension unlink jupyterlab-ros
-jupyter-labextension uninstall jupyterlab-ros
+jupyter-labextension unlink @robostack/jupyterlab-ros
+jupyter-labextension uninstall @robostack/jupyterlab-ros
 
 # Uninstalling the server extension
 jupyter-serverextension disable jupyter_ros_server
-pip uninstall jupyterlab_ros_server
+pip uninstall jupyter_ros_server
 
 # Cleaning jupyterlab
 jupyter lab clean

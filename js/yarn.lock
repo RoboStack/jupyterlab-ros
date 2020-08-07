@@ -926,10 +926,10 @@ ajv@^6.10.0, ajv@^6.10.2:
     json-schema-traverse "^0.4.1"
     uri-js "^4.2.2"
 
-"amphion@npm:@robostack/amphion@^0.1.24":
-  version "0.1.24"
-  resolved "https://registry.yarnpkg.com/@robostack/amphion/-/amphion-0.1.24.tgz#57a35b45f5665fee3117f00c8260f457512cd2fd"
-  integrity sha512-A8aONCkFMsZdIQK8JK4aC8C+Xrg7r4ZSv/WFDvekke/leyL3DnIlAAEoiNL7yZwrYS69ZuFD9WoWqhitjnKFVQ==
+"amphion@npm:@robostack/amphion@^0.1.25":
+  version "0.1.25"
+  resolved "https://registry.yarnpkg.com/@robostack/amphion/-/amphion-0.1.25.tgz#d861752fdca4184610c27a5d6efbadc3b66a39dd"
+  integrity sha512-kFoa+Ufa9MXKL8vQmryLXhJWXg3k4ge/M6xPxLs+sAO1yWCsItPn7WCnyu/OrClIINfz/6jqfmkv1sIvLhfStw==
   dependencies:
     "@juggle/resize-observer" "^2.2.1"
     lodash.debounce "^4.0.8"
@@ -3795,12 +3795,12 @@ yeast@0.1.2:
   resolved "https://registry.yarnpkg.com/yeast/-/yeast-0.1.2.tgz#008e06d8094320c372dbc2f8ed76a0ca6c8ac419"
   integrity sha1-AI4G2AlDIMNy28L47XagymyKxBk=
 
-"zethus@npm:@robostack/zethus@^0.1.25":
-  version "0.1.25"
-  resolved "https://registry.yarnpkg.com/@robostack/zethus/-/zethus-0.1.25.tgz#bacdaa3f4b620dfcc991aaa67aa2a84eabf4d030"
-  integrity sha512-t39fH0rUlFz0lmer1Kei5QHePkI+5qrpIn48ujOUH+oUK517vVm6yyrAD8PVE1DNzjPuZMe4wRgZ1ggrSTY4ZQ==
+"zethus@npm:@robostack/zethus@^0.1.29":
+  version "0.1.29"
+  resolved "https://registry.yarnpkg.com/@robostack/zethus/-/zethus-0.1.29.tgz#5ba141fd056109c8322083c10a2bd568d62e60c1"
+  integrity sha512-h/upxVjwIjTwfpb/dnBNXtyKPP/QkYxNV4UMO5MSs31ejlSh6RNbt2XpYlrDMZgtEkCATLy6fjN2mVPHUYB/Zw==
   dependencies:
-    amphion "npm:@robostack/amphion@^0.1.24"
+    amphion "npm:@robostack/amphion@^0.1.25"
     brace "^0.11.1"
     classnames "^2.2.6"
     d3 "^5.16.0"

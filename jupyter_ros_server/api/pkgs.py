@@ -10,7 +10,7 @@ import rospkg
 
 from ..lib import getEnv, getMaster, save
 
-class Rospkgs(IPythonHandler):
+class Pkgs(IPythonHandler):
     rospack = rospkg.RosPack()
 
     @tornado.web.authenticated
@@ -22,7 +22,7 @@ class Rospkgs(IPythonHandler):
             self.finish()
             return
         
-        print("[ROSPKGS] get:", args[0])
+        print("[PKGS] get:", args[0])
         
         argslist = args[0].split('/')
         

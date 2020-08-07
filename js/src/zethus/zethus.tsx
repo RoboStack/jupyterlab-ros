@@ -20,7 +20,7 @@ export default class ZethusWidget extends IFrame {
   constructor() {
     super();
     const baseUrl = PageConfig.getBaseUrl();
-    this.url = baseUrl + 'jupyterlab-ros/zethus/index.html';
+    this.url = baseUrl + 'ros/zethus/index.html';
     this.id = 'Zethus';
     this.title.label = 'Zethus';
     this.title.closable = true;

@@ -17,12 +17,12 @@ log.set_verbosity(log.INFO)
 def js_package_name():
     with open(os.path.join(ROOT_JS, 'package.json')) as f:
         package_json = json.load(f)
-    return '%s-%s.tgz' % (package_json['name'], package_json['version'])
+    return 'robostack-jupyterlab-ros-%s.tgz' % (package_json['version'])
 
-from jupyterlab_ros_server._version import __version__
+from jupyter_ros_server._version import __version__
 ROOT_PATH = os.path.dirname(os.path.abspath(__file__))
 ROOT_JS = os.path.join(ROOT_PATH, 'js')
-PUBLIC = os.path.join(ROOT_PATH, 'jupyterlab_ros_server', 'public')
+PUBLIC = os.path.join(ROOT_PATH, 'jupyter_ros_server', 'public')
 ZETHUS = os.path.join(ROOT_JS, 'node_modules', 'zethus', 'build', '*')
 JS_PACK = os.path.join(ROOT_JS, js_package_name())
 
@@ -31,14 +31,14 @@ def check_js():
 
 def register_server_extension():
     try:
-        check_call(['jupyter-serverextension', 'enable', '--py', '--sys-prefix', 'jupyterlab_ros_server'], stdout=sys.stdout, stderr=sys.stderr)
+        check_call(['jupyter-serverextension', 'enable', '--py', '--sys-prefix', 'jupyter_ros_server'], stdout=sys.stdout, stderr=sys.stderr)
         return True
     except Exception:
         log.error("Error installing the server extension.")
         log.info("\tTry manualy with:")
-        log.info("\tjupyter-serverextension enable --py jupyterlab_ros_server")
+        log.info("\tjupyter-serverextension enable --py jupyter_ros_server")
         log.info("\tor in conda environments:")
-        log.info("\tjupyter-serverextension enable --py --sys-prefix jupyterlab_ros_server")
+        log.info("\tjupyter-serverextension enable --py --sys-prefix jupyter_ros_server")
         return False
 
 def build_jupyterlab():
@@ -131,7 +131,7 @@ class NPM(Command):
             log.info("\t+ Public folder cleaned.")
         except Exception:
             log.error("Public folder not cleaned.")
-            log.info("\tTry to remove everything inside of jupyterlab_ros_server/public")
+            log.info("\tTry to remove everything inside of jupyter_ros_server/public")
             return False
 
         try:
@@ -139,7 +139,7 @@ class NPM(Command):
             log.info("\t+ Zethus installed.")
         except Exception:
             log.error("Zethus not installed.")
-            log.info("\tTry to move Zethus from js/node_modules/zethus/build to jupyterlab_ros_server/public")
+            log.info("\tTry to move Zethus from js/node_modules/zethus/build to jupyter_ros_server/public")
             return False
 
         return True
@@ -150,7 +150,7 @@ class NPM(Command):
             exit(1)
 
 setup_args = {
-    'name': "jupyterlab_ros_server",
+    'name': "jupyter_ros_server",
     'version': __version__,
     'description': "Jupyterlab server extension for ROS.",
     'author': "QuantStack",
@@ -159,7 +159,7 @@ setup_args = {
     'include_package_data': True,
     'packages': find_packages(),
     'package_data': {
-        'jupyterlab_ros_server': [
+        'jupyter_ros_server': [
             'static/*',
             'public/*'
         ]
@@ -167,7 +167,7 @@ setup_args = {
     'data_files': [
         (
             'etc/jupyter/jupyter_notebook_config.d',
-            ['jupyterlab_ros_server/jupyterlab_ros_server.json']
+            ['jupyter_ros_server/jupyter_ros_server.json']
         ),
         ('share/jupyter/lab/extensions', ['js/' + js_package_name()])
     ],
@@ -206,7 +206,7 @@ setup_args = {
 
 if __name__ == '__main__' :
     log.info("------------------------------------------------------")
-    log.info("INSTALLING JUPYTERLAB-ROS")
+    log.info("INSTALLING JUPYTER-ROS-SERVER")
 
     setup(**setup_args)
 

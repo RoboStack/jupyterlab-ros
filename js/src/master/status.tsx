@@ -16,7 +16,7 @@ export default class StatusMaster extends ReactWidget {
     this.addClass('jp-ReactWidget');
     
     const server = ServerConnection.makeSettings();
-    const url = URLExt.join(server.wsUrl, 'jupyterlab-ros/master');
+    const url = URLExt.join(server.wsUrl, 'ros/master');
     this.ws = new WebSocket(url);
     this.ws.onopen = this.onOpen;
     this.ws.onmessage = this.onMessage;

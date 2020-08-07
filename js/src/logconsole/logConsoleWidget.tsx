@@ -15,6 +15,7 @@ import { RosLog } from './log';
 export class LogConsoleWidget extends MainAreaWidget<LogConsolePanel> {
   
   private logs: RosLog[];
+  private url: string;
   private ros: ROSLIB.Ros;
   private listener: ROSLIB.Topic;
 
@@ -31,8 +32,8 @@ export class LogConsoleWidget extends MainAreaWidget<LogConsolePanel> {
     this.title.icon = listIcon;
 
     const server = ServerConnection.makeSettings();
-    const url = URLExt.join(server.wsUrl, 'jupyterlab-ros/bridge');
-    this.ros = new ROSLIB.Ros({ url });
+    this.url = URLExt.join(server.wsUrl, 'ros/bridge');
+    this.ros = new ROSLIB.Ros({ url: this.url });
     this.ros.on('connection', this.onConection);
     this.ros.on('error', this.onError);
     this.ros.on('close', this.onClose);
@@ -44,7 +45,7 @@ export class LogConsoleWidget extends MainAreaWidget<LogConsolePanel> {
     
     this.listener.subscribe(this.onMessage);
 
-    this.status = new LogStatus(this.ros);
+    this.status = new LogStatus(this.ros, this.url);
     this.levelSwitcher = new LogLevelSwitcher(this.content);
     this.nodeSwicher = new LogNodeSwitcher(this.content);
     this.logs = [];
@@ -91,7 +92,7 @@ export class LogConsoleWidget extends MainAreaWidget<LogConsolePanel> {
     this.status.setConnected(false);
     
     setTimeout(() => {
-      this.ros?.connect("ws://"+window.location.host+"/jupyterlab-ros/bridge");
+      this.ros?.connect(this.url);
     }, 5000);
   }
 

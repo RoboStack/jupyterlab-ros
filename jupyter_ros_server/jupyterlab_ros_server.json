@@ -1,7 +1,7 @@
 {
   "NotebookApp": {
     "nbserver_extensions": {
-      "jupyterlab_ros_server": true
+      "jupyter_ros_server": true
     }
   }
 }

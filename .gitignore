@@ -2,17 +2,21 @@
 
 # Build
 build
-js/jupyterlab-ros-*.tgz
+dist
+js/robostack-jupyterlab-ros-*.tgz
 *.tsbuildinfo
-jupyterlab_ros_server.egg-info/
-jupyterlab_ros_server/public/*
+jupyter_ros_server.egg-info/
+jupyter_ros_server/public/*
 
 # Libraries
+package-lock.json
 node_modules/
+
+# Cache
+jupyter_ros_server/**/__pycache__
 
 # Others
 .github/
 .vscode/
 .DS_Store
 .ipynb_checkpoints
-jupyterlab_ros_server/**/__pycache__

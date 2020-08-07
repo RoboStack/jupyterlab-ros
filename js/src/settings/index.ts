@@ -14,7 +14,7 @@ export const settings: JupyterFrontEndPlugin<void> = {
   activate: (app: JupyterFrontEnd, palette: ICommandPalette, restorer: ILayoutRestorer, settings: ISettingRegistry) => {
     const { commands } = app;
     const server = ServerConnection.makeSettings();
-    const url = URLExt.join(server.baseUrl, 'jupyterlab-ros/setting');
+    const url = URLExt.join(server.baseUrl, 'ros/setting');
 
     let content: SettingsWidget = null;
     let widget: MainAreaWidget<SettingsWidget> = null;

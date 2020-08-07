@@ -3,7 +3,7 @@ from .api import setup_handlers
 
 
 def _jupyter_server_extension_paths():
-    return [{"module": "jupyterlab_ros_server"}]
+    return [{"module": "jupyter_ros_server"}]
 
 
 def load_jupyter_server_extension(lab_app):
@@ -14,6 +14,6 @@ def load_jupyter_server_extension(lab_app):
         JupyterLab application instance
     """
 
-    url_path = "jupyterlab-ros"
+    url_path = "ros"
     setup_handlers(lab_app.web_app, url_path)
-    lab_app.log.info("Registered jupyterlab_ros_server extension at URL path /{}".format(url_path))
+    lab_app.log.info("Registered jupyter_ros_server extension at URL path /{}".format(url_path))

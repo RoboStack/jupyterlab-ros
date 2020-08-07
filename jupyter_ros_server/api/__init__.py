@@ -13,7 +13,7 @@ from ..lib import PUBLIC
 from .bridge import Bridge
 from .launch import Launch
 from .master import Master
-from .rospkgs import Rospkgs
+from .pkgs import Pkgs
 from .setting import Setting
 
 def setup_handlers(web_app, url_path):
@@ -24,7 +24,7 @@ def setup_handlers(web_app, url_path):
     route_bridge = url_path_join(base_url, url_path, "bridge")
     route_launch = url_path_join(base_url, url_path, "launch")
     route_master = url_path_join(base_url, url_path, "master")
-    route_rospkgs = url_path_join(base_url, url_path, "rospkgs/(.*)")
+    route_pkgs = url_path_join(base_url, url_path, "pkgs/(.*)")
     route_setting = url_path_join(base_url, url_path, "setting")
     route_zethus = url_path_join(base_url, url_path, "zethus")
 
@@ -35,7 +35,7 @@ def setup_handlers(web_app, url_path):
         (route_bridge, init_bridge()),
         (route_launch, Launch),
         (route_master, Master),
-        (route_rospkgs, Rospkgs),
+        (route_pkgs, Pkgs),
         (route_setting, Setting),
         ("{}/(.*)".format(route_zethus), StaticFileHandler, {"path": PUBLIC})
     ]

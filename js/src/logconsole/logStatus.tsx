@@ -7,14 +7,16 @@ export class LogStatus extends ReactWidget {
 
   private connected: boolean = false;
   private ros: ROSLIB.Ros = null;
+  private url: string;
   
-  constructor(ros: ROSLIB.Ros) {
+  constructor(ros: ROSLIB.Ros, url: string) {
     super();
     this.addClass('jp-LogConsole-toolbarLogLevel');
     this.ros = ros;
+    this.url = url;
   }
 
-  private connect = (): void => this.ros?.connect("ws://"+window.location.host+"/jupyterlab-ros/bridge");
+  private connect = (): void => this.ros?.connect(this.url);
   private disconnect = (): void => this.ros?.close();
 
   public setConnected = (connected: boolean) => {

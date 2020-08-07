@@ -25,12 +25,8 @@ mamba create -n test -c conda-forge -c robostack python=3.6 nodejs=12 jupyterlab
 
 conda activate test
 
-# Clone the repo to your local environment
-git clone https://github.com/RoboStack/jupyterlab-ros.git
-# Move to jupyterlab-ros directory
-cd jupyterlab-ros
 # Install the extension
-pip install .
+pip install jupyter-ros-server
 ```
 
 ## Contributing
@@ -50,7 +46,7 @@ cd jupyterlab-ros
 # Install server extension in editable mode
 pip install -e .
 # Register server extension
-jupyter-serverextension enable --py --sys-prefix jupyterlab_ros_server
+jupyter-serverextension enable --py --sys-prefix jupyter_ros_server
 
 # Move to js folder
 cd js/
@@ -72,9 +68,10 @@ jupyter-lab --no-browser --ip=192.168.64.6 --watch
 ```bash
 # Uninstalling the frontend extension
 jupyter-labextension unlink jupyterlab-ros
+jupyter-labextension uninstall jupyterlab-ros
 
 # Uninstalling the server extension
-jupyter-serverextension disable jupyterlab_ros_server
+jupyter-serverextension disable jupyter_ros_server
 pip uninstall jupyterlab_ros_server
 
 # Cleaning jupyterlab

@@ -20,14 +20,18 @@ jupyter labextension install @jupyter-widgets/jupyterlab-manager
 pip install ipyvuetify
 jupyter labextension install jupyter-vuetify
 
-pip install jupyros
+git clone https://github.com/hbcarlos/jupyter-ros.git
+cd jupyter-ros
+pip install .
+jupyter nbextension enable --py --sys-prefix jupyros
+jupyter labextension install jupyter-ros
 
 jupyter-lab build --dev-build=False
 ```
 
 ## Troubleshooting
 
-To use the `turtlebot3_teleop` package you need to the program from python2 to python3.
+To use the `turtlebot3_teleop` package you need to  from python2 to python3.
 
 ```bash
 2to3 -w "$CONDA_PREFIX/lib/turtlebot3_teleop/turtlebot3_teleop_key"

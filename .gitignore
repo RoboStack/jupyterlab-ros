@@ -5,12 +5,12 @@ build
 dist
 js/robostack-jupyterlab-ros-*.tgz
 *.tsbuildinfo
-jupyter_ros_server.egg-info/
+jupyter_ros_server.egg-info
 jupyter_ros_server/public/*
 
 # Libraries
 package-lock.json
-node_modules/
+js/node_modules
 
 # Cache
 jupyter_ros_server/**/__pycache__

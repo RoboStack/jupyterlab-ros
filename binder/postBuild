@@ -2,6 +2,7 @@ pip install jupyter-ros-server
 
 jupyter labextension install bqplot
 jupyter labextension install @jupyter-widgets/jupyterlab-manager
+jupyter labextension install @jupyter-voila/jupyterlab-preview
 
 pip install ipyvuetify
 jupyter labextension install jupyter-vuetify

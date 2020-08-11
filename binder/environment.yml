@@ -5,11 +5,13 @@ channels:
 dependencies:
 - python=3.6
 - nodejs=12
+- mamba
 - jupyterlab
 - ipympl
 - bqplot
 - ipywidgets
 - voila
+- jupyter_conda
 - ros-melodic-ros-core
 - ros-melodic-rospy
 - ros-melodic-rosbridge-suite

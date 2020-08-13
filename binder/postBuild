@@ -1,4 +1,4 @@
-pip install jupyter-ros-server
+python setup.py install
 
 jupyter labextension install bqplot
 jupyter labextension install @jupyter-widgets/jupyterlab-manager

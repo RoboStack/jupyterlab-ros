@@ -1,4 +1,4 @@
-python setup.py install
+pip install .
 
 jupyter labextension install bqplot
 jupyter labextension install @jupyter-widgets/jupyterlab-manager

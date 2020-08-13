@@ -161,15 +161,14 @@ setup_args = {
     'package_data': {
         'jupyter_ros_server': [
             'static/*',
-            'public/*'
+            'public/*',
+            'public/forklift/*',
+            'public/image/viz/*'
         ]
     },
     'data_files': [
-        (
-            'etc/jupyter/jupyter_notebook_config.d',
-            ['jupyter_ros_server/jupyter_ros_server.json']
-        ),
-        ('share/jupyter/lab/extensions', ['js/' + js_package_name()])
+        ('share/jupyter/lab/extensions', ['js/' + js_package_name()]),
+        ('etc/jupyter/jupyter_notebook_config.d', ['jupyter_ros_server/jupyter_ros_server.json'])
     ],
     'cmdclass': {
         'jsdeps': NPM,

@@ -2600,9 +2600,9 @@ nice-try@^1.0.4:
   integrity sha512-1nh45deeb5olNY7eX82BkPO7SSxR5SSYJiPTrTdFUVYwAl8CKMA5N9PjTYkHiRjisVcxcQ1HXdLhx2qxxJzLNQ==
 
 node-fetch@^2.6.0:
-  version "2.6.0"
-  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.0.tgz#e633456386d4aa55863f676a7ab0daa8fdecb0fd"
-  integrity sha512-8dG4H5ujfvFiqDmVu9fQ5bOHUC15JMjMY/Zumv26oOvvVJjM67KF8koCWIabKQ1GJIa9r2mMZscBq/TbdOcmNA==
+  version "2.6.1"
+  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.1.tgz#045bd323631f76ed2e2b55573394416b639a0052"
+  integrity sha512-V4aYg89jEoVRxRb2fJdAg8FHvI7cEyYdVAh94HH0UIK8oJxUfkjlDQN9RbMx+bEjP7+ggMiFRprSti032Oipxw==
 
 normalize.css@^8.0.1:
   version "8.0.1"
@@ -3795,10 +3795,10 @@ yeast@0.1.2:
   resolved "https://registry.yarnpkg.com/yeast/-/yeast-0.1.2.tgz#008e06d8094320c372dbc2f8ed76a0ca6c8ac419"
   integrity sha1-AI4G2AlDIMNy28L47XagymyKxBk=
 
-"zethus@npm:@robostack/zethus@^0.1.29":
-  version "0.1.29"
-  resolved "https://registry.yarnpkg.com/@robostack/zethus/-/zethus-0.1.29.tgz#5ba141fd056109c8322083c10a2bd568d62e60c1"
-  integrity sha512-h/upxVjwIjTwfpb/dnBNXtyKPP/QkYxNV4UMO5MSs31ejlSh6RNbt2XpYlrDMZgtEkCATLy6fjN2mVPHUYB/Zw==
+"zethus@npm:@robostack/zethus@^0.1.30":
+  version "0.1.30"
+  resolved "https://registry.yarnpkg.com/@robostack/zethus/-/zethus-0.1.30.tgz#9b8f3ab65781786e97e1cd55fb01014cd9f61f8e"
+  integrity sha512-LBEbhsLhaFMDN5HC96yqpUgfyLWgcY09xPr4h4L7sccxfjMdmptltau/BLoXa7Ez+FeX70A4QHcoRtZjt+mZIA==
   dependencies:
     amphion "npm:@robostack/amphion@^0.1.25"
     brace "^0.11.1"

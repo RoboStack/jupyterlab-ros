@@ -35,4 +35,6 @@ To use the `turtlebot3_teleop` package you need to  from python2 to python3.
 
 ```bash
 2to3 -w "$CONDA_PREFIX/lib/turtlebot3_teleop/turtlebot3_teleop_key"
+
+ln -s "$CONDA_PREFIX/lib/libPocoFoundation.so.71" "$CONDA_PREFIX/lib/libPocoFoundation.so.60"
 ```

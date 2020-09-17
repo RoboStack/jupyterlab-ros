@@ -7,9 +7,6 @@ dependencies:
 - nodejs=12
 - mamba
 - jupyterlab
-- ipympl
-- bqplot
-- ipywidgets
 - ros-melodic-ros-core
 - ros-melodic-rospy
 - ros-melodic-rosbridge-suite

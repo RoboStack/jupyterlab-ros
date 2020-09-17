@@ -1,0 +1,2 @@
+conda create -n test -c conda-forge -c robostack python=3.6 nodejs=12 jupyterlab ipympl bqplot ipywidgets voila jupyter_conda ros-melodic-ros-core ros-melodic-rosauth ros-melodic-rospy ros-melodic-rosbridge-suite ros-melodic-rosbag ros-melodic-tf2-web-republisher ros-melodic-franka-ros ros-melodic-interactive-marker-tutorials ros-melodic-teb-local-planner ros-melodic-turtlebot3 ros-melodic-turtlebot3-fake
+

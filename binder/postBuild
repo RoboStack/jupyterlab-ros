@@ -1,1 +1,16 @@
 pip install .
+
+git clone https://github.com/hbcarlos/jupyter-ros.git
+cd jupyter-ros
+pip install .
+
+pip install ipyvuetify
+
+jupyter nbextension enable --py --sys-prefix jupyros
+
+jupyter labextension install --no-build bqplot @jupyter-widgets/jupyterlab-manager jupyter-vuetify jupyter-ros
+
+jupyter-lab build --minimize=False --dev-build=False
+
+2to3 -w "$CONDA_PREFIX/lib/turtlebot3_teleop/turtlebot3_teleop_key"
+sudo ln -s "$CONDA_PREFIX/lib/libPocoFoundation.so.71" "$CONDA_PREFIX/lib/libPocoFoundation.so.60"

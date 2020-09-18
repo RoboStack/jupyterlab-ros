@@ -8,7 +8,7 @@ pip install ipyvuetify
 
 jupyter nbextension enable --py --sys-prefix jupyros
 
-jupyter labextension install --no-build bqplot @jupyter-widgets/jupyterlab-manager jupyter-vuetify jupyter-ros
+jupyter labextension install --no-build bqplot @jupyter-widgets/jupyterlab-manager @jupyter-voila/jupyterlab-preview jupyter-vuetify jupyter-ros
 
 jupyter-lab build --minimize=False --dev-build=False
 

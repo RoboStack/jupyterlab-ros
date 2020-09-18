@@ -20,4 +20,4 @@ jupyter-lab build --dev-build=False
 conda config --add channels robostack
 
 2to3 -w "$CONDA_PREFIX/lib/turtlebot3_teleop/turtlebot3_teleop_key"
-sudo ln -s "$CONDA_PREFIX/lib/libPocoFoundation.so.71" "$CONDA_PREFIX/lib/libPocoFoundation.so.60"
+ln -s "$CONDA_PREFIX/lib/libPocoFoundation.so.71" "$CONDA_PREFIX/lib/libPocoFoundation.so.60"

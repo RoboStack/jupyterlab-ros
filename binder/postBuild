@@ -12,5 +12,5 @@ jupyter labextension install --no-build bqplot @jupyter-widgets/jupyterlab-manag
 
 jupyter-lab build --minimize=False --dev-build=False
 
-2to3 -w "$CONDA_PREFIX/lib/turtlebot3_teleop/turtlebot3_teleop_key"
-sudo ln -s "$CONDA_PREFIX/lib/libPocoFoundation.so.71" "$CONDA_PREFIX/lib/libPocoFoundation.so.60"
+2to3 -w /srv/conda/envs/notebook/lib/turtlebot3_teleop/turtlebot3_teleop_key
+ln -s "$CONDA_PREFIX/lib/libPocoFoundation.so.71" "$CONDA_PREFIX/lib/libPocoFoundation.so.60"

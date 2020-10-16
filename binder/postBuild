@@ -13,4 +13,4 @@ jupyter labextension install --no-build bqplot @jupyter-widgets/jupyterlab-manag
 jupyter-lab build --minimize=False --dev-build=False
 
 2to3 -w /srv/conda/envs/notebook/lib/turtlebot3_teleop/turtlebot3_teleop_key
-ln -s /srv/conda/envs/notebook/lib/libPocoFoundation.so.71 /srv/conda/envs/notebook/lib/libPocoFoundation.so.60
+ln -s /srv/conda/envs/notebook/lib/libPocoFoundation.so.71 /srv/conda/envs/notebook/lib/libPocoFoundation.so.60 || echo "have correct version of poco!"

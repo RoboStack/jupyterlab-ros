@@ -44,7 +44,7 @@ git clone https://github.com/RoboStack/jupyterlab-ros.git
 cd jupyterlab-ros
 
 # Install server extension in editable mode
-pip install -e .
+python -m pip install -e .
 # Register server extension
 jupyter-serverextension enable --py --sys-prefix jupyter_ros_server
 

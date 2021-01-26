@@ -14,17 +14,14 @@ mamba install -c conda-forge -c robostack ros-melodic-franka-ros ros-melodic-int
 
 ```bash
 mamba install -c conda-forge bqplot ipympl ipywidgets
-jupyter labextension install bqplot
-jupyter labextension install @jupyter-widgets/jupyterlab-manager
 
+# Probably ipyvuetify doen't support lab 3
 pip install ipyvuetify
-jupyter labextension install jupyter-vuetify
 
+# Workin on jupyros update to lab 3
 git clone https://github.com/hbcarlos/jupyter-ros.git
 cd jupyter-ros
 pip install .
-jupyter nbextension enable --py --sys-prefix jupyros
-jupyter labextension install jupyter-ros
 
 jupyter-lab build --dev-build=False
 ```

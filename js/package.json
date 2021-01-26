@@ -29,13 +29,14 @@
   },
   "scripts": {
     "build": "tsc",
-    "clean": "rimraf build tsconfig.tsbuildinfo",
+    "build:labextension": "jlpm run prepare && jlpm run zethus && jupyter labextension build .",
+    "watch": "tsc -w",
+    "clean": "rimraf build tsconfig.tsbuildinfo ../jupyter_ros_server/public ../jupyter_ros_server/labextension",
     "eslint": "eslint . --ext .ts,.tsx --fix",
     "eslint:check": "eslint . --ext .ts,.tsx",
     "prepare": "jlpm run clean && jlpm run build",
-    "zethus": "cp -r node_modules/zethus/build/* ../jupyter_ros_server/public/",
-    "del": "rm -r node_modules build tsconfig.tsbuildinfo package-lock.json",
-    "watch": "tsc -w"
+    "zethus": "npx copyfiles -u 3 node_modules/zethus/build/* ../jupyter_ros_server/public/",
+    "del": "rm -r node_modules build tsconfig.tsbuildinfo yarn.lock ../jupyter_ros_server/public"
   },
   "dependencies": {
     "@jupyterlab/application": "^3.0.0-rc.5",
@@ -54,9 +55,11 @@
     "zethus": "npm:@robostack/zethus@^0.1.30"
   },
   "devDependencies": {
+    "@jupyterlab/builder": "^3.0.1",
     "@types/ws": "^6.0.1",
     "@typescript-eslint/eslint-plugin": "^2.25.0",
     "@typescript-eslint/parser": "^2.25.0",
+    "copyfiles": "^2.4.1",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.10.1",
     "eslint-plugin-prettier": "^3.1.2",
@@ -68,7 +71,8 @@
     "style/*.css"
   ],
   "jupyterlab": {
-    "extension": true,
-    "schemaDir": "schema"
+    "schemaDir": "schema",
+    "extension": "build/index.js",
+    "outputDir": "../jupyter_ros_server/labextension"
   }
 }

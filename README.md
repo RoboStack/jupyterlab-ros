@@ -21,7 +21,7 @@ A JupyterLab extension for ROS.
 
 ```bash
 # Create a new environment with the dependencies
-mamba create -n jupyterlab-ros -c conda-forge -c robostack python=3.6 nodejs jupyterlab ros-melodic-ros-core ros-melodic-rosauth ros-melodic-rospy ros-melodic-rosbridge-suite ros-melodic-rosbag ros-melodic-tf2-web-republisher
+mamba create -n jupyterlab-ros -c conda-forge -c robostack python=3.6 nodejs=12 jupyterlab ros-melodic-ros-core ros-melodic-rosauth ros-melodic-rospy ros-melodic-rosbridge-suite ros-melodic-rosbag ros-melodic-tf2-web-republisher
 
 conda activate jupyterlab-ros
 

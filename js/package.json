@@ -29,34 +29,37 @@
   },
   "scripts": {
     "build": "tsc",
-    "clean": "rimraf build tsconfig.tsbuildinfo",
+    "build:labextension": "jlpm run prepare && jlpm run zethus && jupyter labextension build .",
+    "watch": "tsc -w",
+    "clean": "rimraf build tsconfig.tsbuildinfo ../jupyter_ros_server/public ../jupyter_ros_server/labextension",
     "eslint": "eslint . --ext .ts,.tsx --fix",
     "eslint:check": "eslint . --ext .ts,.tsx",
     "prepare": "jlpm run clean && jlpm run build",
-    "zethus": "cp -r node_modules/zethus/build/* ../jupyter_ros_server/public/",
-    "del": "rm -r node_modules build tsconfig.tsbuildinfo package-lock.json",
-    "watch": "tsc -w"
+    "zethus": "npx copyfiles -u 3 node_modules/zethus/build/* ../jupyter_ros_server/public/",
+    "del": "rm -r node_modules build tsconfig.tsbuildinfo yarn.lock ../jupyter_ros_server/public"
   },
   "dependencies": {
-    "@jupyterlab/application": "^2.0.0",
-    "@jupyterlab/apputils": "^2.0.0",
-    "@jupyterlab/logconsole": "^2.1.1",
-    "@jupyterlab/mainmenu": "^2.1.1",
-    "@jupyterlab/notebook": "^2.0.0",
-    "@jupyterlab/settingeditor": "^2.1.1",
-    "@jupyterlab/settingregistry": "^2.1.0",
-    "@jupyterlab/statedb": "^2.2.0",
-    "@jupyterlab/statusbar": "^2.1.1",
+    "@jupyterlab/application": "^3.0.0-rc.5",
+    "@jupyterlab/apputils": "^3.0.0-rc.5",
+    "@jupyterlab/logconsole": "^3.0.0-rc.5",
+    "@jupyterlab/mainmenu": "^3.0.0-rc.5",
+    "@jupyterlab/notebook": "^3.0.0-rc.5",
+    "@jupyterlab/settingeditor": "^3.0.0-rc.5",
+    "@jupyterlab/settingregistry": "^3.0.0-rc.5",
+    "@jupyterlab/statedb": "^3.0.0-rc.5",
+    "@jupyterlab/statusbar": "^3.0.0-rc.5",
     "@lumino/coreutils": "^1.5.3",
     "@lumino/widgets": "^1.12.2",
     "json5": "^2.1.3",
-    "roslib": "npm:@robostack/roslib@^1.1.0",
+    "roslib": "npm:@robostack/roslib@^1.1.1",
     "zethus": "npm:@robostack/zethus@^0.1.30"
   },
   "devDependencies": {
+    "@jupyterlab/builder": "^3.0.1",
     "@types/ws": "^6.0.1",
     "@typescript-eslint/eslint-plugin": "^2.25.0",
     "@typescript-eslint/parser": "^2.25.0",
+    "copyfiles": "^2.4.1",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.10.1",
     "eslint-plugin-prettier": "^3.1.2",
@@ -68,7 +71,8 @@
     "style/*.css"
   ],
   "jupyterlab": {
-    "extension": true,
-    "schemaDir": "schema"
+    "schemaDir": "schema",
+    "extension": "build/index.js",
+    "outputDir": "../jupyter_ros_server/labextension"
   }
 }

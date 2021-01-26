@@ -1,15 +1,16 @@
 *.bundle.*
 
 # Build
-build
-dist
-js/robostack-jupyterlab-ros-*.tgz
-*.tsbuildinfo
 jupyter_ros_server.egg-info
-jupyter_ros_server/public/*
+
+# JS-TS
+dist
+build
+*.tsbuildinfo
+jupyter_ros_server/public
+jupyter_ros_server/labextension
 
 # Libraries
-package-lock.json
 js/node_modules
 
 # Cache

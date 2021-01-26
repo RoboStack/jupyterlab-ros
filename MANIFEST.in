@@ -1,4 +1,9 @@
 include LICENSE
 include README.md
-recursive-include jupyterlab_ros_server/static *
-recursive-include jupyterlab_ros_server/public *
+include pyproject.toml
+
+include jupyterlab_ros_server/jupyterlab_ros_server.json
+
+graft jupyterlab_ros_server/static
+graft jupyterlab_ros_server/public
+graft jupyterlab_ros_server/labextension

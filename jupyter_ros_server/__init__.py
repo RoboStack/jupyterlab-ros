@@ -2,8 +2,16 @@ from ._version import __version__
 from .api import setup_handlers
 
 
+def _jupyter_labextension_paths():
+    return [{
+        'src': 'labextension',
+        'dest': '@robostack/jupyterlab-ros',
+    }]
+
 def _jupyter_server_extension_paths():
-    return [{"module": "jupyter_ros_server"}]
+    return [{
+        "module": "jupyter_ros_server"
+    }]
 
 
 def load_jupyter_server_extension(lab_app):

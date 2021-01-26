@@ -17,16 +17,27 @@ A JupyterLab extension for ROS.
     * ros-melodic-rosauth
     * ros-melodic-tf2-web-republisher
 
-## Install
+### Install
 
 ```bash
 # Create a new environment with the dependencies
-mamba create -n test -c conda-forge -c robostack python=3.6 nodejs=12 jupyterlab ros-melodic-ros-core ros-melodic-rosauth ros-melodic-rospy ros-melodic-rosbridge-suite ros-melodic-rosbag ros-melodic-tf2-web-republisher
+mamba create -n jupyterlab-ros -c conda-forge -c robostack python=3.6 nodejs=12 jupyterlab ros-melodic-ros-core ros-melodic-rosauth ros-melodic-rospy ros-melodic-rosbridge-suite ros-melodic-rosbag ros-melodic-tf2-web-republisher
 
-conda activate test
+conda activate jupyterlab-ros
 
 # Install the extension
 pip install jupyter-ros-server
+```
+
+### Uninstall
+
+```bash
+# Uninstalling python package
+pip uninstall jupyter-ros-server
+
+# Cleaning jupyterlab
+jupyter lab clean
+jupyter lab build
 ```
 
 ## Contributing
@@ -45,13 +56,9 @@ cd jupyterlab-ros
 
 # Install server extension in editable mode
 python -m pip install -e .
-# Register server extension
-jupyter-serverextension enable --py --sys-prefix jupyter_ros_server
 
-# Move to js folder
-cd js/
 # Link your development version of the extension with JupyterLab
-jupyter-labextension link .
+jupyter-labextension develop . --ovewrite
 ```
 
 You can watch the source directory and run JupyterLab in watch mode to watch for changes in the extension's source and automatically rebuild the extension and application.
@@ -60,18 +67,16 @@ You can watch the source directory and run JupyterLab in watch mode to watch for
 # Watch the source directory in another terminal tab
 jlpm watch
 # Run jupyterlab in watch mode in one terminal tab
-jupyter-lab --no-browser --ip=192.168.64.6 --watch
+jupyter-lab
 ```
 
 ### Uninstall
 
 ```bash
 # Uninstalling the frontend extension
-jupyter-labextension unlink @robostack/jupyterlab-ros
 jupyter-labextension uninstall @robostack/jupyterlab-ros
 
 # Uninstalling the server extension
-jupyter-serverextension disable jupyter_ros_server
 pip uninstall jupyter_ros_server
 
 # Cleaning jupyterlab

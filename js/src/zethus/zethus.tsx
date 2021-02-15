@@ -25,6 +25,7 @@ export default class ZethusWidget extends IFrame {
     this.title.label = 'Zethus';
     this.title.closable = true;
     this.node.style.overflowY = 'auto';
+    this.node.style.background = '#FFF';
 
     this.sandbox = ["allow-forms", "allow-modals", "allow-orientation-lock", "allow-pointer-lock", "allow-popups", "allow-presentation", "allow-same-origin", "allow-scripts", "allow-top-navigation", "allow-top-navigation-by-user-activation"];
   }

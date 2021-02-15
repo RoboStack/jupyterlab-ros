@@ -1,23 +1,27 @@
 name: jupyterlab-ros
 channels:
-- conda-forge
 - robostack
+- conda-forge
 dependencies:
-- python=3.6
-- nodejs=12
-- jupyterlab=3
+- python
+- nodejs
+- jupyterlab>=3,<4
 - ipympl
 - bqplot
 - ipywidgets
 - voila
-- ros-melodic-ros-core
-- ros-melodic-rospy
-- ros-melodic-rosbridge-suite
-- ros-melodic-rosbag
-- ros-melodic-rosauth
-- ros-melodic-tf2-web-republisher
-- ros-melodic-franka-ros
-- ros-melodic-interactive-marker-tutorials
-- ros-melodic-teb-local-planner
-- ros-melodic-turtlebot3
-- ros-melodic-turtlebot3-fake
+- ros-noetic-ros-core
+- ros-noetic-rospy
+- ros-noetic-rosbridge-suite
+- ros-noetic-rosbag
+- ros-noetic-rosauth
+- ros-noetic-tf2-web-republisher
+# our stuff
+- jupyterlab-ros
+- jupyter-ros
+- jupyter-amphion
+# - ros-noetic-franka-ros
+# - ros-noetic-interactive-marker-tutorials
+# - ros-noetic-teb-local-planner
+# - ros-noetic-turtlebot3
+# - ros-noetic-turtlebot3-fake

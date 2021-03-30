@@ -16,7 +16,7 @@ dependencies:
 - ros-noetic-rosbag
 - ros-noetic-rosauth
 - ros-noetic-tf2-web-republisher
-# - ros-noetic-franka-ros
+- ros-noetic-moveit-panda-config
 - ros-noetic-interactive-marker-tutorials
 - ros-noetic-teb-local-planner
 - ros-noetic-turtlebot3

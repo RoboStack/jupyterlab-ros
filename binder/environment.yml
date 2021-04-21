@@ -2,6 +2,7 @@ name: jupyterlab-ros
 channels:
 - robostack
 - conda-forge
+- nodefaults
 dependencies:
 - python
 - nodejs
@@ -22,6 +23,7 @@ dependencies:
 - ros-noetic-turtlebot3
 - ros-noetic-turtlebot3-fake
 # our stuff
+- jupyterlab >=3
 - jupyterlab-ros
-- jupyter-ros >=0.4.1
 - jupyter-amphion >=0.2.2
+# - jupyter-ros >=0.4.1

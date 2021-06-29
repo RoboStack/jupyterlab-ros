@@ -4,40 +4,13 @@ A JupyterLab extension for ROS.
 
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/RoboStack/jupyterlab-ros/master?urlpath=lab/tree/examples)
 
-## Requirements
-
-* python >= 3.6
-* JupyterLab >= 2.0
-* npm >= 6.13.4
-* ROS
-    * ros-melodic-ros-core
-    * ros-melodic-rospy
-    * ros-melodic-rosbridge-suite
-    * ros-melodic-rosbag
-    * ros-melodic-rosauth
-    * ros-melodic-tf2-web-republisher
-
 ### Install
 
-```bash
-# Create a new environment with the dependencies
-mamba create -n jupyterlab-ros -c conda-forge -c robostack python=3.6 nodejs=12 jupyterlab ros-melodic-ros-core ros-melodic-rosauth ros-melodic-rospy ros-melodic-rosbridge-suite ros-melodic-rosbag ros-melodic-tf2-web-republisher
-
-conda activate jupyterlab-ros
-
-# Install the extension
-pip install jupyter-ros-server
-```
-
-### Uninstall
+We recommend following the installation instructions of the [RoboStack](https://github.com/RoboStack/ros-noetic) repository which enables you to install ROS Noetic in a conda environment. After following these instructions, simply
 
 ```bash
-# Uninstalling python package
-pip uninstall jupyter-ros-server
-
-# Cleaning jupyterlab
-jupyter lab clean
-jupyter lab build
+conda activate robostackenv
+mamba install jupyterlab-ros nodejs=12
 ```
 
 ## Contributing
@@ -58,7 +31,7 @@ cd jupyterlab-ros
 python -m pip install -e .
 
 # Link your development version of the extension with JupyterLab
-jupyter-labextension develop . --ovewrite
+jupyter-labextension develop . --overwrite
 ```
 
 You can watch the source directory and run JupyterLab in watch mode to watch for changes in the extension's source and automatically rebuild the extension and application.

@@ -14,8 +14,8 @@ dependencies:
 - ros-noetic-ros-core
 - ros-noetic-rospy
 - ros-noetic-rosbridge-suite
-- ros-neotic-rosbag
-- ros-neotic-rosauth
+- ros-noetic-rosbag
+- ros-noetic-rosauth
 - ros-noetic-tf2-web-republisher
 - ros-noetic-franka-ros
 - ros-noetic-interactive-marker-tutorials

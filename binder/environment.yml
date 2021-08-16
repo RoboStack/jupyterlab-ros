@@ -7,6 +7,7 @@ dependencies:
 - nodejs=12
 - jupyterlab=3
 - ipympl
+- ipyvuetify
 - bqplot
 - ipywidgets
 - voila

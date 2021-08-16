@@ -1,6 +1,6 @@
 # JupyterLab-ROS Examples
 
-These are some exaples you can try in JupyterLab-ROS. To use these notebooks you need to install some ROS packages and libraries.
+These are some examples you can try in JupyterLab-ROS. To use these notebooks you need to install some ROS packages and libraries.
 
 > NOTE: If you are trying the extension on Binder all these packages and libraries are already installed.
 

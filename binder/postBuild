@@ -12,4 +12,4 @@
 
 # jupyter-lab build --minimize=False --dev-build=False
 
-2to3 -w /srv/conda/envs/notebook/lib/turtlebot3_teleop/turtlebot3_teleop_key
+# 2to3 -w /srv/conda/envs/notebook/lib/turtlebot3_teleop/turtlebot3_teleop_key

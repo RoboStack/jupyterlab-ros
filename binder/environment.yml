@@ -22,4 +22,5 @@ dependencies:
 - ros-noetic-teb-local-planner
 - ros-noetic-turtlebot3
 - ros-noetic-turtlebot3-fake
+- jupyter-ros
 - jupyterlab-ros

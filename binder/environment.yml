@@ -23,6 +23,6 @@ dependencies:
 - ros-noetic-turtlebot3
 - ros-noetic-turtlebot3-fake
 # our stuff
-- jupyterlab-ros
-- jupyter-amphion
-# - jupyter-ros
+- robostack::jupyterlab-ros
+- robostack::jupyter-amphion
+- robostack::jupyter-ros

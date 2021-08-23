@@ -25,4 +25,4 @@ dependencies:
 # our stuff
 - jupyterlab-ros
 - jupyter-amphion
-- jupyter-ros
+# - jupyter-ros

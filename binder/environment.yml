@@ -10,7 +10,7 @@ dependencies:
 - ipyvuetify=1.8
 - bqplot=0.12
 - ipywidgets=7.6
-- voila=2.10
+- voila=0.2.10
 - ros-noetic-ros-core
 - ros-noetic-rospy
 - ros-noetic-rosbridge-suite

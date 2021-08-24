@@ -6,11 +6,11 @@ dependencies:
 - python=3.8
 - nodejs=14
 - jupyterlab=3.1
-- ipympl=0.7
-- ipyvuetify=1.8
-- bqplot=0.12
-- ipywidgets=7.6
-- voila=0.2.10
+- ipympl
+- ipyvuetify
+- bqplot
+- ipywidgets
+- voila
 - ros-noetic-ros-core
 - ros-noetic-rospy
 - ros-noetic-rosbridge-suite
@@ -23,6 +23,6 @@ dependencies:
 - ros-noetic-turtlebot3
 - ros-noetic-turtlebot3-fake
 # our stuff
-- robostack::jupyterlab-ros=0.2.1
+- robostack::jupyterlab-ros
 - robostack::jupyter-amphion
-- robostack::jupyter-ros=0.5
+# - robostack::jupyter-ros=0.5

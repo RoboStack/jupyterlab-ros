@@ -1,0 +1,6 @@
+git clone https://github.com/RoboStack/jupyter-ros.git
+cd jupyter-ros
+pip install .
+
+jupyter nbextension install --py --symlink --sys-prefix jupyros
+jupyter nbextension enable --py --sys-prefix jupyros

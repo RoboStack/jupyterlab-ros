@@ -25,4 +25,4 @@ dependencies:
 # our stuff
 - robostack::jupyterlab-ros
 - robostack::jupyter-amphion
-# - robostack::jupyter-ros=0.5
+- robostack::jupyter-ros

@@ -17,7 +17,7 @@ mamba install jupyterlab-ros nodejs=12
 
 Please see the [examples](./examples) folder for some tutorials and examples how to use jupyterlab-ros. These require the following ROS packages:
 ```bash
-mamba install ros-noetic-ros-core ros-noetic-rospy ros-noetic-rosbridge-suite ros-neotic-rosbag ros-neotic-rosauth ros-noetic-tf2-web-republisher ros-noetic-franka-ros ros-noetic-interactive-marker-tutorials ros-noetic-teb-local-planner ros-noetic-turtlebot3 ros-noetic-turtlebot3-fake
+mamba install ros-noetic-ros-core ros-noetic-rospy ros-noetic-rosbridge-suite ros-noetic-rosbag ros-noetic-rosauth ros-noetic-tf2-web-republisher ros-noetic-franka-ros ros-noetic-interactive-marker-tutorials ros-noetic-teb-local-planner ros-noetic-turtlebot3 ros-noetic-turtlebot3-fake
 ```
 
 ## Contributing

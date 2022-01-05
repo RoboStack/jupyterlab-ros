@@ -29,6 +29,17 @@ The `jlpm` command is JupyterLab's pinned version of
 `yarn` or `npm` in lieu of `jlpm` below.
 
 ```bash
+# Create a development environment
+# With the following command you have all the necessary to run
+# the examples (you will need to install jupyros from pip later).
+# You can also use the install instructions from https://github.com/RoboStack/ros-noetic
+# to create the environment
+mamba create -n lab-ros -c conda-forge -c robostack python=3.8 nodejs=14 jupyterlab=3 ipympl ipyvuetify bqplot ipywidgets voila ros-noetic-ros-core ros-noetic-rospy ros-noetic-rosbridge-suite ros-noetic-rosbag ros-noetic-rosauth ros-noetic-tf2-web-republisher ros-noetic-franka-ros ros-noetic-interactive-marker-tutorials ros-noetic-teb-local-planner ros-noetic-turtlebot3 ros-noetic-turtlebot3-fake
+
+# Activate the environment and install jupyros
+conda activate lab-ros
+pip install jupyros
+
 # Clone the repo to your local environment
 git clone https://github.com/RoboStack/jupyterlab-ros.git
 # Move to jupyterlab-ros directory

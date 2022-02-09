@@ -3,9 +3,9 @@ channels:
 - conda-forge
 - robostack
 dependencies:
-- python=3.8
+- python=3.9
 - nodejs=14
-- jupyterlab=3.1
+- jupyterlab
 - ipympl
 - ipyvuetify
 - bqplot
@@ -25,4 +25,4 @@ dependencies:
 # our stuff
 - robostack::jupyterlab-ros
 - robostack::jupyter-amphion
-# - robostack::jupyter-ros=0.5
+- robostack::jupyter-ros

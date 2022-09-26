@@ -8,10 +8,26 @@ from notebook.base.handlers import IPythonHandler
 
 import rospkg
 
-from ..lib import getEnv, getMaster, save
+from ..lib import getEnv, getMaster, save, getWorkspaces, ROS_PACKAGE_PATH
+
+
+
 
 class Pkgs(IPythonHandler):
-    rospack = rospkg.RosPack()
+
+    # rospack = rospkg.RosPack()
+    current_workspace = getWorkspaces()
+    current_workspace_list =  current_workspace.split(':') if ":" in current_workspace else [current_workspace]
+    
+    # if ROS_PACKAGE_PATH != current_workspace:
+    #     if ROS_PACKAGE_PATH not in current_workspace_list:
+    #         current_workspace_list.append(ROS_PACKAGE_PATH)
+
+    current_workspace_list = [ws.strip() for ws in current_workspace_list]
+
+    rospack = rospkg.RosPack(current_workspace_list)
+
+    print(f"[Pkgs : ] {' | '.join(current_workspace_list)}")
 
     @tornado.web.authenticated
     def get(self, *args, **kwargs):
@@ -23,7 +39,8 @@ class Pkgs(IPythonHandler):
             return
         
         print("[PKGS] get:", args[0])
-        
+        print("[PKGS] ws : ", cls.current_workspace_list)
+
         argslist = args[0].split('/')
         
         package = argslist[0]

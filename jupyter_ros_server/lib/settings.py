@@ -6,7 +6,7 @@ ROOT = path.dirname(path.dirname(__file__))
 PUBLIC = path.join(ROOT, 'public')
 SETTINGS = path.join(ROOT, 'static/settings.json')
 MASTER = path.join(ROOT, 'static/roslab.launch')
-ROS_PACKAGE_PATH = environ.get("ROS_PACKAGE_PATH", default="")
+ROS_PACKAGE_PATH = environ.get("ROS_PACKAGE_PATH", default="").strip()
 
 
 def getEnv():
@@ -50,7 +50,7 @@ def save(env, master, workspaces):
     
     data['env'] = env
     data['master'] = master
-    data['workspaces'] = f"{data['workspaces']}:{workspaces}" if data['workspaces'] != "" else workspaces
+    data['workspaces'] = workspaces
 
     with open(SETTINGS, 'w+') as settings:
         json.dump(data, settings)

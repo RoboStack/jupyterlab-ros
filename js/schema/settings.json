@@ -17,8 +17,8 @@
     },
     "workspaces": {
       "type": "string",
-      "title": "Workspaces colon seprated",
-      "description": "Absolute path of your launch file to initialize ROS master.\nKeep it empty to use the default one.",
+      "title": "Workspace Paths",
+      "description": "Absolute paths to the workspaces separated by colons.\nExample:\n/home/jovyan/ws1:/home/jovyan/w2:/home/jovyan/ws3\nKeep it empty to use load the workspaces sourced before jupyter lab was started.",
       "default": ""
     }
   }

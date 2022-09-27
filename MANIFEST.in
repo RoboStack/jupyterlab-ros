@@ -2,8 +2,8 @@ include LICENSE
 include README.md
 include pyproject.toml
 
-include jupyterlab_ros_server/jupyterlab_ros_server.json
+include jupyter_ros_server/jupyter_ros_server.json
 
-graft jupyterlab_ros_server/static
-graft jupyterlab_ros_server/public
-graft jupyterlab_ros_server/labextension
+graft jupyter_ros_server/static
+graft jupyter_ros_server/public
+graft jupyter_ros_server/labextension

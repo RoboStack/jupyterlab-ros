@@ -64,9 +64,10 @@ export const settings: JupyterFrontEndPlugin<void> = {
     const loadSetting = (setting: ISettingRegistry.ISettings): void => {
       const env = setting.get('env').composite as string;
       const master = setting.get('master').composite as string;
+      const workspaces = setting.get('workspaces').composite as string;
 
-      if ( env != "" || master != "" ) {
-        const msg = { method: 'PUT', body: JSON.stringify({ env, master }) };
+      if ( env != "" || master != "" || workspaces != "" ) {
+        const msg = { method: 'PUT', body: JSON.stringify({ env, master, workspaces }) };
   
         ServerConnection.makeRequest(url, msg, server)
         .then( resp => {})

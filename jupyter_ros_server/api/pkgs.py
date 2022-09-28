@@ -1,6 +1,5 @@
 import os
 import json
-from turtle import st
 import tornado
 from tornado.web import StaticFileHandler
 

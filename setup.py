@@ -63,7 +63,11 @@ setup_args = {
     'license': "BSD-3-Clause",
     'url': "https://github.com/RoboStack/jupyterlab-ros",
     'include_package_data': True,
-    'packages': find_packages(),
+    'packages': find_packages(
+        where=HERE,
+        include=["*"],
+        exclude=[],
+    ),
     'cmdclass': cmdclass,
     'install_requires': [
         'rosbridge-library',
